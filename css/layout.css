@@ -1,0 +1,16 @@
+
+/* Main layout */
+body{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: auto 1fr auto;
+
+    & > header{
+        grid-column-end: 2 span;
+    }
+    & > footer{
+        grid-column-end: 2 span;
+    }
+}
+
+/* Filter layout */

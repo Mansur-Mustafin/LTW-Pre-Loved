@@ -1,0 +1,88 @@
+/* Filter on the main page */
+#related{
+    padding: 1em;
+}
+
+.filter-element{
+    margin: .5em .5em 0 .5em;
+    border-bottom: 1px solid rgb(204, 204, 204);
+    padding-bottom: 0.2em;
+}
+
+.filter-element > label{
+    display: flex;
+    transition: all .3s;
+    padding: .5em;
+    cursor: pointer;
+
+    & input{
+        display: none;
+    }
+
+    & h4{
+        flex-grow: 1;
+    }
+
+    &:hover{
+        background-color: Gainsboro;
+        border-radius: 5px;
+    }
+
+    &::after{
+        content:'\2715';
+        transition: 0.3s ease 0s;
+        transform: rotate(-45deg);
+    }
+}
+
+.filter-element > ul li{
+    list-style-type: none;
+    transition: all .2s ease-in-out;
+    padding: 0 0.5em;
+    
+    &:hover{
+        background-color: Gainsboro;
+        border-radius: 5px;
+    }
+    & label{
+        transition: all .2s ease-in-out;
+        padding: 0 0.5em;
+        opacity: 0;
+        max-height: 0;
+        display: block;
+        cursor: pointer;
+    }
+    /* Option in a list */
+    & input[type=checkbox]{
+        margin-right: 10px;
+        width: 1.15em;
+        height: 1.15em;
+    }
+}
+
+/* Opend menu */
+.filter-element > label:has(input:checked){
+    &::after {
+        transform: rotate(0deg);
+    }
+    & + ul li label{
+        padding: 0.5em 0.5em;
+        max-height: 2em;
+        opacity: 1;
+    }
+}
+
+#filter button{
+    margin: 1em 0 0 .5em;
+    padding: 0.7em;
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid rgb(204, 204, 204);
+    transition: all .3s;
+
+    &:hover{
+        background-color: gainsboro;
+    }
+}
+
+

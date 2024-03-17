@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Ruda:wght@400..900&display=swap');
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-family: 'Ruda', serif;
+    color: #333;
+}
+
+body{
+    margin: 0 auto;
+    max-width: 60em;
+}
