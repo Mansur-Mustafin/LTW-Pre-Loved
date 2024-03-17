@@ -1,7 +1,7 @@
 
 /* Main layout */
 body{
-    background-color: var(--gray);
+    background-color: var(--matador-grey);
     display: grid;
     grid-template-columns: 1fr 2fr;
     grid-template-rows: auto 1fr auto;

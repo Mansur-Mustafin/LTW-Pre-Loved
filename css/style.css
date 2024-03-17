@@ -19,16 +19,11 @@ html {
     color: #333;
 }
 
-body{
-    margin: 0 auto;
-    max-width: 60em;
-}
-
 div.header-content {
     background-color: var(--matador-red);
 }
 
-div.header-content > a, p{
+div.header-content > a, header p{
     color: var(--matador-grey);
     text-decoration: none;
 }
