@@ -1,5 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Ruda:wght@400..900&display=swap');
 
+:root {
+    --matador-yellow: #FCBA04; 
+    --matador-red: #A50104; 
+    --matador-dark-red: #590004; 
+    --matador-darker-red: #250001; 
+    --matador-grey: #F3F3F3; 
+  }
+
 *{
     box-sizing: border-box;
     margin: 0;
@@ -14,4 +22,54 @@ html {
 body{
     margin: 0 auto;
     max-width: 60em;
+}
+
+div.header-content {
+    background-color: var(--matador-red);
+}
+
+div.header-content > a, p{
+    color: var(--matador-grey);
+    text-decoration: none;
+}
+
+div.header-content > a > img, h1{
+    display: inline-block;
+    vertical-align: middle;
+}
+
+div.header-content > a > img{
+    height: 5em;
+}
+
+div.header-content > p{
+    margin-left: 1em;
+}
+
+div#signup{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: right;
+    background-color: var(--matador-dark-red);
+}
+
+div#signup a{
+    text-decoration: none;
+    color: var(--matador-grey);
+    margin: .5em .5em;
+    padding-top: .5em;
+    padding-bottom: .5em;
+}
+
+div#signup a:hover {
+    color: var(--matador-yellow);
+}
+
+footer {
+    background-color: var(--matador-red);
+    width: 100%;
+}
+
+footer > p{
+    margin-left: .5em;
 }
