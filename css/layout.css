@@ -25,7 +25,7 @@ body{
     grid-template-columns: 1fr 4fr auto auto;
     grid-template-rows: auto 1fr;
     margin: 1em;
-    
+    transition: all .3s;
     img {
         height: 12em;
         grid-row-end: 2 span;
@@ -50,5 +50,14 @@ body{
     }
     p {
         margin: 1em;
+    }
+}
+
+.item:hover{
+    transform: scale(1.01); /* Slightly increase the size */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+
+    h3{
+        color: var(--matador-yellow);
     }
 }
