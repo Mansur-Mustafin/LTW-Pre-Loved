@@ -3,15 +3,26 @@
 body{
     background-color: var(--matador-grey);
     main{
-        max-width: 70em;
-        margin: 0 auto;
         display: grid;
         grid-template-columns: 1fr 2fr;
     }
 }
 
-/* Filter layout */
-
+/* Login layout */
+section#login-register{
+    margin: 10em auto;
+    grid-column-end: 2 span;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr;
+    #login-form{
+        grid-column-end: 2 span;
+    }
+    #register-form{
+        grid-column-start: 1;
+        grid-column-end: 2 span;
+    }
+}
 
 /* Items layout*/
 .item {

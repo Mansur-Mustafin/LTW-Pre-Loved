@@ -5,10 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../css/style.css" rel="stylesheet">
     <link href="../css/layout.css" rel="stylesheet">
+    <link href="../css/filter.css" rel="stylesheet">
     <link href="../css/form.css" rel="stylesheet">
     <title>OLtwX</title>
+
+    
+    
 </head>
 <body>
+
 <header>
 
     <div id="logo">
@@ -22,99 +27,62 @@
 
     <nav id="header-menu">
         <ul>
-            <li><img src="../assets/img/account-icon.svg" alt="account-icon"><a href="login_register.html">Your Account</a></li>
+            <li><img src="../assets/img/account-icon.svg" alt="account-icon"><a href="#">Your Account</a></li>
+            <li><img src="../assets/img/shopping-cart.svg" alt="cart-icon"><a href="#">Shopping Cart</a></li>
+            <li><img src="../assets/img/love.svg" alt="cart-icon"><a href="#">Wish List</a></li>
         </ul>
     </nav>
 
 
 </header>
-<div id="related">
-    <h2>Filter</h2>
-    <form action="#" method="get" id="filter">
 
-        <div class="filter-element">
-            <label>
-                <input type="checkbox">
-                <h4>Price</h4>
-            </label>
-            <ul>
-                <li><label><input type="checkbox" name="brand" value="apple">Apple</label></li>
-                <li><label><input type="checkbox" name="brand" value="asus">Asus</label></li>
-                <li><label><input type="checkbox" name="brand" value="razer">Razer</label></li>
-            </ul>
-        </div>
-
-        <div class="filter-element">
-            <label>
-                <input type="checkbox">
-                <h4>Brands</h4>
-            </label>
-            <ul>
-                <li><label><input type="checkbox" name="brand" value="apple">Apple</label></li>
-                <li><label><input type="checkbox" name="brand" value="asus">Asus</label></li>
-                <li><label><input type="checkbox" name="brand" value="razer">Razer</label></li>
-            </ul>
-        </div>
-
-        <div class="filter-element">
-            <label>
-                <input type="checkbox">
-                <h4>Models</h4>
-            </label>
-            <ul>
-                <li><label><input type="checkbox" name="brand" value="Macbook">Macbook</label></li>
-                <li><label><input type="checkbox" name="brand" value="ROG">ROG</label></li>
-                <li><label><input type="checkbox" name="brand" value="TUF">TUF</label></li>
-                <li><label><input type="checkbox" name="brand" value="ZenBook">ZenBook</label></li>
-            </ul>
-        </div>
-
-        <button type="submit">Submit</button>
-    </form>
-</div>
 <main>
-    <section id="items">
-        <article class="item">
-            <img src="../assets/img/default_item.svg" alt="Item Image">
-            <h3>Item Title</h3>
-            <p>Description of the item...</p>
-            <p class="price">300</p><p class="coin">$</p>
-        </article>
-        <article class="item">
-            <img src="../assets/img/default_item.svg" alt="Item Image">
-            <h3>Item Title</h3>
-            <p>Description of the item...</p>
-            <p class="price">300</p><p class="coin">$</p>
-        </article>
-        <article class="item">
-            <img src="../assets/img/default_item.svg" alt="Item Image">
-            <h3>Item Title</h3>
-            <p>Description of the item...</p>
-            <p class="price">300</p><p class="coin">$</p>
-        </article>
-        <article class="item">
-            <img src="../assets/img/default_item.svg" alt="Item Image">
-            <h3>Item Title</h3>
-            <p>Description of the item...</p>
-            <p class="price">300</p><p class="coin">$</p>
-        </article>            <article class="item">
-        <img src="../assets/img/default_item.svg" alt="Item Image">
-        <h3>Item Title</h3>
-        <p>Description of the item...</p>
-        <p class="price">300</p><p class="coin">$</p>
-    </article>
-        <article class="item">
-            <img src="../assets/img/default_item.svg" alt="Item Image">
-            <h3>Item Title</h3>
-            <p>Description of the item...</p>
-            <p class="price">300</p><p class="coin">$</p>
-        </article>
+
+    <section id="login-register">
+
+
+        <input type="checkbox" id="login-tuggle-checked" checked>
+        <input type="checkbox" id="register-tuggle-checked">
+        <button id="login-tuggle">Login</button>
+        <button id="register-tuggle">Create Account</button>
+        <form id="login-form">
+            <label>
+                Username <input type="text" name="username">
+            </label>
+            <label>
+                Password <input type="password" name="password">
+            </label>
+            <button formaction="#" formmethod="post">Login</button>
+        </form>
+        <form id="register-form">
+            <label>
+                Username <input type="text" name="username">
+            </label>
+            <label>
+                Password <input type="password" name="password">
+            </label>
+            <button formaction="#" formmethod="post">Register</button>
+        </form>
+
     </section>
+
 </main>
 
 <footer>
     <p>&copy; 2024 Matador OLX. All rights reserved.</p>
 </footer>
+
+<script>
+    document.getElementById('login-tuggle').addEventListener('click', function() {
+        document.getElementById('login-tuggle-checked').checked = true;
+        document.getElementById('register-tuggle-checked').checked = false;
+    });
+
+    document.getElementById('register-tuggle').addEventListener('click', function() {
+        document.getElementById('register-tuggle-checked').checked = true;
+        document.getElementById('login-tuggle-checked').checked = false;
+    });
+</script>
 
 </body>
 </html>
