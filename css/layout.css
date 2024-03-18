@@ -9,6 +9,9 @@ body{
     & > header{
         grid-column-end: 2 span;
     }
+    #back-button{
+        grid-column-end: 2 span;
+    }
     & > footer{
         grid-column-end: 2 span;
     }
@@ -59,5 +62,31 @@ body{
 
     h3{
         color: var(--matador-yellow);
+    }
+}
+
+html{
+    min-height: 100vh;
+}
+
+footer{
+    .footer-list{
+        display : flex;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+        h3{
+            margin-bottom: .25em;
+        }
+        ul{
+            display: flex;
+            flex-direction: column;
+            align-items: right;
+            list-style-type: none; 
+        }
+    }
+    p{
+        margin-top: .5em;
+        margin-left: .5em;
+        text-align: center;
     }
 }
