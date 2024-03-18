@@ -38,7 +38,6 @@ header{
 }
 
 header > div#logo{
-
     a{
         display: block;
         p{
@@ -86,29 +85,5 @@ header > nav#header-menu{
     background-color: var(--matador-dark-red);
     :hover{
         color: var(--matador-yellow);
-    }
-}
-/* Footer */
-
-footer{
-    padding: 1em;
-    background-color: var(--matador-red);
-    width: 100%;
-    .footer-list{
-        h3{
-            color: var(--matador-grey);
-            font-size: xx-large;
-        }
-        li{
-            a{
-                text-decoration: none;
-            }
-            :hover{
-                color: var(--matador-yellow)
-            }
-        }
-    }
-    p{
-        color: var(--matador-grey);
     }
 }

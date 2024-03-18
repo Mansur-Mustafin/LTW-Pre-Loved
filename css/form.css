@@ -36,9 +36,7 @@
 }
 
 .filter-element > ul li{
-    transition: all .2s ease-in-out;
     padding: 0 0.5em;
-    
     &:hover{
         background-color: Gainsboro;
         border-radius: 5px;
