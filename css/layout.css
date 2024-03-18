@@ -1,6 +1,7 @@
 
 /* Main layout */
 body{
+    background-color: var(--matador-grey);
     display: grid;
     grid-template-columns: 1fr 2fr;
     grid-template-rows: auto 1fr auto;
@@ -14,3 +15,49 @@ body{
 }
 
 /* Filter layout */
+
+
+/* Items layout*/
+.item {
+    border-radius: 1em;
+    background-color: white;
+    display: grid;
+    grid-template-columns: 1fr 4fr auto auto;
+    grid-template-rows: auto 1fr;
+    margin: 1em;
+    transition: all .3s;
+    img {
+        height: 12em;
+        grid-row-end: 2 span;
+        margin: 1em;
+    }
+    h3 {
+        font-size: x-large;
+        margin-left: 1em;
+        margin-top: 1em;
+    }
+    .price {
+        grid-row: 1;
+        grid-column: 3;
+        margin-right: 0;
+        font-size: larger;
+    }
+    .coin {
+        grid-row: 1;
+        grid-column: 4;
+        margin-left: 0;
+        font-size: larger;
+    }
+    p {
+        margin: 1em;
+    }
+}
+
+.item:hover{
+    transform: scale(1.01); /* Slightly increase the size */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+
+    h3{
+        color: var(--matador-yellow);
+    }
+}
