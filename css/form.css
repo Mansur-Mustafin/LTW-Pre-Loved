@@ -36,7 +36,6 @@
 }
 
 .filter-element > ul li{
-    list-style-type: none;
     transition: all .2s ease-in-out;
     padding: 0 0.5em;
     
@@ -60,7 +59,7 @@
     }
 }
 
-/* Opend menu */
+/* Opened menu */
 .filter-element > label:has(input:checked){
     &::after {
         transform: rotate(0deg);

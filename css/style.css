@@ -19,52 +19,74 @@ html {
     color: #333;
 }
 
-div.header-content {
-    background-color: var(--matador-red);
+ul li{
+    list-style-type: none;
 }
 
-div.header-content > a, header p{
-    color: var(--matador-grey);
-    text-decoration: none;
-}
-
-div.header-content > a > img, h1{
-    display: inline-block;
-    vertical-align: middle;
-}
-
-div.header-content > a > img{
-    height: 5em;
-}
-
-div.header-content > p{
-    margin-left: 1em;
-}
-
-div#signup{
-    padding-top: 5px;
-    padding-bottom: 5px;
-    text-align: right;
-    background-color: var(--matador-dark-red);
-}
-
-div#signup a{
+a{
     text-decoration: none;
     color: var(--matador-grey);
-    margin: .5em .5em;
-    padding-top: .5em;
-    padding-bottom: .5em;
 }
 
-div#signup a:hover {
-    color: var(--matador-yellow);
+/* Header */
+
+header{
+    padding: 1em;
+    background-color: #A50104;
+    display: flex;
+    flex-flow: row;
 }
+
+header > div#logo{
+
+    a{
+        display: block;
+        p{
+            margin-left: 1.5em;
+        }
+    }
+    img{
+        height: 6em;
+    }
+    img, h1{
+        display: inline-block;
+        vertical-align: middle;
+    }
+}
+
+header > nav#header-menu{
+    flex-grow: 1;
+    align-self: center;
+    display: flex;
+    justify-content: flex-end;
+    ul{
+        display: flex;
+    }
+    img{
+        height: 1.3em;
+        margin-right: .4em;
+    }
+    li{
+        transition: all .3s;
+        padding: 1em 0.7em;
+        margin: 0.3em;
+        cursor: pointer;
+    }
+    li:hover{
+        background-color: var(--matador-dark-red);
+        border-radius: 3px;
+    }
+}
+
+/* Footer */
 
 footer {
+    padding: 1em;
     background-color: var(--matador-red);
     width: 100%;
 }
 
 footer > p{
+    color: var(--matador-grey);
     margin-left: .5em;
 }
