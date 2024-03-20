@@ -51,7 +51,8 @@
     }
 }
 
-input{
+/* Para todos inputs, mas nao de type checkbox */
+input:not(input[type=checkbox]){
     padding: 1em;
     border: none;
     background-color: var(--matador-grey);
