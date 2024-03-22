@@ -131,3 +131,83 @@ CREATE TABLE ItemTags (
 /*******************************************************************************
    Populate Tables
 ********************************************************************************/
+-- Populate Users
+INSERT INTO Users (username, password, email, phonenumber, image_path, banned, admin_flag, address)
+VALUES 
+('john_doe', 'pass123', 'john.doe@example.com', '123-456-7890', '/data/images/john_doe.png', 0, 0, '123 Main St, Hometown'),
+('jane_smith', 'password', 'jane.smith@example.com', '234-567-8901', '/data/images/jane_smith.png', 0, 1, '456 Elm St, Bigcity');
+
+-- Populate Categories
+INSERT INTO Categories (name)
+VALUES 
+('Electronics'),
+('Clothing'),
+('Cars'),
+('Books');
+
+-- Populate Size
+INSERT INTO Size (name)
+VALUES 
+('Small'),
+('Medium'),
+('Large');
+
+-- Populate Condition
+INSERT INTO Condition (name)
+VALUES 
+('New'),
+('Used');
+
+-- Populate Tags
+INSERT INTO Tags (name)
+VALUES 
+('Pay 2 buy 1'),
+('Limited Edition'),
+('Rare');
+
+-- Populate Brands
+INSERT INTO Brands (name)
+VALUES 
+('BrandA'),
+('BrandB'),
+('BrandC');
+
+-- Populate Models (assuming BrandA's id is 1)
+INSERT INTO Models (brand_id, name)
+VALUES 
+(1, 'ModelX'),
+(1, 'ModelY'),
+(2, 'ModelA'),
+(2, 'ModelB'),
+(3, 'ModelQ'),
+(3, 'ModelYR');
+
+
+-- Populate Items
+INSERT INTO Items (brand, model, description, images, price, user_id, category_id, size_id, condition_id)
+VALUES 
+('BrandA', 'ModelX', 'Description of item 1', '/images/item1.png', 19.99, 1, 1, 1, 1),
+('BrandB', 'ModelY', 'Description of item 2', '/images/item2.png', 29.99, 2, 2, 2, 2);
+
+-- Populate Wishlist
+INSERT INTO Wishlist (user_id, item_id)
+VALUES 
+(1, 2),
+(2, 1);
+
+-- Populate Transactions
+INSERT INTO Transactions (seller_id, buyer_id, item_id)
+VALUES 
+(1, 2, 1),
+(2, 1, 2);
+
+-- Populate Messages
+INSERT INTO Messages (files, text, item_id_exchange, item_id, sender_id)
+VALUES 
+('/files/file1.pdf', 'Is this item still available?', NULL, 1, 2);
+
+-- Populate ItemTags
+INSERT INTO ItemTags (item_id, tag_id)
+VALUES 
+(1, 1),
+(2, 2);

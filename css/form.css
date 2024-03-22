@@ -41,13 +41,17 @@
     display: flex;
     flex-flow: column;
     label{
-        padding: 1em;
+        padding: 1em 1em 0;
     }
     label, input{
         display: block;
     }
-    button{
+    button, ul{
         margin-top: 1em;
+    }
+    ul{
+        
+        color: var(--matador-dark-red);
     }
 }
 
@@ -58,7 +62,6 @@ input:not(input[type=checkbox]){
     background-color: var(--matador-grey);
     color: black;
     border-bottom: 1px solid black;
-    margin-top: 1em;
     width: 100%;
     font-size: 0.9em;
     transition: all .3s;
@@ -69,6 +72,9 @@ input:not(input[type=checkbox]){
     /* ela tira design de autocomplete */
     &:-webkit-autofill{
         -webkit-box-shadow: 0 0 0 30px var(--matador-grey) inset !important;
+    }
+    &:required{
+        border-bottom: 1px solid var(--matador-yellow);
     }
 }
 

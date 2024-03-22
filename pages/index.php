@@ -12,10 +12,11 @@ require_once(__DIR__ . '/../templates/common.tpl.php');
 require_once(__DIR__ . '/../templates/filter.tpl.php');
 require_once(__DIR__ . '/../templates/item.tpl.php');
 
-$session->setId(123);
+//$session->setId(123);
+$items = array(1,2,3,4,5,6);
 
 drawHeader($session);
 drawFilter();
-drawItems([], $session);
+drawItems($items, $session);
 drawFooter();
 ?>

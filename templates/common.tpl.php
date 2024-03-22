@@ -31,9 +31,10 @@ require_once(__DIR__ . '/../utils/session.php');
             <nav id="header-menu">
                 <ul>
                 <?php if ($session->isLoggedIn()) {?>
-                    <li><img src="../assets/img/account-icon.svg" alt="account-icon"><a href="../pages/profile.php">Your Account</a></li>
                     <li><img src="../assets/img/shopping-cart.svg" alt="cart-icon"><a href="#">Shopping Cart</a></li>
                     <li><img src="../assets/img/love.svg" alt="cart-icon"><a href="#">Wish List</a></li>
+                    <li><img src="../assets/img/account-icon.svg" alt="account-icon"><a href="../pages/profile.php"><?=$session->getName();?></a></li>
+                    <li><a href="../actions/action_logout.php"><img src="../assets/img/logout.svg" alt="account-icon"></a></li>
                 <?php } else { ?>
                     <li><img src="../assets/img/account-icon.svg" alt="account-icon"><a href="../pages/login.php">Login</a></li>
                 <?php } ?>
@@ -70,4 +71,13 @@ require_once(__DIR__ . '/../utils/session.php');
 </body>
 </html>
 
+<?php } ?>
+
+
+<?php function drawErrors(array $errors) { ?>
+    <ul>
+        <?php foreach($errors as $error){ ?>
+            <li><p><?=$error?></p></li>
+        <?php } ?>
+    </ul>
 <?php } ?>

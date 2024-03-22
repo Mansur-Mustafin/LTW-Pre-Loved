@@ -1,11 +1,12 @@
 <?php
 declare(strict_types=1);
+
+require_once(__DIR__ . '/../utils/session.php');
 ?>
 
 
-<?php function drawLoginForm() {?>
+<?php function drawLoginForm(Session $session) {?>
     <section id="login-register">
-
 
         <input type="checkbox" id="login-tuggle-checked" checked>
         <input type="checkbox" id="register-tuggle-checked">
@@ -13,22 +14,36 @@ declare(strict_types=1);
         <button id="register-tuggle">Create Account</button>
         <form id="login-form">
             <label>
-                Username <input type="text" name="username">
+                Username <input type="text" name="email">
             </label>
             <label>
                 Password <input type="password" name="password">
             </label>
-            <button formaction="#" formmethod="post">Login</button>
+            <?=drawErrors($session->getErrorMessages())?>
+            <button formaction="../actions/action_login.php" formmethod="post">Login</button>
         </form>
         <form id="register-form">
             <label>
-                Username <input type="text" name="username">
+                Email <input type="email" name="email" required>
             </label>
             <label>
-                Password <input type="password" name="password">
+                Username <input type="text" name="username" required>
             </label>
-            <button formaction="#" formmethod="post">Register</button>
+            <label>
+                Password <input type="password" name="password" required>
+            </label>
+            <label>
+                Confirm Password <input type="password" name="confirm_password" required>
+            </label>
+            <label>
+                Address <input type="text" name="address">
+            </label>
+            <label>
+                Phone Number <input type="tel" name="phonenumber">
+            </label>
+            <button formaction="../actions/action_register.php" formmethod="post">Register</button>
         </form>
+
 
     </section>
 
