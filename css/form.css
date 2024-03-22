@@ -23,7 +23,7 @@
     }
 }
 
-/* Swith Login Register */
+
 #login-register > button{
     font-family: inherit;
     background-color: var(--matador-grey);
@@ -65,7 +65,13 @@ input:not(input[type=checkbox]){
     &:focus{
         border: 1px solid var(--matador-dark-red)
     }
+    /* TODO perguntar se podemos usar isso */
+    /* ela tira design de autocomplete */
+    &:-webkit-autofill{
+        -webkit-box-shadow: 0 0 0 30px var(--matador-grey) inset !important;
+    }
 }
+
 
 button{
     padding: 1em;

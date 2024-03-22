@@ -6,7 +6,7 @@
     --matador-dark-red: #590004; 
     --matador-darker-red: #250001; 
     --matador-grey: #F3F3F3; 
-  }
+}
 
 *{
     box-sizing: border-box;
@@ -37,9 +37,6 @@ body > main{
     margin: 0 auto;
 }
 
-body > footer{
-
-}
 /* Header */
 
 header{
@@ -50,7 +47,6 @@ header{
 }
 
 header > div#logo{
-
     a{
         display: block;
         p{
@@ -90,15 +86,13 @@ header > nav#header-menu{
     }
 }
 
-/* Footer */
-
-footer {
-    padding: 1em;
-    background-color: var(--matador-red);
+#back-button{
+    padding-top: .5em;
     width: 100%;
-}
-
-footer > p{
-    color: var(--matador-grey);
-    margin-left: .5em;
+    height: 2em;
+    text-align: center;
+    background-color: var(--matador-dark-red);
+    :hover{
+        color: var(--matador-yellow);
+    }
 }
