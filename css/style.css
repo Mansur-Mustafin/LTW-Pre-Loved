@@ -37,54 +37,6 @@ body > main{
     margin: 0 auto;
 }
 
-/* Header */
-
-header{
-    padding: 1em;
-    background-color: #A50104;
-    display: flex;
-    flex-flow: row;
-}
-
-header > div#logo{
-    a{
-        display: block;
-        p{
-            margin-left: 1.5em;
-        }
-    }
-    img{
-        height: 6em;
-    }
-    img, h1{
-        display: inline-block;
-        vertical-align: middle;
-    }
-}
-
-header > nav#header-menu{
-    flex-grow: 1;
-    align-self: center;
-    display: flex;
-    justify-content: flex-end;
-    ul{
-        display: flex;
-    }
-    img{
-        height: 1.3em;
-        margin-right: .4em;
-    }
-    li{
-        transition: all .3s;
-        padding: 1em 0.7em;
-        margin: 0.3em;
-        cursor: pointer;
-    }
-    li:hover{
-        background-color: var(--matador-dark-red);
-        border-radius: 3px;
-    }
-}
 
 #back-button{
     padding-top: .5em;

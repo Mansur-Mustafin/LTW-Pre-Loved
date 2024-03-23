@@ -9,14 +9,14 @@ main {
     margin: .5em;
 
     .profile-info {
-        img {
-            height: 100%;
-            border: solid white;
-            border-radius: 1em;
-            height: 15em;
-        }
         padding: 1em;
         width: fit-content;
+        & > img {
+            height: 100%;
+            border: solid white;
+            border-radius: 50%;
+            height: 15em;
+        }
     }
 
     .user-name {
@@ -28,5 +28,19 @@ main {
         margin: .5em;
         padding: .5em;
     }
-    border-right: solid var(--matador-dark-red) ;
+}
+
+/* TODO se calhar da para fazer melhor? */
+form#profile-upload-form{
+    position: relative;
+    input{
+        display: none;
+    }
+    label > img{
+        height: 2em;
+        position: absolute;
+        right: 1em;
+        top: -3em;
+        cursor: pointer;
+    }
 }

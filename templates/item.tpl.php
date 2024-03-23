@@ -2,12 +2,12 @@
 declare(strict_types=1);
 ?>
 
-<?php function drawItems(array $items, Session $session) { ?>
+<?php function drawItems(array $items, Session $session, string $title) { ?>
     <section id="items">
-        
-    <?php foreach($items as $item){
-        drawItem($item, $session);
-    } ?>
+        <h2><?=$title?></h2>
+        <?php foreach($items as $item){
+            drawItem($item, $session);
+        } ?>
     </section>
 <?php } ?>
 

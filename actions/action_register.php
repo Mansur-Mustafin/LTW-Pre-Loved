@@ -41,4 +41,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $session->setName($username);
 
     header('Location: ../pages/profile.php');
+    exit;
 }

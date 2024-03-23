@@ -17,6 +17,6 @@ $items = array(1,2,3,4,5,6);
 
 drawHeader($session);
 drawFilter();
-drawItems($items, $session);
+drawItems($items, $session, 'Find what you want to buy!');
 drawFooter();
 ?>

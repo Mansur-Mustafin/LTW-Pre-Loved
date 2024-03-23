@@ -11,4 +11,5 @@ if (!$session->isLoggedIn()) {
 $session->logout();
 
 header('Location: ' . $_SERVER['HTTP_REFERER']);
+exit;
 ?>

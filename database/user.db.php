@@ -65,3 +65,12 @@ function getUser(PDO $db, string $text): ?User {
     return $user;
 }
 
+function updateUserProfilePicture($db, $username, $image_path) {
+    
+    $sql = "UPDATE Users SET image_path = :image_path WHERE username = :username";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(':image_path', $image_path, PDO::PARAM_STR);
+    $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+
+    $stmt->execute();
+}

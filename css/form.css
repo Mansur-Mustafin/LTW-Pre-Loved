@@ -1,3 +1,39 @@
+/* Para todos inputs, mas nao de type checkbox */
+input:not(input[type=checkbox]){
+    padding: 1em;
+    border: none;
+    background-color: var(--matador-grey);
+    color: black;
+    border-bottom: 1px solid black;
+    width: 100%;
+    font-size: 0.9em;
+    transition: all .3s;
+    &:focus{
+        border: 1px solid var(--matador-dark-red)
+    }
+    /* TODO perguntar se podemos usar isso */
+    /* ela tira design de autocomplete */
+    &:-webkit-autofill{
+        -webkit-box-shadow: 0 0 0 30px var(--matador-grey) inset !important;
+    }
+    &:required{
+        border-bottom: 1px solid var(--matador-yellow);
+    }
+}
+
+
+button{
+    padding: 1em;
+    border: 2px solid var(--matador-dark-red);
+    font-family: inherit;
+    transition: all .3s;
+    &:hover{
+        background-color: var(--matador-dark-red);
+        color: var(--matador-grey);
+    }
+}
+
+
 /* Logic of changing login form */
 #login-register{
     & > input{
@@ -55,37 +91,4 @@
     }
 }
 
-/* Para todos inputs, mas nao de type checkbox */
-input:not(input[type=checkbox]){
-    padding: 1em;
-    border: none;
-    background-color: var(--matador-grey);
-    color: black;
-    border-bottom: 1px solid black;
-    width: 100%;
-    font-size: 0.9em;
-    transition: all .3s;
-    &:focus{
-        border: 1px solid var(--matador-dark-red)
-    }
-    /* TODO perguntar se podemos usar isso */
-    /* ela tira design de autocomplete */
-    &:-webkit-autofill{
-        -webkit-box-shadow: 0 0 0 30px var(--matador-grey) inset !important;
-    }
-    &:required{
-        border-bottom: 1px solid var(--matador-yellow);
-    }
-}
 
-
-button{
-    padding: 1em;
-    border: 2px solid var(--matador-dark-red);
-    font-family: inherit;
-    transition: all .3s;
-    &:hover{
-        background-color: var(--matador-dark-red);
-        color: var(--matador-grey);
-    }
-}

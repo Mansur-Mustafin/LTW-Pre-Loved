@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 class User {
-    const DEFAULT_USER_IMG = '/assets/img/account-icon.svg';
+    const DEFAULT_USER_IMG = '../assets/img/account-icon.svg';
 
     public int $id;
     public string $username;

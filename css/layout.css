@@ -27,6 +27,14 @@ section#login-register{
 
 
 /* Items layout*/
+section#items{
+    padding: 1em;
+    h2{
+        font-size:x-large;
+        padding: 1em 1em 0;
+    }
+}
+
 .item {
     border-radius: 1em;
     background-color: white;

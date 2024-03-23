@@ -46,3 +46,4 @@ if($user->admin_flag){
 }
 
 header('Location: /');
+exit;
