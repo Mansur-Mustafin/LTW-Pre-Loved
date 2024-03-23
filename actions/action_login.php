@@ -37,6 +37,11 @@ if(!is_same_password($_POST['password'], $user->password)){
     die(header('Location: ../pages/login.php'));
 }
 
+if($user->$banned){
+    $session->addMessage('error', 'This user was bunned');
+    die(header('Location: ../pages/login.php')); 
+}
+
 $session->setId($user->id);
 $session->setName($user->username);
 
