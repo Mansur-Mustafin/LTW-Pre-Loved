@@ -12,11 +12,12 @@ require_once(__DIR__ . '/../templates/filter.tpl.php');
 require_once(__DIR__ . '/../templates/item.tpl.php');
 
 $db = getDatabaseConnection();
-$items = getAllItems($db, 20, 0);
+$item_id = intval($_GET['item_id']);
+$item = getItem($db, $item_id);
 
 drawHeader($session);
-drawFilter();
-drawItems($items, $session, 'Find what you want to buy!');
+var_dump($item);
+
 drawFooter();
 
 ?>

@@ -35,8 +35,7 @@ CREATE TABLE Users (
 
 CREATE TABLE Items (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    brand TEXT,
-    model TEXT,
+    title TEXT,
     description TEXT,
     images TEXT,
     price REAL NOT NULL,
@@ -47,6 +46,7 @@ CREATE TABLE Items (
     size_id INTEGER,
     condition_id INTEGER,
     model_id INTEGER,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE,
     FOREIGN KEY (category_id) REFERENCES Categories(id) ON DELETE SET NULL,
     FOREIGN KEY (size_id) REFERENCES Size(id) ON DELETE SET NULL,
@@ -137,6 +137,10 @@ VALUES
 ('john_doe', 'pass123', 'john.doe@example.com', '123-456-7890', '/data/images/john_doe.png', 0, 0, '123 Main St, Hometown'),
 ('jane_smith', 'password', 'jane.smith@example.com', '234-567-8901', '/data/images/jane_smith.png', 0, 1, '456 Elm St, Bigcity');
 
+INSERT INTO Users (username, password, email, image_path, banned, admin_flag)
+VALUES 
+('Mansur','$2y$10$mc3lFQMZPdD9FO7Gc.T5ful8ywIb8VVAPFNq7GNb2JEllzgiMGqrq','mansur@gmail.com','/data/profile_img/a5ec03d3e184f620948b1295a0b73a89038263f5134a0ec49083ab05331e459b.png',0,0);
+
 -- Populate Categories
 INSERT INTO Categories (name)
 VALUES 
@@ -156,7 +160,8 @@ VALUES
 INSERT INTO Condition (name)
 VALUES 
 ('New'),
-('Used');
+('Used'),
+('As new');
 
 -- Populate Tags
 INSERT INTO Tags (name)
@@ -184,10 +189,11 @@ VALUES
 
 
 -- Populate Items
-INSERT INTO Items (brand, model, description, images, price, user_id, category_id, size_id, condition_id)
+INSERT INTO Items (title, description, images, price, tradable, priority, user_id, category_id, size_id, condition_id, model_id, created_at)
 VALUES 
-('BrandA', 'ModelX', 'Description of item 1', '/images/item1.png', 19.99, 1, 1, 1, 1),
-('BrandB', 'ModelY', 'Description of item 2', '/images/item2.png', 29.99, 2, 2, 2, 2);
+('Item1', 'Description for Model A', '["../assets/img/default_item.svg"]', 100.00, 1, 1, 1, 1, 1, 1, 1,'2024-03-23 10:00:00'),
+('Item2', 'Description for Model B', '["../assets/img/default_item.svg"]', 150.00, 0, 2, 2, 2, 2, 2, 2,'2024-03-23 10:15:00'),
+('Item3', 'Description for Model C', '["../assets/img/default_item.svg"]', 200.00, 1, 3, 3, 3, 3, 3, 3,'2024-03-23 10:30:00');
 
 -- Populate Wishlist
 INSERT INTO Wishlist (user_id, item_id)

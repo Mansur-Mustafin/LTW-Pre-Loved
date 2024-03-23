@@ -52,6 +52,7 @@ section#items{
         font-size: x-large;
         margin-left: 1em;
         margin-top: 1em;
+        color: black;
     }
     .price {
         grid-row: 1;

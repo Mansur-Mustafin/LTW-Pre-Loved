@@ -23,7 +23,7 @@ class User {
         $this->username = $username;
         $this->password = $password;
         $this->email = $email;
-        $this->phonenumber = $phonenumber;
+        $this->phonenumber = $phonenumber ?? '';
         $this->image_path = $image_path ?? self::DEFAULT_USER_IMG;
         $this->banned = $banned;
         $this->admin_flag = $admin_flag;
