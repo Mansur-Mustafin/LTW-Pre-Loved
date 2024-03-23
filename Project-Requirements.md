@@ -5,8 +5,9 @@ Develop a website that facilitates the buying and selling of pre-loved items. Th
 
 ## Key Features
 ### General
-- Register a new account.
-- Log in and out.
+- [X] Register a new account.
+- [X] Log in and out.
+- [X] Upload profile foto.
 - Edit their profile, including their name, username, password, and email.
 
 ### Sellers

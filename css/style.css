@@ -6,7 +6,7 @@
     --matador-dark-red: #590004; 
     --matador-darker-red: #250001; 
     --matador-grey: #F3F3F3; 
-  }
+}
 
 *{
     box-sizing: border-box;
@@ -19,6 +19,10 @@ html {
     color: #333;
 }
 
+body{
+    min-height: 100vh;
+}
+
 ul li{
     list-style-type: none;
 }
@@ -28,65 +32,19 @@ a{
     color: var(--matador-grey);
 }
 
-/* Header */
-
-header{
-    padding: 1em;
-    background-color: #A50104;
-    display: flex;
-    flex-flow: row;
+body > main{
+    max-width: 70em;
+    margin: 0 auto;
 }
 
-header > div#logo{
 
-    a{
-        display: block;
-        p{
-            margin-left: 1.5em;
-        }
-    }
-    img{
-        height: 6em;
-    }
-    img, h1{
-        display: inline-block;
-        vertical-align: middle;
-    }
-}
-
-header > nav#header-menu{
-    flex-grow: 1;
-    align-self: center;
-    display: flex;
-    justify-content: flex-end;
-    ul{
-        display: flex;
-    }
-    img{
-        height: 1.3em;
-        margin-right: .4em;
-    }
-    li{
-        transition: all .3s;
-        padding: 1em 0.7em;
-        margin: 0.3em;
-        cursor: pointer;
-    }
-    li:hover{
-        background-color: var(--matador-dark-red);
-        border-radius: 3px;
-    }
-}
-
-/* Footer */
-
-footer {
-    padding: 1em;
-    background-color: var(--matador-red);
+#back-button{
+    padding-top: .5em;
     width: 100%;
-}
-
-footer > p{
-    color: var(--matador-grey);
-    margin-left: .5em;
+    height: 2em;
+    text-align: center;
+    background-color: var(--matador-dark-red);
+    :hover{
+        color: var(--matador-yellow);
+    }
 }

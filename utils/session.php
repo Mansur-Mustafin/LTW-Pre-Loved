@@ -40,5 +40,30 @@
     public function getMessages() {
       return $this->messages;
     }
+
+    public function getErrorMessages(): array {
+      $errorMessages = [];
+      foreach ($this->messages as $message) {
+          if ($message['type'] === 'error') {
+              $errorMessages[] = $message['text'];
+          }
+      }
+      $this->clearErrorMessages();
+      return $errorMessages;
+    }
+    
+    public function clearErrorMessages(): void {
+      // Filter out the error messages from $this->messages
+      $this->messages = array_filter($this->messages, function ($message) {
+          return $message['type'] !== 'error';
+      });
+
+      // Also clear error messages from the session
+      if (isset($_SESSION['messages'])) {
+          $_SESSION['messages'] = array_filter($_SESSION['messages'], function ($message) {
+              return $message['type'] !== 'error';
+          });
+      }
+    }
   }
 ?>
