@@ -2,15 +2,11 @@
 /* Main layout */
 body{
     background-color: var(--matador-grey);
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    grid-template-rows: auto 1fr auto;
-
-    & > header{
-        grid-column-end: 2 span;
-    }
-    & > footer{
-        grid-column-end: 2 span;
+    main{
+        max-width: 70em;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 2fr;
     }
 }
 
@@ -61,3 +57,4 @@ body{
         color: var(--matador-yellow);
     }
 }
+

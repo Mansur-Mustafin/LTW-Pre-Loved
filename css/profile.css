@@ -1,0 +1,32 @@
+main {
+    display: grid;
+}
+
+#profile-display {
+    display: flex;
+    flex-direction: column;
+    padding: 1em;
+    margin: .5em;
+
+    .profile-info {
+        img {
+            height: 100%;
+            border: solid white;
+            border-radius: 1em;
+            height: 15em;
+        }
+        padding: 1em;
+        width: fit-content;
+    }
+
+    .user-name {
+        font-size: larger;
+    }
+
+    button {
+        height: fit-content;
+        margin: .5em;
+        padding: .5em;
+    }
+    border-right: solid var(--matador-dark-red) ;
+}
