@@ -9,19 +9,33 @@ main {
     margin: .5em;
 
     .profile-info {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
         padding: 1em;
         width: fit-content;
+
         & > img {
+            grid-column-end: 2 span;
             height: 100%;
             border: solid white;
             border-radius: 50%;
-            height: 15em;
-            width: 20em;
+            height: 17em;
+            width: 18em;
+            margin-bottom: 1em;
+        }
+
+        form#enable-editing-mode {
+            justify-self: end;
+        }
+
+        form#edit-profile-info {
+            grid-column-end: 2 span;
         }
     }
 
     .user-name {
-        font-size: larger;
+        font-size: x-large;
+        font-weight: bold;
     }
 
     button {

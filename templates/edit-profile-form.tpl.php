@@ -18,7 +18,7 @@
                 <input type="text" name="new_address" placeholder= "Address">
                 <input type="password" name="new_password" placeholder="Password">
 
-                <button type="submit" name="edit" value="save">Click me PLEASE!!!</button>
+                <button type="submit" name="edit" value="save">Save</button>
                 <button type="submit" name="edit" value="cancel">Cancel</button>
             </form>
         </div>
