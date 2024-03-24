@@ -16,7 +16,8 @@ require_once(__DIR__ . '/../utils/session.php');
         <link href="../css/form.css" rel="stylesheet">
         <link href="../css/profile.css" rel="stylesheet">
         <link href="../css/header.css" rel="stylesheet">
-        <title>OLtwX</title>
+        <title>Matador OLX</title>
+        <link rel="icon" type="image/x-icon" href="../assets/img/favicon.png">
     </head>
     <body>
         <header>
