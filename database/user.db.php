@@ -74,3 +74,14 @@ function updateUserProfilePicture($db, $username, $image_path) {
 
     $stmt->execute();
 }
+
+function updateUserParameter($db,$username,$new_value,$user_param) {
+    $sql = "UPDATE Users SET $user_param = :new_value WHERE username = :username";
+    
+    $stmt = $db->prepare($sql);
+
+    $stmt->bindParam(':new_value',$new_value, PDO::PARAM_STR);
+    $stmt->bindParam(':username',$username, PDO::PARAM_STR);
+
+    $stmt->execute();
+}

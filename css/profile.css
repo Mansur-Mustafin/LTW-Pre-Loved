@@ -16,6 +16,7 @@ main {
             border: solid white;
             border-radius: 50%;
             height: 15em;
+            width: 20em;
         }
     }
 
@@ -31,11 +32,12 @@ main {
 }
 
 /* TODO se calhar da para fazer melhor? */
-form#profile-upload-form{
-    position: relative;
-    input{
+form#enable-editing-mode, form#edit-profile-info{
+    input[type=submit], input[type=file] {
         display: none;
     }
+
+    position: relative;
     label > img{
         height: 2em;
         position: absolute;

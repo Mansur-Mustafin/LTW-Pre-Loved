@@ -13,6 +13,7 @@ require_once(__DIR__ . '/../database/item.db.php');
 require_once(__DIR__ . '/../templates/common.tpl.php');
 require_once(__DIR__ . '/../templates/item.tpl.php');
 require_once(__DIR__ . '/../templates/profile.tpl.php');
+require_once(__DIR__ . '/../templates/edit-profile-form.tpl.php');
 
 $db = getDatabaseConnection();
 
@@ -20,7 +21,11 @@ $user = getUser($db, $session->getName());    // TODO search by id?
 $items = getItemsUser($db, $user->id);
 
 drawHeader($session);
-drawProfile($user);
+if($_POST['edit'] != 'true'){
+    drawProfile($user); 
+} else {
+    drawEditProfile($user); 
+}
 drawItems($items, $session, 'Your items to sell');
 drawFooter();
 ?>
