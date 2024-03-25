@@ -30,6 +30,13 @@ main {
 
         form#edit-profile-info {
             grid-column-end: 2 span;
+            div.buttons{
+                margin: 1em 0;
+                display: flex;
+                button {
+                    flex-grow: 1;
+                }
+            }
         }
     }
 

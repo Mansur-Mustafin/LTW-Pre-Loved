@@ -18,9 +18,10 @@
                 <input type="text" name="new_address" placeholder= "Address" value=<?=$user->address?>>
                 <input type="password" name="new_password" placeholder="Password">
                 <!-- TODO <input type="password" name="new_password_confirm" placeholder="Confirm Password"> -->
-
-                <button type="submit" name="edit" value="save">Save</button>
-                <button type="submit" name="edit" value="cancel">Cancel</button>
+                <div class='buttons'>
+                    <button type="submit" name="edit" value="save">Save</button>
+                    <button type="submit" name="edit" value="cancel">Cancel</button>
+                </div>
             </form>
         </div>
     </div>
@@ -29,4 +30,4 @@
             document.getElementById("current_profile_img").src = URL.createObjectURL(profile_img.files[0])
         }
     </script>
-    <?php } ?>
+<?php } ?>
