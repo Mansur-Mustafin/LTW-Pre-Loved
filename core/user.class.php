@@ -27,6 +27,6 @@ class User {
         $this->image_path = $image_path ?? self::DEFAULT_USER_IMG;
         $this->banned = $banned;
         $this->admin_flag = $admin_flag;
-        $this->address = $address;
+        $this->address = $address ?? '';
     }
 }
