@@ -20,11 +20,34 @@ declare(strict_types=1);
     $main_image = $item->getImagesArray()[0];
     ?>
     <article class="item">
-        <img src=<?=$main_image?> alt="Item Image">
+        <img src=<?=htmlspecialchars($main_image)?> alt="Item Image">
         <a href="../pages/item.php?item_id=<?=$item->id?>">
-            <h3><?=$item->title?></h3>
+            <h3><?=htmlspecialchars($item->title)?></h3>
         </a>
-        <p><?=$item->description?></p>
-        <p class="price"><?=$item->price?></p><p class="coin">$</p>
+        <div>
+            <ul>
+                <?php foreach ($item->tags as $tag) { ?>
+                    <li><?=htmlspecialchars($tag)?></li>
+                <?php } ?>
+                <li><?= htmlspecialchars($item->condition) ?></li>
+                <li><?= htmlspecialchars($item->size) ?></li>
+                <?php if ($item->tradable) { ?>
+                    <li>Tradable</li>
+                <?php } else { ?>
+                    <li>Not tradable</li>
+                <?php } ?>
+            </ul>
+            <p><?= htmlspecialchars(substr($item->description, 0, 100)) . (strlen($item->description) > 100 ? '...' : '') ?></p>
+            <p><?=$item->getTimePassed()?></p>
+        </div>
+        <p class="price"><?=htmlspecialchars(number_format($item->price, 2))?></p><p class="coin">$</p>
+        <?php if ($session->isLoggedIn()) { ?>
+            <form action="../actions/add_to_list" method='post'>
+                <input type="hidden" name='user-id' value='<?= $session->getId() ?>'>
+                <input type="hidden" name='item-id' value='<?= $item->id ?>'>
+                <button type='submit' value='cart'><img src="../assets/img/shopping-cart.svg" alt="Add to Cart"></button>
+                <button type='submit' value='wishlist'><img src="../assets/img/love.svg" alt="Add to Wishlist"></button>
+            </form>
+        <?php } ?>
     </article>
 <?php } ?>

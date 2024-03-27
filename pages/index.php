@@ -12,7 +12,7 @@ require_once(__DIR__ . '/../templates/filter.tpl.php');
 require_once(__DIR__ . '/../templates/item.tpl.php');
 
 $db = getDatabaseConnection();
-$items = getAllItems($db, 20, 0);
+$items = getAllItems($db, 20, 0, $session->getId());
 
 drawHeader($session);
 drawFilter();

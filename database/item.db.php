@@ -26,6 +26,8 @@ function getItemsUser(PDO $db, int $user_id): array {
 
     $items = [];
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $tags = getTagsForItem($db, $row['id']);
+
         $item = new Item(
             id: $row['id'],
             brand: $row['brand_name'],
@@ -40,7 +42,8 @@ function getItemsUser(PDO $db, int $user_id): array {
             condition: $row['condition_name'],
             model: $row['model_name'],
             category: $row['category_name'],
-            size: $row['size_name']
+            size: $row['size_name'],
+            tags: $tags
         );
         $items[] = $item;
     }
@@ -48,7 +51,7 @@ function getItemsUser(PDO $db, int $user_id): array {
     return $items;
 }
 
-function getAllItems(PDO $db, int $limit, int $offset): array {
+function getAllItems(PDO $db, int $limit, int $offset, ?int $uid): array {
     $sql = "SELECT 
             Items.*, 
             Condition.name AS condition_name, 
@@ -61,13 +64,22 @@ function getAllItems(PDO $db, int $limit, int $offset): array {
             LEFT JOIN Models ON Items.model_id = Models.id
             LEFT JOIN Categories ON Items.category_id = Categories.id
             LEFT JOIN Size ON Items.size_id = Size.id
-            LEFT JOIN Brands ON Models.brand_id = Brands.id
-            ORDER BY Items.priority DESC, Items.created_at DESC
-            LIMIT :limit OFFSET :offset;";
+            LEFT JOIN Brands ON Models.brand_id = Brands.id";
+
+    // Conditionally add WHERE clause if uid is not null
+    if ($uid !== null) {
+        $sql .= " WHERE Items.user_id != :uid";
+    }
+
+    $sql .= " ORDER BY Items.priority DESC, Items.created_at DESC
+              LIMIT :limit OFFSET :offset;";
 
     $stmt = $db->prepare($sql);
 
     // Bind parameters
+    if ($uid !== null) {
+        $stmt->bindParam(':uid', $uid, PDO::PARAM_INT);
+    }
     $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
     $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
 
@@ -75,6 +87,8 @@ function getAllItems(PDO $db, int $limit, int $offset): array {
 
     $items = [];
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $tags = getTagsForItem($db, $row['id']);
+
         $item = new Item(
             id: $row['id'],
             brand: $row['brand_name'],
@@ -89,7 +103,8 @@ function getAllItems(PDO $db, int $limit, int $offset): array {
             condition: $row['condition_name'],
             model: $row['model_name'],
             category: $row['category_name'],
-            size: $row['size_name']
+            size: $row['size_name'],
+            tags: $tags
         );
         $items[] = $item;
     }
@@ -119,6 +134,8 @@ function getItem(PDO $db, int $itemId): ?Item {
 
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     if ($row) {
+        $tags = getTagsForItem($db, $row['id']);
+
         return new Item(
             id: $row['id'],
             brand: $row['brand_name'],
@@ -133,9 +150,28 @@ function getItem(PDO $db, int $itemId): ?Item {
             condition: $row['condition_name'],
             model: $row['model_name'],
             category: $row['category_name'],
-            size: $row['size_name']
+            size: $row['size_name'],
+            tags: $tags
         );
     }
 
     return null;
+}
+
+function getTagsForItem(PDO $db, int $itemId): array {
+    $tagSql = "SELECT Tags.name 
+               FROM ItemTags 
+               JOIN Tags ON ItemTags.tag_id = Tags.id 
+               WHERE ItemTags.item_id = :itemId";
+
+    $tagStmt = $db->prepare($tagSql);
+    $tagStmt->bindParam(':itemId', $itemId, PDO::PARAM_INT);
+    $tagStmt->execute();
+
+    $tags = [];
+    while ($tagRow = $tagStmt->fetch(PDO::FETCH_ASSOC)) {
+        $tags[] = $tagRow['name'];
+    }
+
+    return $tags;
 }
