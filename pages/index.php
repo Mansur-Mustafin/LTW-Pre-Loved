@@ -13,10 +13,12 @@ require_once(__DIR__ . '/../templates/item.tpl.php');
 
 $db = getDatabaseConnection();
 $items = getAllItems($db, 20, 0, $session->getId());
+$items_in_cart = itemsInCart($db, $session->getId());
+$items_in_wishlist = itemsInCart($db, $session->getId());
 
-drawHeader($session);
+drawHeader($session, 'All news');
 drawFilter();
-drawItems($items, $session, 'Find what you want to buy!');
+drawItems($items, $session, 'Find what you want to buy!', $items_in_cart, $items_in_wishlist);
 drawFooter();
 
 ?>

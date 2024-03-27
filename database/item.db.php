@@ -175,3 +175,103 @@ function getTagsForItem(PDO $db, int $itemId): array {
 
     return $tags;
 }
+
+function itemsInCart(PDO $db, ?int $uid): array {
+    if (!isset($uid)){
+        return array();
+    }
+
+    $sql = "SELECT item_id
+            FROM ShoppingCart
+            WHERE user_id = :uid;";
+
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(':uid', $uid, PDO::PARAM_INT);
+    $stmt->execute();
+
+    $itemIds = [];
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $itemIds[] = $row['item_id'];
+    }
+
+    return $itemIds;
+}
+
+function itemsInWishlist(PDO $db, ?int $uid): array {
+    if (!isset($uid)){
+        return array();
+    }
+
+    $sql = "SELECT item_id
+            FROM Wishlist
+            WHERE user_id = :uid;";
+
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(':uid', $uid, PDO::PARAM_INT);
+    $stmt->execute();
+
+    $itemIds = [];
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $itemIds[] = $row['item_id'];
+    }
+
+    return $itemIds;
+}
+
+
+function getAllItemsFromId(PDO $db, array $items_ids): array {
+    if (empty($items_ids)) {
+        return [];
+    }
+    $placeholders = implode(',', array_fill(0, count($items_ids), '?'));
+
+    $sql = "SELECT 
+            Items.*, 
+            Condition.name AS condition_name, 
+            Models.name AS model_name,
+            Categories.name AS category_name,
+            Size.name AS size_name,
+            Brands.name AS brand_name
+            FROM Items
+            LEFT JOIN Condition ON Items.condition_id = Condition.id
+            LEFT JOIN Models ON Items.model_id = Models.id
+            LEFT JOIN Categories ON Items.category_id = Categories.id
+            LEFT JOIN Size ON Items.size_id = Size.id
+            LEFT JOIN Brands ON Models.brand_id = Brands.id
+            WHERE Items.id IN ($placeholders)
+            ORDER BY Items.priority DESC, Items.created_at DESC;";
+
+    $stmt = $db->prepare($sql);
+
+    foreach ($items_ids as $index => $itemId) {
+        $stmt->bindValue(($index + 1), $itemId, PDO::PARAM_INT);
+    }
+
+    $stmt->execute();
+
+    $items = [];
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $tags = getTagsForItem($db, $row['id']);
+
+        $item = new Item(
+            id: $row['id'],
+            brand: $row['brand_name'],
+            description: $row['description'],
+            title: $row['title'],
+            images: $row['images'],
+            price: $row['price'],
+            tradable: $row['tradable'],
+            priority: $row['priority'],
+            user_id: $row['user_id'],
+            created_at: $row['created_at'],
+            condition: $row['condition_name'],
+            model: $row['model_name'],
+            category: $row['category_name'],
+            size: $row['size_name'],
+            tags: $tags
+        );
+        $items[] = $item;
+    }
+
+    return $items;
+}

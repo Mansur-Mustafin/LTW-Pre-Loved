@@ -11,6 +11,7 @@ DROP TABLE IF EXISTS Tags;
 DROP TABLE IF EXISTS Messages;
 DROP TABLE IF EXISTS Transactions;
 DROP TABLE IF EXISTS Wishlist;
+DROP TABLE IF EXISTS ShoppingCart;
 DROP TABLE IF EXISTS Items;
 DROP TABLE IF EXISTS Condition;
 DROP TABLE IF EXISTS Size;
@@ -58,11 +59,17 @@ CREATE TABLE Wishlist (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER NOT NULL,
     item_id INTEGER NOT NULL,
-    added_on DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES Users(id),
     FOREIGN KEY (item_id) REFERENCES Items(id)
 );
 
+CREATE TABLE ShoppingCart (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    item_id INTEGER NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES Users(id),
+    FOREIGN KEY (item_id) REFERENCES Items(id)
+);
 
 CREATE TABLE Transactions (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -200,6 +207,11 @@ INSERT INTO Wishlist (user_id, item_id)
 VALUES 
 (1, 2),
 (2, 1);
+
+-- Populate ShoppingCart
+INSERT INTO ShoppingCart (user_id, item_id)
+VALUES 
+(3, 1);
 
 -- Populate Transactions
 INSERT INTO Transactions (seller_id, buyer_id, item_id)

@@ -3,7 +3,7 @@ declare(strict_types=1);
 require_once(__DIR__ . '/../utils/session.php');
 ?>
 
-<?php function drawHeader(Session $session){?>
+<?php function drawHeader(Session $session, string $title = ''){?>
 
     <!DOCTYPE html>
     <html lang="en">
@@ -16,7 +16,7 @@ require_once(__DIR__ . '/../utils/session.php');
         <link href="../css/form.css" rel="stylesheet">
         <link href="../css/profile.css" rel="stylesheet">
         <link href="../css/header.css" rel="stylesheet">
-        <title>Matador OLX</title>
+        <title>Matador OLX | <?=$title?></title>
         <link rel="icon" type="image/x-icon" href="../assets/img/favicon.png">
     </head>
     <body>
@@ -33,8 +33,8 @@ require_once(__DIR__ . '/../utils/session.php');
             <nav id="header-menu">
                 <ul>
                 <?php if ($session->isLoggedIn()) {?>
-                    <li><img src="../assets/img/shopping-cart.svg" alt="cart-icon"><a href="#">Shopping Cart</a></li>
-                    <li><img src="../assets/img/love.svg" alt="cart-icon"><a href="#">Wish List</a></li>
+                    <li><img src="../assets/img/shopping-cart.svg" alt="cart-icon"><a href="../pages/shopping_cart.php">Shopping Cart</a></li>
+                    <li><img src="../assets/img/love.svg" alt="cart-icon"><a href="../pages/wishlist.php">Wish List</a></li>
                     <li><img src="../assets/img/account-icon.svg" alt="account-icon"><a href="../pages/profile.php"><?=$session->getName();?></a></li>
                     <li><a href="../actions/action_logout.php"><img src="../assets/img/logout.svg" alt="account-icon"></a></li>
                 <?php } else { ?>
