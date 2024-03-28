@@ -89,7 +89,7 @@ section#items{
         justify-content: space-evenly;
         button{
             padding: 0;
-            align-self: center;
+            align-self: end;
             img{
                 margin: .5em;
                 width: 1.5em;
