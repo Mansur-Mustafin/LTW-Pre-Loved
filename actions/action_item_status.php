@@ -31,6 +31,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action'], $_POST['item
     case 'wishlist-delete':
       removeFromWishlist($db, $userId, $itemId);
       break;
+    case 'delete':
+      deleteItem($db, $userId, $itemId);
+      break;
     default:
       die(header('Location: /'));
       break;
