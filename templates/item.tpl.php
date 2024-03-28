@@ -8,7 +8,7 @@ require_once(__DIR__ . '/../core/item.class.php')
                          array $items_in_cart = array(), array $items_in_wish_list = array()) {?>
     <section id="items">
         <?php if (empty($items)){ ?>
-            <h2>You dont have items to sell, add one! TODO</h2>
+            <h2>TODO handle each page item.tpl.php line 11 <?=$title?></h2>
         <?php } else { ?>
             <h2><?=$title?></h2>
             <?php foreach($items as $item){
@@ -61,10 +61,10 @@ function draw_buttons_item(Item $item, Session $session, string $title, bool $in
             <input type="hidden" name='item-id' value='<?= $item->id ?>'>
             
             <?php if ($title == 'Find what you want to buy!' || $title == 'Your Wishlist!' || $title == 'Time to buy!') { ?>
-                <button type='submit' name='action' value='cart' class='<?= $in_cart ? "selected" : "" ?>'>
+                <button type='submit' name='action' value='cart-<?=$in_cart ? 'delete' : 'add'?>' class='<?= $in_cart ? "selected" : "" ?>'>
                     <img src="../assets/img/shopping-cart.svg" alt="Add to Cart">
                 </button>
-                <button type='submit' name='action' value='wishlist' class='<?= $in_wish_list ? "selected" : "" ?>'>
+                <button type='submit' name='action' value='wishlist-<?=$in_wish_list ? 'delete' : 'add'?>' class='<?= $in_wish_list ? "selected" : "" ?>'>
                     <img src="../assets/img/love.svg" alt="Add to Wishlist">
                 </button>
             <?php } elseif ($title == 'Your items to sell') { ?>

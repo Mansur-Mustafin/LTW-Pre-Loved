@@ -76,7 +76,6 @@ function getAllItems(PDO $db, int $limit, int $offset, ?int $uid): array {
 
     $stmt = $db->prepare($sql);
 
-    // Bind parameters
     if ($uid !== null) {
         $stmt->bindParam(':uid', $uid, PDO::PARAM_INT);
     }
@@ -274,4 +273,29 @@ function getAllItemsFromId(PDO $db, array $items_ids): array {
     }
 
     return $items;
+}
+
+function addToCart(PDO $db, int $userId, int $itemId): void {
+    $stmt = $db->prepare("INSERT INTO ShoppingCart (user_id, item_id) VALUES (?, ?)");
+    $stmt->execute([$userId, $itemId]);
+}
+
+function removeFromCart(PDO $db, int $userId, int $itemId): void {
+    $stmt = $db->prepare("DELETE FROM ShoppingCart WHERE user_id = ? AND item_id = ?");
+    $stmt->execute([$userId, $itemId]);
+}
+
+function addToWishlist(PDO $db, int $userId, int $itemId): void {
+    $stmt = $db->prepare("INSERT INTO Wishlist (user_id, item_id) VALUES (?, ?)");
+    $stmt->execute([$userId, $itemId]);
+}
+
+function removeFromWishlist(PDO $db, int $userId, int $itemId): void {
+    $stmt = $db->prepare("DELETE FROM Wishlist WHERE user_id = ? AND item_id = ?");
+    $stmt->execute([$userId, $itemId]);
+}
+
+function deleteItem(PDO $db, int $userId, int $itemId): void {
+    $stmt = $db->prepare("DELETE FROM Items WHERE id = ? AND user_id = ?");
+    $stmt->execute([$itemId, $userId]);
 }

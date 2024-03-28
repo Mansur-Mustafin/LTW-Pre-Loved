@@ -8,18 +8,33 @@ if (!$session->isLoggedIn()) {
   die(header('Location: /'));
 }
 
+require_once(__DIR__.'/../core/item.class.php');
+require_once(__DIR__.'/../database/item.db.php');
+require_once(__DIR__.'/../database/connection.db.php');
+
+$db = getDatabaseConnection();
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action'], $_POST['item-id'], $_POST['user-id'])) {
-    $userId = $_POST['user-id'];
-    $itemId = $_POST['item-id'];
-    $action = $_POST['action'];
+  $userId = intval($_POST['user-id']);
+  $itemId = intval($_POST['item-id']);
 
-    if ($action == 'cart') {
-        
-    }else if ($action == 'wishlist'){
-
-    }else if ($action == 'delete'){
-
-    }
+  switch ($_POST['action']) {
+    case 'cart-add':
+      addToCart($db, $userId, $itemId);
+      break;
+    case 'cart-delete':
+      removeFromCart($db, $userId, $itemId);
+      break;
+    case 'wishlist-add':
+      addToWishlist($db, $userId, $itemId);
+      break;
+    case 'wishlist-delete':
+      removeFromWishlist($db, $userId, $itemId);
+      break;
+    default:
+      die(header('Location: /'));
+      break;
+  }
 
 }
 
