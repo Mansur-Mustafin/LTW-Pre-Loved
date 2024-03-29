@@ -12,6 +12,7 @@ require_once(__DIR__.'/../utils/hash.php');
 require_once(__DIR__.'/../utils/validation.php');
 require_once(__DIR__.'/../database/user.db.php');
 require_once(__DIR__.'/../database/connection.db.php');
+require_once(__DIR__.'/../core/user.class.php');
 
 $db = getDatabaseConnection();
 
@@ -37,7 +38,7 @@ if(!is_same_password($_POST['password'], $user->password)){
     die(header('Location: ../pages/login.php'));
 }
 
-if($user->$banned){
+if($user->banned){
     $session->addMessage('error', 'This user was bunned');
     die(header('Location: ../pages/login.php')); 
 }

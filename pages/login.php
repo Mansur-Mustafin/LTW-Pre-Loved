@@ -11,7 +11,7 @@ require_once(__DIR__ . '/../templates/common.tpl.php');
 require_once(__DIR__ . '/../templates/item.tpl.php');
 require_once(__DIR__ . '/../templates/forms.tpl.php');
 
-drawHeader($session);
+drawHeader($session, 'Enter in account');
 drawLoginForm($session);
 drawFooter();
 ?>
