@@ -21,7 +21,6 @@ input:not(input[type=checkbox]){
     }
 }
 
-
 button{
     padding: 1em;
     border: 2px solid var(--matador-dark-red);
@@ -33,6 +32,13 @@ button{
     }
 }
 
+button.selected{
+    background-color: var(--matador-dark-red);
+    &:hover{
+        background-color: white;
+        color: var(--matador-grey);
+    }
+}
 
 /* Logic of changing login form */
 #login-register{

@@ -41,6 +41,10 @@ body > main{
     margin: 0 auto;
 }
 
+button{
+    cursor: pointer;
+}
+
 #back-button{
     padding-top: .5em;
     width: 100%;
