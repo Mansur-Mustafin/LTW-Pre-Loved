@@ -19,7 +19,7 @@ $db = getDatabaseConnection();
 $user = getUser($db, $session->getName());    // TODO search by id?
 $items = getItemsUser($db, $user->id);
 
-drawHeader($session);
+drawHeader($session, $session->getName());
 drawProfile($user);
 drawItems($items, $session, 'Your items to sell');
 drawFooter();

@@ -5,7 +5,7 @@ declare(strict_types=1);
 class User {
     const DEFAULT_USER_IMG = '../assets/img/account-icon.svg';
 
-    public int $id;
+    public ?int $id;
     public string $username;
     public string $password;
     public string $email;
