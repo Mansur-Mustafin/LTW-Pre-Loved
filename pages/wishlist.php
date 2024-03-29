@@ -20,7 +20,7 @@ $items_in_wishlist = itemsInWishlist($db, $session->getId());
 $items = getAllItemsFromId($db, $items_in_wishlist);
 
 drawHeader($session, 'Wishlist');
-drawFilter();
+var_dump('TODO');
 drawItems($items, $session, 'Your Wishlist!', $items_in_cart, $items_in_wishlist);
 drawFooter();
 
