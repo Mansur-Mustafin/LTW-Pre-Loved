@@ -76,7 +76,7 @@ require_once(__DIR__ . '/../utils/session.php');
 
 
 <?php function drawErrors(array $errors) { ?>
-    <ul>
+    <ul id='errors'>
         <?php foreach($errors as $error){ ?>
             <li><p><?=$error?></p></li>
         <?php } ?>

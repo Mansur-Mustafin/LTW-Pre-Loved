@@ -85,10 +85,4 @@ button{
     button, ul{
         margin-top: 1em;
     }
-    ul{
-        
-        color: var(--matador-dark-red);
-    }
 }
-
-

@@ -65,23 +65,29 @@ function getUser(PDO $db, string $text): ?User {
     return $user;
 }
 
-function updateUserProfilePicture($db, $username, $image_path) {
-    
-    $sql = "UPDATE Users SET image_path = :image_path WHERE username = :username";
+function updateUser(PDO $db, User $user): bool {
+    $sql = "UPDATE Users SET 
+                username = :username, 
+                password = :password, 
+                email = :email, 
+                phonenumber = :phonenumber, 
+                image_path = :image_path, 
+                banned = :banned, 
+                admin_flag = :admin_flag, 
+                address = :address 
+            WHERE id = :id";
+
     $stmt = $db->prepare($sql);
-    $stmt->bindParam(':image_path', $image_path, PDO::PARAM_STR);
-    $stmt->bindParam(':username', $username, PDO::PARAM_STR);
 
-    $stmt->execute();
-}
+    $stmt->bindValue(':id', $user->id, PDO::PARAM_INT);
+    $stmt->bindValue(':username', $user->username, PDO::PARAM_STR);
+    $stmt->bindValue(':password', $user->password, PDO::PARAM_STR);
+    $stmt->bindValue(':email', $user->email, PDO::PARAM_STR);
+    $stmt->bindValue(':phonenumber', $user->phonenumber, PDO::PARAM_STR);
+    $stmt->bindValue(':image_path', $user->image_path, PDO::PARAM_STR);
+    $stmt->bindValue(':banned', $user->banned, PDO::PARAM_INT);
+    $stmt->bindValue(':admin_flag', $user->admin_flag, PDO::PARAM_INT);
+    $stmt->bindValue(':address', $user->address, PDO::PARAM_STR);
 
-function updateUserParameter($db,$username,$new_value,$user_param) {
-    $sql = "UPDATE Users SET $user_param = :new_value WHERE username = :username";
-    
-    $stmt = $db->prepare($sql);
-
-    $stmt->bindParam(':new_value',$new_value, PDO::PARAM_STR);
-    $stmt->bindParam(':username',$username, PDO::PARAM_STR);
-
-    $stmt->execute();
+    return $stmt->execute();
 }

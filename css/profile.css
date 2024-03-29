@@ -2,42 +2,21 @@ main {
     display: grid;
 }
 
-#profile-display {
-    display: flex;
-    flex-direction: column;
+aside#profile-info {
     padding: 1em;
-    margin: .5em;
+    margin: 3em .5em ;
 
-    .profile-info {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        padding: 1em;
-        width: fit-content;
+    padding: 1em;
+    width: fit-content;
 
-        & > img {
-            grid-column-end: 2 span;
-            height: 100%;
-            border: solid white;
-            border-radius: 50%;
-            height: 17em;
-            width: 18em;
-            margin-bottom: 1em;
-        }
-
-        form#enable-editing-mode {
-            justify-self: end;
-        }
-
-        form#edit-profile-info {
-            grid-column-end: 2 span;
-            div.buttons{
-                margin: 1em 0;
-                display: flex;
-                button {
-                    flex-grow: 1;
-                }
-            }
-        }
+    & > img {
+        grid-column-end: 2 span;
+        height: 100%;
+        border: solid white;
+        border-radius: 50%;
+        height: 17em;
+        width: 18em;
+        margin-bottom: 1em;
     }
 
     .user-name {
@@ -45,15 +24,19 @@ main {
         font-weight: bold;
     }
 
-    button {
-        height: fit-content;
-        margin: .5em;
-        padding: .5em;
+    .buttons{
+        margin: 1em 0;
+        display: flex;
+        button {
+            flex: 1;
+            margin: .5em;
+            padding: .5em;
+        }
     }
 }
 
 /* TODO se calhar da para fazer melhor? */
-form#enable-editing-mode, form#edit-profile-info{
+form#edit-profile-info{
     input[type=submit], input[type=file] {
         display: none;
     }
