@@ -27,6 +27,10 @@ ul li{
     list-style-type: none;
 }
 
+ul#errors{
+    color: var(--matador-dark-red);
+}
+
 a{
     text-decoration: none;
     color: var(--matador-grey);

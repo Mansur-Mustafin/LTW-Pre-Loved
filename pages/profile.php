@@ -18,9 +18,12 @@ $db = getDatabaseConnection();
 
 $user = getUser($db, $session->getName());    // TODO search by id?
 $items = getItemsUser($db, $user->id);
+drawHeader($session);
 
-drawHeader($session, $session->getName());
-drawProfile($user);
+if(isset($_POST['edit']) && $_POST['edit'] == 'profile') drawEditProfile($user); 
+else if (isset($_POST['edit']) && $_POST['edit'] == 'password')  drawChangePassword($user); 
+else drawProfile($user, $session); 
+
 drawItems($items, $session, 'Your items to sell');
 drawFooter();
 ?>
