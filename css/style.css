@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Ruda:wght@400..900&display=swap');
+
+:root {
+    --matador-yellow: #FCBA04; 
+    --matador-red: #A50104; 
+    --matador-dark-red: #590004; 
+    --matador-darker-red: #250001; 
+    --matador-grey: #F3F3F3; 
+}
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-family: 'Ruda', serif;
+    color: #333;
+}
+
+body{
+    min-height: 100vh;
+}
+
+ul li{
+    list-style-type: none;
+}
+
+ul#errors{
+    color: var(--matador-dark-red);
+}
+
+a{
+    text-decoration: none;
+    color: var(--matador-grey);
+}
+
+body > main{
+    max-width: 70em;
+    margin: 0 auto;
+}
+
+button{
+    cursor: pointer;
+}
+
+#back-button{
+    padding-top: .5em;
+    width: 100%;
+    height: 2em;
+    text-align: center;
+    background-color: var(--matador-dark-red);
+    :hover{
+        color: var(--matador-yellow);
+    }
+}

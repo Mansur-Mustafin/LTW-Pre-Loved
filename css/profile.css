@@ -1,0 +1,52 @@
+main {
+    display: grid;
+}
+
+aside#profile-info {
+    padding: 1em;
+    margin: 3em .5em ;
+
+    padding: 1em;
+    width: fit-content;
+
+    & > img {
+        grid-column-end: 2 span;
+        height: 100%;
+        border: solid white;
+        border-radius: 50%;
+        height: 17em;
+        width: 18em;
+        margin-bottom: 1em;
+    }
+
+    .user-name {
+        font-size: x-large;
+        font-weight: bold;
+    }
+
+    .buttons{
+        margin: 1em 0;
+        display: flex;
+        button {
+            flex: 1;
+            margin: .5em;
+            padding: .5em;
+        }
+    }
+}
+
+/* TODO se calhar da para fazer melhor? */
+form#edit-profile-info{
+    input[type=submit], input[type=file] {
+        display: none;
+    }
+
+    position: relative;
+    label > img{
+        height: 2em;
+        position: absolute;
+        right: 1em;
+        top: -3em;
+        cursor: pointer;
+    }
+}
