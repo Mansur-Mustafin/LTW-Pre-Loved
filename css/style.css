@@ -31,6 +31,10 @@ ul#errors{
     color: var(--matador-dark-red);
 }
 
+ul#success{
+    color: var(--matador-yellow);
+}
+
 a{
     text-decoration: none;
     color: var(--matador-grey);
@@ -43,6 +47,10 @@ body > main{
 
 button{
     cursor: pointer;
+}
+
+#related{
+    padding: 2em 1em 1em;
 }
 
 #back-button{

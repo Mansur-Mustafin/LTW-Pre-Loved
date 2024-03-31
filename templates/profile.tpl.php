@@ -40,7 +40,7 @@ require_once(__DIR__ . '/../templates/common.tpl.php');
 
             <input type="text" name="new_username" placeholder= "Username" value='<?=htmlspecialchars($user->username)?>'>
             <input type="text" name="new_email" placeholder= "Email" value='<?=htmlspecialchars($user->email)?>'>
-            <input type="text" name="new_phonenumber" placeholder= 'Phone number' value='<?=htmlspecialchars($user->phonenumber)?>'>
+            <input type="tel" name="new_phonenumber" placeholder= 'Phone number' value='<?=htmlspecialchars($user->phonenumber)?>'>
             <input type="text" name="new_address" placeholder= "Address" value='<?= htmlspecialchars($user->address)?>' >
             <div class='buttons'>
                 <button type="submit" name="edit-profile" value="save">Save</button>

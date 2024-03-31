@@ -83,3 +83,11 @@ require_once(__DIR__ . '/../utils/session.php');
         <?php } ?>
     </ul>
 <?php } ?>
+
+<?php function drawSuccessMsg(array $messages) { ?>
+    <ul id='success'>
+        <?php foreach($messages as $message){ ?>
+            <li><p><?=$message?></p></li>
+        <?php } ?>
+    </ul>
+<?php } ?>

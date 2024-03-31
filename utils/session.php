@@ -48,20 +48,31 @@
               $errorMessages[] = $message['text'];
           }
       }
-      $this->clearErrorMessages();
+      $this->clearMessagesOfType('error');
+      return $errorMessages;
+    }
+
+    public function getSuccesMessages(): array {
+      $errorMessages = [];
+      foreach ($this->messages as $message) {
+          if ($message['type'] === 'success') {
+              $errorMessages[] = $message['text'];
+          }
+      }
+      $this->clearMessagesOfType('success');
       return $errorMessages;
     }
     
-    public function clearErrorMessages(): void {
+    public function clearMessagesOfType(string $type): void {
       // Filter out the error messages from $this->messages
       $this->messages = array_filter($this->messages, function ($message) {
-          return $message['type'] !== 'error';
+          return $message['type'] !== $type;
       });
 
-      // Also clear error messages from the session
+      // Clear error messages from the session
       if (isset($_SESSION['messages'])) {
           $_SESSION['messages'] = array_filter($_SESSION['messages'], function ($message) {
-              return $message['type'] !== 'error';
+              return $message['type'] !== $type;
           });
       }
     }

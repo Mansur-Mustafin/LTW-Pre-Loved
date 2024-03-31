@@ -11,6 +11,7 @@ require_once(__DIR__ . '/../database/connection.db.php');
 require_once(__DIR__ . '/../templates/common.tpl.php');
 require_once(__DIR__ . '/../templates/filter.tpl.php');
 require_once(__DIR__ . '/../templates/item.tpl.php');
+require_once(__DIR__ . '/../templates/wishlist.tpl.php');
 
 $db = getDatabaseConnection();
 
@@ -20,7 +21,7 @@ $items_in_wishlist = itemsInWishlist($db, $session->getId());
 $items = getAllItemsFromId($db, $items_in_wishlist);
 
 drawHeader($session, 'Wishlist');
-var_dump('TODO');
+drawWishListForm($session);
 drawItems($items, $session, 'Your Wishlist!', $items_in_cart, $items_in_wishlist);
 drawFooter();
 

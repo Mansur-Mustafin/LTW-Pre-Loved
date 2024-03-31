@@ -1,5 +1,5 @@
 /* Para todos inputs, mas nao de type checkbox */
-input:not(input[type=checkbox]){
+input:not(input[type=checkbox]), textarea{
     padding: 1em;
     border: none;
     background-color: var(--matador-grey);
@@ -19,6 +19,15 @@ input:not(input[type=checkbox]){
     &:required{
         border-bottom: 1px solid var(--matador-yellow);
     }
+    &::placeholder{
+        font-family: monospace;
+    }
+}
+
+textarea{
+    resize: none;
+    overflow-y: auto;
+    max-height: 16em;
 }
 
 button{
@@ -90,5 +99,24 @@ button.selected{
     }
     button, ul{
         margin-top: 1em;
+    }
+}
+
+/* Wishlist form */
+form#wishlist-form{
+    margin: 1em;
+    display: flex;
+    flex-direction: column;
+    p{
+        margin-bottom: 1em;
+    }
+    label{
+        display: block;
+        margin-bottom: 1.5em;
+    }
+    button{
+        width: 80%;
+        padding: .7em 1em;
+        align-self: center;
     }
 }
