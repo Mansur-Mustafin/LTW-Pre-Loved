@@ -22,17 +22,7 @@ aside#profile-info {
     .user-name {
         font-size: x-large;
         font-weight: bold;
-    }
-
-    .buttons{
-        margin: 1em 0;
-        display: flex;
-        button {
-            flex: 1;
-            margin: .5em;
-            padding: .5em;
-        }
-    }
+    }   
 }
 
 /* TODO se calhar da para fazer melhor? */

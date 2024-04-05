@@ -1,0 +1,117 @@
+.item, .item-main{
+    border-radius: 1em;
+    background-color: white;
+    display: grid;
+    margin: 1em;
+    transition: all .3s;
+    img{
+        margin: 1em;
+    }
+    h3{
+        color: black;
+    }
+    div.price p{
+        display: inline;
+        margin: 1em 0 0;
+        font-size: larger;
+        text-align: end;
+    }
+}   
+
+.item {
+    grid-template-columns: 1fr 4fr auto;
+    grid-template-rows: auto 1fr auto;
+    img {
+        height: 11em;
+        grid-row-end: 3 span;
+        
+    }
+    h3{
+        font-size: x-large;
+        margin-left: 1em;
+        margin-top: 1em;
+    }
+    .price {
+        grid-row: 1;
+        grid-column: 3;
+    }
+    & > div{
+        margin: 1em;
+        p{
+            margin: .5em;
+        }
+    }
+    form{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        button{
+            padding: 0;
+            align-self: end;
+            margin-right: 1.5em;
+            img{
+                margin: .5em;
+                width: 1.5em;
+                height: 1.5em;
+            }
+        }
+    } 
+    p{
+        grid-column: 2;
+    }
+}
+
+.item:hover{
+    transform: scale(1.01); /* Slightly increase the size */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+    h3{
+        color: var(--matador-yellow);
+    }
+}
+
+.item-main{
+    padding: 2em;
+    margin: 1em 0 0;
+    grid-template-columns: 1fr auto;
+    h3{
+        font-size: xx-large;
+        margin-top: .4em;
+    }
+    .price{
+        margin: 1em 1em 0 0 ;
+    }
+    img{
+        grid-column-end: 2 span;
+    }
+    label{
+        grid-column-end: 2 span;
+        color: rgba(0, 0, 0, 0.5);
+        margin: .5em;
+        p{
+            display: inline;
+            color: black;
+        }
+    }
+    ul{
+        grid-column-end: 2 span;
+    }
+    p{
+        grid-column-end: 2 span;
+        margin-top: 3em;
+        color: rgba(0, 0, 0, 0.5);
+        text-align: end;
+    }
+}
+
+ul.tags{
+    li{
+        margin: .5em;
+        background-color: var(--matador-grey);
+        border-radius: 9px;
+        padding: .5em;
+        display: inline-block;
+    }
+}
+
+
+

@@ -15,6 +15,8 @@ require_once(__DIR__.'/../database/connection.db.php');
 $db = getDatabaseConnection();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action'], $_POST['item-id'], $_POST['user-id'])) {
+  var_dump($_POST['action']);
+
   $userId = intval($_POST['user-id']);
   $itemId = intval($_POST['item-id']);
 
@@ -33,6 +35,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action'], $_POST['item
       break;
     case 'delete':
       deleteItem($db, $userId, $itemId);
+      break;
+    case 'delete-main':
+      deleteItem($db, $userId, $itemId);
+      header('Location: /pages/profile.php');
+      exit;
       break;
     default:
       die(header('Location: /'));
