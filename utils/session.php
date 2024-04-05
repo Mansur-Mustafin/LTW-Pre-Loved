@@ -65,13 +65,13 @@
     
     public function clearMessagesOfType(string $type): void {
       // Filter out the error messages from $this->messages
-      $this->messages = array_filter($this->messages, function ($message) {
+      $this->messages = array_filter($this->messages, function ($message) use ($type) {
           return $message['type'] !== $type;
       });
 
       // Clear error messages from the session
       if (isset($_SESSION['messages'])) {
-          $_SESSION['messages'] = array_filter($_SESSION['messages'], function ($message) {
+          $_SESSION['messages'] = array_filter($_SESSION['messages'], function ($message) use ($type) {
               return $message['type'] !== $type;
           });
       }
