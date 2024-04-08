@@ -1,8 +1,4 @@
 /* Filter on the main page */
-#related{
-    padding: 1em;
-}
-
 .filter-element{
     margin: .5em .5em 0 .5em;
     border-bottom: 1px solid rgb(204, 204, 204);
