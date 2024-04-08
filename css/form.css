@@ -41,6 +41,16 @@ button{
     }
 }
 
+.buttons{
+    margin: 1em 0;
+    display: flex;
+    button {
+        flex: 1;
+        margin: .5em;
+        padding: .5em;
+    }
+}
+
 button.selected{
     background-color: var(--matador-dark-red);
     &:hover{

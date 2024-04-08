@@ -22,7 +22,7 @@ require_once(__DIR__ . '/../core/item.class.php')
 <?php } ?>
 
 
-<?php function drawItem(Item $item, Session $session, string $title, bool $in_cart, bool $in_wish_list) { 
+<?php function drawItem(Item $item, Session $session, string $title, bool $in_cart, bool $in_wish_list) {
     $main_image = $item->getImagesArray()[0];
     ?>
     <article class="item">
@@ -31,7 +31,7 @@ require_once(__DIR__ . '/../core/item.class.php')
             <h3><?=htmlspecialchars($item->title)?></h3>
         </a>
         <div>
-            <ul>
+            <ul class='tags'>
                 <?php foreach ($item->tags as $tag) { ?>
                     <li><?=htmlspecialchars($tag)?></li>
                 <?php } ?>
@@ -47,7 +47,7 @@ require_once(__DIR__ . '/../core/item.class.php')
                    (strlen($item->description) > 100 ? '...' : '') ?></p>
             <p><?=$item->getTimePassed()?></p>
         </div>
-        <p class="price"><?=htmlspecialchars(number_format($item->price, 2))?></p><p class="coin">$</p>
+        <div class="price"><p><?=htmlspecialchars(number_format($item->price, 2))?></p><p>$</p></div>
         <?php draw_buttons_item($item, $session, $title, $in_cart, $in_wish_list); ?>
     </article>
 <?php } ?>
@@ -76,3 +76,74 @@ function draw_buttons_item(Item $item, Session $session, string $title, bool $in
     <?php }
 } ?>
 
+
+<?php function drawItemMain(Item $item, Session $session, bool $in_cart, bool $in_wish_list) {
+    $main_image = $item->getImagesArray()[0];
+
+    ?>
+    <aside>
+    <article class="item-main">
+
+        <h3><?=htmlspecialchars($item->title)?></h3>
+        <div class="price"><p><?=htmlspecialchars(number_format($item->price, 2))?></p><p>$</p></div>
+
+        <img src=<?=htmlspecialchars($main_image)?> alt="Item Image">
+        
+        <label>brand:
+            <p><?= htmlspecialchars($item->brand) ?></p>
+        </label>
+        <label>model:
+            <p><?= htmlspecialchars($item->model) ?></p>
+        </label>
+        <label>condition:
+            <p><?= htmlspecialchars($item->condition) ?></p>
+        </label>
+        <label>size:
+            <p><?= htmlspecialchars($item->size) ?></p>
+        </label>
+        
+        <ul class='tags'>
+            <?php foreach ($item->tags as $tag) { ?>
+                <li><?=htmlspecialchars($tag)?></li>
+            <?php } ?>
+            <?php if ($item->tradable) { ?>
+                <li>Tradable</li>
+            <?php } else { ?>
+                <li>Not tradable</li>
+            <?php } ?>
+        </ul>
+        
+        <label>description:
+            <p><?= htmlspecialchars($item->description) ?></p>
+        </label>
+
+        <p><?=$item->getTimePassed()?></p>
+        
+        
+    </article>
+
+    <!-- TODO -->
+    <form action="../actions/action_item_status.php" id="editing-item" method="post">
+        <?php if ($session->isLoggedIn()){ ?>
+            <input type="hidden" name='user-id' value='<?= $session->getId() ?>'>
+            <input type="hidden" name='item-id' value='<?= $item->id ?>'>
+        <?php } ?>
+       
+        <div class='buttons'>
+            <?php if ($session->isLoggedIn() && $session->getId() == $item->user_id){ ?>
+                <button type='button' name="edit" value="item">Edit Item</button>
+                <button type='submit' name="action" value="delete-main">Delete Item</button>
+            <?php } else if($session->isLoggedIn()) { ?>
+
+                <button type='submit' name='action' value='cart-<?=$in_cart ? 'delete' : 'add'?>'>
+                    <?=$in_cart ? 'Remove ShoppingCart' : 'Add ShoppingCart'?>
+                </button>
+                <button type='submit' name='action' value='wishlist-<?=$in_wish_list ? 'delete' : 'add'?>'>
+                    <?=$in_wish_list ? 'Remove WishList' : 'Add WishList'?>
+                </button>
+
+            <?php } ?>
+        </div>
+    </form>
+    </aside>
+<?php } ?>
