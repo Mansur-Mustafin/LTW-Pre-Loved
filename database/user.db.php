@@ -91,3 +91,27 @@ function updateUser(PDO $db, User $user): bool {
 
     return $stmt->execute();
 }
+
+function getAllUsers(PDO $db): array {
+    $sql = 'SELECT * FROM USERS';
+    $stmt = $db->prepare($sql);
+    $stmt->execute();
+
+    $users = [];
+    while( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
+        $user = new User(
+            id: $row['id'],
+            username: $row['username'],
+            email: $row['email'],
+            password: $row['password'],
+            phonenumber: $row['phonenumber'] ?? null,
+            image_path: $row['image_path'] ?? null,
+            banned: $row['banned'] ?? 0,
+            admin_flag: $row['admin_flag'] ?? 0,
+            address: $row['address'] ?? null,
+        );
+        $users[] = $user;
+    }
+
+    return $users;
+}

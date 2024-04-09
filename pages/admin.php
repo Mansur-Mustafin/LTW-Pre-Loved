@@ -23,23 +23,18 @@ $allUsers = getAllUsers($db);
 drawHeader($session, 'Admin Page');
 drawSideBar();
 switch ($_GET['value']) {
-    case 'user':
-        drawUsersAdmin();
+    case 'users':
+        drawUsersAdmin($allUsers);
         break;
     case 'statistics':
         drawStatisticsAdmin();
         break;
-    case 'transactions':
-        drawTransactionsAdmin();
+    case 'tags':
+        drawTagsAdmin();
         break;
-    case 'comments':
-        drawCommentsAdmin();
+    case 'items':
+        drawItemsAdmin();
         break;
-    case 'reviews':
-        drawReviewsAdmin();
-        break;
-    case 'misc':
-        drawMiscAdmin();
     default:
         break;
 }

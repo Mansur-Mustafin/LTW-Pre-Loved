@@ -26,7 +26,7 @@ require_once(__DIR__ . '/../core/item.class.php')
     $main_image = $item->getImagesArray()[0];
     ?>
     <article class="item">
-        <img src=<?=htmlspecialchars($main_image)?> alt="Item Image">
+        <img src=<?=htmlspecialchars($main_image)?> alt="Account Profile Picture">
         <a href="../pages/item.php?item_id=<?=$item->id?>">
             <h3><?=htmlspecialchars($item->title)?></h3>
         </a>

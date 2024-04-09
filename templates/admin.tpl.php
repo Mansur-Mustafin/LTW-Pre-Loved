@@ -13,8 +13,8 @@ require_once(__DIR__ . '/../pages/admin.php');
         </a>
         <ul>
             <li class="admin-item">
-                <a href="../pages/admin.php?value=user">
-                    <p>User</p>
+                <a href="../pages/admin.php?value=users">
+                    <p>Users</p>
                 </a>                
             </li>
             <li class="admin-item">
@@ -23,51 +23,58 @@ require_once(__DIR__ . '/../pages/admin.php');
                 </a>    
             </li>
             <li class="admin-item">
-                <a href="../pages/admin.php?value=transactions">
-                    <p>Transactions</p>
+                <a href="../pages/admin.php?value=tags">
+                    <p>Tags</p>
                 </a>
             </li>
             <li class="admin-item">
-                <a href="../pages/admin.php?value=comments">
-                    <p>Comments</p>
-                </a>
-            </li>
-            <li class="admin-item">
-                <a href="../pages/admin.php?value=reviews">
-                    <p>Reviews</p>
-                </a>
-            </li>
-            <li class="admin-item">
-                <a href="../pages/admin.php?value=misc">
-                    <p>Misc</p>
+                <a href="../pages/admin.php?value=items">
+                    <p>Items</p>
                 </a>
             </li>
         </ul>
     </aside>
 <?php } ?>
 
-<?php function drawUsersAdmin() {?>
-    <?php foreach($allUsers as $user) {?>
-        
-    <?php }?>
+<?php function drawUsersAdmin(array $allUsers) {?>
+    <section id="user-admin-info">
+        <?php foreach($allUsers as $user) { ?>
+            <article class="item">
+                <img class="profile-img" src=<?= htmlspecialchars($user->image_path) ?> alt="User Image">
+                <div class="user-info">
+                    <div class="user-tags">
+                        <p class="username"><?= htmlspecialchars($user->username)?></p>
+                        <?php if($user->admin_flag) {?>
+                            <img src="../assets/img/star.svg" alt="Admin Tag">
+                        <?php } ?>
+                        <?php if($user->banned) {?>
+                            <img src="../assets/img/banned.svg" alt="Banned Tag">
+                        <?php }?>
+                    </div>
+                    <p class="email"><?= htmlspecialchars($user->email) ?></p>
+                    <p class="phonenumber"> <?= htmlspecialchars($user->phonenumber) ?></p>
+                    <p class ="address"> <?= htmlspecialchars($user->address) ?> </p>
+                </div>
+                <div class="buttons">
+                    <?php if(!$user->admin_flag) {?>
+                        <button>Make Admin</button>
+                        <button>Ban</button>
+                    <?php }?>
+                </div>
+
+            </article>
+        <?php } ?>
+    </section>
 <?php }?>
 
 <?php function drawStatisticsAdmin() {?>
-    <?php echo "drawStatistics"?>
+    <?php echo "TODO"?>
 <?php }?>
 
-<?php function drawTransactionsAdmin() {?>
-    <?php echo "drawTransactions"?>
+<?php function drawTagsAdmin() {?>
+    <?php echo "TODO"?>
 <?php }?>
 
-<?php function drawCommentsAdmin() {?>
-    <?php echo "drawComments"?>
-<?php }?>
-
-<?php function drawReviewsAdmin() {?>
-    <?php echo "drawReviews"?>
-<?php }?>
-
-<?php function drawMiscAdmin() {?>
-    <?php echo "drawMisc"?>
+<?php function drawItemsAdmin() {?>
+    <?php echo "TODO"?>
 <?php }?>

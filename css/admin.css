@@ -27,3 +27,37 @@ aside#admin-nav-bar {
         padding-bottom: 0.2em;
     }
 }
+
+#user-admin-info .item {
+    padding: 1em;
+    min-height: 5em;
+
+    .username {
+        font-weight: bolder;
+        font-size: larger;
+    }
+
+    .user-tags {
+        display: flex;
+
+        img {
+            margin: 0;
+            height: 1em;
+            align-self: center;
+        }
+    }
+
+    .profile-img {
+        background-color: Gainsboro;
+        border-radius: 15%;
+        height: 6em;
+    }
+
+    .buttons {
+        height: fit-content;
+        display: flex;
+        flex-direction: column;
+    }
+
+
+}
