@@ -22,4 +22,6 @@ function getConditions(PDO $db) {
     return $db->query("SELECT * FROM Condition")->fetchAll(PDO::FETCH_ASSOC);
 }
 
-
+function getTags(PDO $db) {
+    return $db->query("SELECT * FROM Tags")->fetchAll(PDO::FETCH_ASSOC);
+}

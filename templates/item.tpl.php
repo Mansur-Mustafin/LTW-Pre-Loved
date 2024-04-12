@@ -30,7 +30,7 @@ require_once(__DIR__ . '/../core/item.class.php')
         <a href="../pages/item.php?item_id=<?=$item->id?>">
             <h3><?=htmlspecialchars($item->title)?></h3>
         </a>
-        <div>
+        <div>// TODO 
             <ul class='tags'>
                 <?php foreach ($item->tags as $tag) { ?>
                     <li><?=htmlspecialchars($tag)?></li>

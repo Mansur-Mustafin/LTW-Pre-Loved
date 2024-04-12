@@ -26,38 +26,74 @@ aside#admin-nav-bar {
         border-bottom: 1px solid rgb(204, 204, 204);
         padding-bottom: 0.2em;
     }
+
 }
 
-#user-admin-info .item {
-    padding: 1em;
-    min-height: 5em;
-
-    .username {
-        font-weight: bolder;
-        font-size: larger;
+.admin-info {
+    #add-tag, #add-item {
+        justify-self: center;
+        margin: 2em;
+        width: 92%;
     }
+    .element {
+        padding: 1em;
+        min-height: 5em;
 
-    .user-tags {
-        display: flex;
+        .username {
+            font-weight: bolder;
+            font-size: larger;
+        }
 
-        img {
-            margin: 0;
-            height: 1em;
-            align-self: center;
+        .user-tags {
+            display: flex;
+
+            img {
+                margin: 0;
+                height: 1em;
+                align-self: center;
+            }
+        }
+
+        .profile-img {
+            background-color: Gainsboro;
+            border-radius: 15%;
+            height: 6em;
+        }
+
+        .buttons {
+            height: fit-content;
+            display: flex;
+            flex-direction: column;
         }
     }
-
-    .profile-img {
-        background-color: Gainsboro;
-        border-radius: 15%;
-        height: 6em;
-    }
-
-    .buttons {
-        height: fit-content;
+    .entity {
         display: flex;
-        flex-direction: column;
+        align-items: center;
+        align-content: center;
+        justify-content: space-between;
+        font-size: larger;
     }
-
-
+    .product {
+        img {
+            align-self: center;
+        }
+        .product-title {
+            font-size: larger;
+            font-weight: bolder;
+            color: black;
+        }
+        .product-title ~ p {
+            color: gray;
+            font-size: small;
+        }
+        .product-id {
+            color: gray;
+        }
+        .product-id::before {
+            content: "#";
+        }
+        .product-price::before{
+            content: "$";
+        }
+    }
 }

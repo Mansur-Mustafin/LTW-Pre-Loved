@@ -17,14 +17,30 @@ require_once(__DIR__ . '/../pages/admin.php');
                     <p>Users</p>
                 </a>                
             </li>
+            <!-- TODO
             <li class="admin-item">
                 <a href="../pages/admin.php?value=statistics">
                     <p>Statistics</p>
                 </a>    
-            </li>
+            </li> -->
             <li class="admin-item">
                 <a href="../pages/admin.php?value=tags">
                     <p>Tags</p>
+                </a>
+            </li>
+            <li class="admin-item">
+                <a href="../pages/admin.php?value=categories">
+                    <p>Categories</p>
+                </a>
+            </li>
+            <li class="admin-item">
+                <a href="../pages/admin.php?value=brands">
+                    <p>Brands</p>
+                </a>
+            </li>
+            <li class="admin-item">
+                <a href="../pages/admin.php?value=conditions">
+                    <p>Conditions</p>
                 </a>
             </li>
             <li class="admin-item">
@@ -37,9 +53,9 @@ require_once(__DIR__ . '/../pages/admin.php');
 <?php } ?>
 
 <?php function drawUsersAdmin(array $allUsers) {?>
-    <section id="user-admin-info">
+    <section class="admin-info">
         <?php foreach($allUsers as $user) { ?>
-            <article class="item">
+            <article class="element item">
                 <img class="profile-img" src=<?= htmlspecialchars($user->image_path) ?> alt="User Image">
                 <div class="user-info">
                     <div class="user-tags">
@@ -57,8 +73,8 @@ require_once(__DIR__ . '/../pages/admin.php');
                 </div>
                 <div class="buttons">
                     <?php if(!$user->admin_flag) {?>
-                        <button>Make Admin</button>
-                        <button>Ban</button>
+                        <button formaction="#">Make Admin</button>
+                        <button formaction="#">Ban</button>
                     <?php }?>
                 </div>
 
@@ -71,10 +87,48 @@ require_once(__DIR__ . '/../pages/admin.php');
     <?php echo "TODO"?>
 <?php }?>
 
-<?php function drawTagsAdmin() {?>
-    <?php echo "TODO"?>
+<?php function drawEntitiesAdmin(array $entities) {?>
+    <section class="admin-info">
+        <button id="add-tag">Add</button>
+        <?php foreach($entities as $entity) { ?>
+            <article class="element entity item" >
+                <p><?= $entity["name"] ?></p>
+                <button formaction="#">Remove</button> <!-- THIS IS GOING TO BE HARD -->
+            </article>
+        <?php } ?>
+    </section>
 <?php }?>
 
-<?php function drawItemsAdmin() {?>
-    <?php echo "TODO"?>
+<?php function drawItemsAdmin(array $items) {?>
+    <section class="admin-info">
+        <button id="add-item">Add new Item</button>
+        <?php foreach($items as $item) { 
+            $main_image = $item->getImagesArray()[0];
+            $joined_tags = join(", ",$item->tags);?>
+            <article class ="element product item">
+                <img src="<?=htmlspecialchars($main_image)?>" alt="product-picture">
+
+                <div class="product-info">
+                    <a href="../pages/item.php?item_id=<?=$item->id?>" class="product-title"><?= $item->title ?> <span class="product-id"><?= $item->id ?></span></a>
+
+                    <p>Brand: <?= $item->brand ?></p>
+                    <p>Price: <span class="product-price"><?= $item->price ?></span></p>
+                    <p>Tradable: <?= $item->tradable ? "Tradable" : "not Trabable" ?></p>
+                    <p>Created-at: <?= $item->created_at?></p>
+                    <p>Condition: <?= $item->condition?></p>
+                    <p>Model: <?= $item->model ?></p>
+                    <p>Category: <?= $item->category ?></p>
+                    <p>Size: <?= $item->size ?></p>
+                    <p>Tags: <?= $joined_tags?></p>
+                    <p>Description: <?= $item->description ?></p>
+                </div>
+
+                <div class="buttons">
+                    <button formaction="#" >Edit</button>
+                    <button formaction="#" >Remove</button>
+                </div>
+
+            </article> 
+        <?php } ?>
+    </section>
 <?php }?>
