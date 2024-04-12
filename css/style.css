@@ -14,6 +14,16 @@
     padding: 0;
 }
 
+body *::selection {
+    color: white;
+    background: var(--matador-dark-red);
+}
+
+body *::-moz-selection{ /* Code for Firefox */
+    color: white;
+    background: var(--matador-dark-red);
+}
+
 html {
     font-family: 'Ruda', serif;
     color: #333;
