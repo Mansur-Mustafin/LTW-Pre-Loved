@@ -72,12 +72,21 @@ require_once(__DIR__ . '/../pages/admin.php');
                     <p class ="address"> <?= htmlspecialchars($user->address) ?> </p>
                 </div>
                 <div class="buttons">
-                    <?php if(!$user->admin_flag) {?>
-                        <button formaction="#">Make Admin</button>
-                        <button formaction="#">Ban</button>
+                    <?php if(!$user->admin_flag && !$user->banned) {?>
+                        <form action="../actions/action_make_user_admin.php" method="post">
+                            <button type="submit" name="username" value="<?= $user->username ?>">Make Admin</button>
+                        </form>
+                    <?php }?>
+                    <?php if(!$user->banned && !$user->admin_flag) {?>
+                        <form action="../actions/action_ban_user.php" method="post">
+                            <button type="submit" name="username" value="<?= $user->username ?>">Ban</button>
+                        </form>
+                    <?php } else if($user->banned && !$user->admin_flag){?>
+                        <form action="../actions/action_unban_user.php" method="post">
+                            <button type="submit" name="username" value="<?= $user->username ?>">Unban</button>
+                        </form>
                     <?php }?>
                 </div>
-
             </article>
         <?php } ?>
     </section>
@@ -87,13 +96,17 @@ require_once(__DIR__ . '/../pages/admin.php');
     <?php echo "TODO"?>
 <?php }?>
 
-<?php function drawEntitiesAdmin(array $entities) {?>
+<?php function drawEntitiesAdmin(array $entities,string $type) {?>
     <section class="admin-info">
-        <button id="add-tag">Add</button>
+        <form action="">
+            <button id="add-tag">Add</button>
+        </form>
         <?php foreach($entities as $entity) { ?>
             <article class="element entity item" >
                 <p><?= $entity["name"] ?></p>
-                <button formaction="#">Remove</button> <!-- THIS IS GOING TO BE HARD -->
+                <form action="../actions/action_delete_entity.php" method="post">
+                    <button type="submit" name="typeValue" value="<?= $type ?>/<?=$entity["id"]?>">Remove</button>
+                </form>
             </article>
         <?php } ?>
     </section>
@@ -101,7 +114,6 @@ require_once(__DIR__ . '/../pages/admin.php');
 
 <?php function drawItemsAdmin(array $items) {?>
     <section class="admin-info">
-        <button id="add-item">Add new Item</button>
         <?php foreach($items as $item) { 
             $main_image = $item->getImagesArray()[0];
             $joined_tags = join(", ",$item->tags);?>
@@ -124,10 +136,10 @@ require_once(__DIR__ . '/../pages/admin.php');
                 </div>
 
                 <div class="buttons">
-                    <button formaction="#" >Edit</button>
-                    <button formaction="#" >Remove</button>
+                    <form action="../actions/action_delete_product.php" method="post">
+                        <button type="submit" name="product_id" value=<?= $item->id ?>>Remove</button>
+                    </form>
                 </div>
-
             </article> 
         <?php } ?>
     </section>

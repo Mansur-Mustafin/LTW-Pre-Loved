@@ -299,3 +299,8 @@ function deleteItem(PDO $db, int $userId, int $itemId): void {
     $stmt = $db->prepare("DELETE FROM Items WHERE id = ? AND user_id = ?");
     $stmt->execute([$itemId, $userId]);
 }
+
+function deleteItembyId(PDO $db,int $itemId): void {
+    $stmt = $db->prepare("DELETE FROM Items WHERE id = ?");
+    $stmt->execute([$itemId]);
+}

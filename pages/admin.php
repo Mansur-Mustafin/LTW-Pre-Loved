@@ -38,16 +38,16 @@ switch ($_GET['value']) {
         break;
     */
     case 'tags':
-        drawEntitiesAdmin($tags);
+        drawEntitiesAdmin($tags,"Tags");
         break;
     case 'categories':
-        drawEntitiesAdmin($categories);
+        drawEntitiesAdmin($categories,"Categories");
         break;
     case 'brands':
-        drawEntitiesAdmin($brands);
+        drawEntitiesAdmin($brands,"Brands");
         break;
     case 'conditions':
-        drawEntitiesAdmin($conditions);
+        drawEntitiesAdmin($conditions,"Conditions");
         break;
     case 'items':
         drawItemsAdmin($items);
