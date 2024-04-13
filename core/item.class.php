@@ -28,7 +28,7 @@ class Item {
         ?string $model = null,
         ?string $description = null,
         ?string $title = null,
-        string $images = null,
+        ?string $images = null,
         float $price,
         int $tradable = 0,
         int $priority = 1,
@@ -50,7 +50,7 @@ class Item {
         $this->priority = $priority;
         $this->user_id = $user_id;
         $this->created_at = $created_at ?? date();
-        $this->condition = $condition;
+        $this->condition = $condition ?? null;
         $this->category = $category;
         $this->size = $size;
         $this->tags = $tags ?? array();

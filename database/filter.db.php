@@ -25,3 +25,23 @@ function getConditions(PDO $db) {
 function getTags(PDO $db) {
     return $db->query("SELECT * FROM Tags")->fetchAll(PDO::FETCH_ASSOC);
 }
+
+function removeTag(PDO $db, $tagId) {
+    $stmt = $db->prepare("DELETE FROM Tags WHERE id=?");
+    $stmt->execute([$tagId]);
+}
+
+function removeCategory(PDO $db, $category) {
+    $stmt = $db->prepare("DELETE FROM Categories WHERE id=?");
+    $stmt->execute([$category]);
+}
+
+function removeCondition(PDO $db, $condition) {
+    $stmt = $db->prepare("DELETE FROM Condition WHERE id=?");
+    $stmt->execute([$condition]);
+}
+
+function removeBrand(PDO $db, $brand) {
+    $stmt = $db->prepare("DELETE FROM Brands WHERE id=?");
+    $stmt->execute([$brand]);
+}

@@ -44,6 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit-profile'])) {
                 $user->image_path = $save_path;
             }
         }
+    
         var_dump($user);
         $session->setName($user->username);
         updateUser($db, $user);

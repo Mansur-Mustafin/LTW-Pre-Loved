@@ -60,12 +60,18 @@ aside#admin-nav-bar {
             height: 6em;
         }
 
+        form button {
+            padding: 1em;
+        }
+
         .buttons {
-            height: fit-content;
+            margin: 1em;
+            width: auto;
             display: flex;
             flex-direction: column;
         }
     }
+    
     .entity {
         display: flex;
         align-items: center;
@@ -73,6 +79,7 @@ aside#admin-nav-bar {
         justify-content: space-between;
         font-size: larger;
     }
+
     .product {
         img {
             align-self: center;

@@ -35,7 +35,7 @@ require_once(__DIR__ . '/../core/item.class.php')
                 <?php foreach ($item->tags as $tag) { ?>
                     <li><?=htmlspecialchars($tag)?></li>
                 <?php } ?>
-                <li><?= htmlspecialchars($item->condition) ?></li>
+                <?php if($item->condition){?> <li>htmlspecialchars($item->condition)</li> <?php } ?>
                 <li><?= htmlspecialchars($item->size) ?></li>
                 <?php if ($item->tradable) { ?>
                     <li>Tradable</li>
@@ -96,7 +96,7 @@ function draw_buttons_item(Item $item, Session $session, string $title, bool $in
             <p><?= htmlspecialchars($item->model) ?></p>
         </label>
         <label>condition:
-            <p><?= htmlspecialchars($item->condition) ?></p>
+            <p><?= htmlspecialchars($item->condition)?></p>
         </label>
         <label>size:
             <p><?= htmlspecialchars($item->size) ?></p>
