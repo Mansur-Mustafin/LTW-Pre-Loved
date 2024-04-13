@@ -30,6 +30,9 @@ aside#admin-nav-bar {
 }
 
 .admin-info {
+    #admin-search-bar {
+        margin-top: 1em;
+    }
     #add-tag, #add-item {
         justify-self: center;
         margin: 2em;
@@ -65,6 +68,7 @@ aside#admin-nav-bar {
         }
 
         .buttons {
+            float: right;
             margin: 1em;
             width: auto;
             display: flex;
@@ -88,6 +92,10 @@ aside#admin-nav-bar {
             font-size: larger;
             font-weight: bolder;
             color: black;
+
+            span {
+                padding-left: 0.2em;
+            }
         }
         .product-title ~ p {
             color: gray;

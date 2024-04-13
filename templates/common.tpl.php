@@ -20,6 +20,8 @@ require_once(__DIR__ . '/../utils/session.php');
         <link href="../css/admin.css" rel="stylesheet">
         <title>Matador OLX | <?=$title?></title>
         <link rel="icon" type="image/x-icon" href="../assets/img/favicon.png">
+        <script type="text/javascript" src="../scripts/search_item.js" defer></script>
+        <script type="text/javascript" src="../scripts/search_user.js" defer></script>
     </head>
     <body>
         <header>
