@@ -39,7 +39,7 @@ require_once(__DIR__ . '/../pages/admin.php');
                 </a>
             </li>
             <li class="admin-item">
-                <a href="../pages/admin.php?value=conditions">
+                <a href="../pages/admin.php?value=condition">
                     <p>Conditions</p>
                 </a>
             </li>
@@ -105,6 +105,7 @@ require_once(__DIR__ . '/../pages/admin.php');
     <section class="admin-info">
         <button id="add-tag">Add</button>
         <div id="entities-admin">
+            <p id="type"><?= $type ?></p>
             <?php foreach($entities as $entity) { ?>
                 <article class="element entity item" >
                     <p><?= $entity["name"] ?></p>

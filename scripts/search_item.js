@@ -48,6 +48,8 @@ if(searchItem) {
             buttonsDiv = document.createElement("div")
             buttonsDiv.className = "buttons"
 
+            /* DOES NOT WORK PROPERLY */
+
             form = document.createElement("form")
             form.action = "../actions/action_delete_product.php"
             form.method = "post"

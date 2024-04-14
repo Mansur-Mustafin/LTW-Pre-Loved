@@ -19,10 +19,10 @@ $items_in_cart = itemsInCart($db, $session->getId());
 $items_in_wishlist = itemsInWishlist($db, $session->getId());
 
 // show filter
-$categories = getCategories($db);
-$brands = getBrands($db);
-$size = getSizes($db);
-$conditions = getConditions($db);
+$categories = getEntitiesFromType($db,"Categories");
+$brands = getEntitiesFromType($db,"Brands");
+$size = getEntitiesFromType($db,"Size");
+$conditions = getEntitiesFromType($db,"Condition");
 
 drawHeader($session, 'All news');
 drawFilter($categories, $brands, $size, $conditions);

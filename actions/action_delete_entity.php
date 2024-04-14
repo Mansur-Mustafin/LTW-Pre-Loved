@@ -20,23 +20,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $type = $type_value[0];
     $value = $type_value[1];
 
-
-    switch($type){
-        case "Tags":
-            addTag($db,$value);
-            break;
-        case "Categories":
-            addCategory($db,$value);
-            break;
-        case "Conditions":
-            addCondition($db,$value);
-            break;
-        case "Brands":
-            addBrand($db,$value);
-            break;
-        default:
-            die(header("Location: ../pages/admin.php?value=". strtolower($type) .""));
-    }
+    removeEntity($db,$value,$type);
 }
 
 header("Location: ../pages/admin.php?value=". strtolower($type) ."");

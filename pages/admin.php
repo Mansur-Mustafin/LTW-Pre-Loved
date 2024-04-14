@@ -16,12 +16,15 @@ require_once(__DIR__ . '/../templates/profile.tpl.php');
 require_once(__DIR__ . '/../templates/admin.tpl.php');
 
 $db = getDatabaseConnection();
+
 $user = getUser($db,$session->getName());
+if(!$user->admin_flag) die(header('Location: /'));
+
 $allUsers = getAllUsers($db);
-$tags = getTags($db);
-$categories = getCategories($db);
-$brands = getBrands($db);
-$conditions = getConditions($db);
+$tags = getEntitiesFromType($db,"Tags");
+$categories = getEntitiesFromType($db,"Categories");
+$brands = getEntitiesFromType($db,"Brands");
+$conditions = getEntitiesFromType($db,"Condition");
 $items = getAllItems($db,100,0,null);
 
 // if(!user->isAdmin()) die(header('Location: /'));
@@ -46,13 +49,14 @@ switch ($_GET['value']) {
     case 'brands':
         drawEntitiesAdmin($brands,"Brands");
         break;
-    case 'conditions':
-        drawEntitiesAdmin($conditions,"Conditions");
+    case 'condition':
+        drawEntitiesAdmin($conditions,"Condition");
         break;
     case 'items':
         drawItemsAdmin($items);
         break;
     default:
+        drawUsersAdmin($allUsers);
         break;
-}
+    }
 drawFooter();
