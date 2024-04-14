@@ -23,16 +23,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     switch($type){
         case "Tags":
-            addTag($db,$value);
+            removeTag($db,$value);
             break;
         case "Categories":
-            addCategory($db,$value);
+            removeCategory($db,$value);
             break;
         case "Conditions":
-            addCondition($db,$value);
+            removeCondition($db,$value);
             break;
         case "Brands":
-            addBrand($db,$value);
+            removeBrand($db,$value);
             break;
         default:
             die(header("Location: ../pages/admin.php?value=". strtolower($type) .""));

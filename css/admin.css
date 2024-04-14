@@ -82,6 +82,13 @@ aside#admin-nav-bar {
         align-content: center;
         justify-content: space-between;
         font-size: larger;
+        #add-entity-form {
+            display: block;
+            width: 100%;
+            input {
+                margin-bottom: 1em;
+            }
+        }
     }
 
     .product {

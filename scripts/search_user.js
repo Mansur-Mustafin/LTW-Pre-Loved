@@ -77,6 +77,7 @@ function drawButtons(article,user) {
     article.appendChild(buttonDiv)
 }
 
+
 function createParagraph(element,parent,className) {
     paragraph = document.createElement("p")
     paragraph.textContent = element

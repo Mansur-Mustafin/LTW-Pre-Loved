@@ -103,17 +103,17 @@ require_once(__DIR__ . '/../pages/admin.php');
 
 <?php function drawEntitiesAdmin(array $entities,string $type) {?>
     <section class="admin-info">
-        <form action="">
-            <button id="add-tag">Add</button>
-        </form>
-        <?php foreach($entities as $entity) { ?>
-            <article class="element entity item" >
-                <p><?= $entity["name"] ?></p>
-                <form action="../actions/action_delete_entity.php" method="post">
-                    <button type="submit" name="typeValue" value="<?= $type ?>/<?=$entity["id"]?>">Remove</button>
-                </form>
-            </article>
-        <?php } ?>
+        <button id="add-tag">Add</button>
+        <div id="entities-admin">
+            <?php foreach($entities as $entity) { ?>
+                <article class="element entity item" >
+                    <p><?= $entity["name"] ?></p>
+                    <form action="../actions/action_delete_entity.php" method="post">
+                        <button type="submit" name="typeValue" value="<?= $type ?>/<?=$entity["id"]?>">Remove</button>
+                    </form>
+                </article>
+            <?php } ?>
+        </div>
     </section>
 <?php }?>
 

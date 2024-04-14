@@ -45,3 +45,23 @@ function removeBrand(PDO $db, $brand) {
     $stmt = $db->prepare("DELETE FROM Brands WHERE id=?");
     $stmt->execute([$brand]);
 }
+
+function addTag(PDO $db, $tag) {
+    $stmt = $db->prepare("INSERT INTO Tags (name) VALUES (?)");
+    $stmt->execute([$tag]);
+}
+
+function addCategory(PDO $db, $category) {
+    $stmt = $db->prepare("INSERT INTO Categories (name) VALUES (?)");
+    $stmt->execute([$category]);
+}
+
+function addCondition(PDO $db, $condition) {
+    $stmt = $db->prepare("INSERT INTO Conditions (name) VALUES (?)");
+    $stmt->execute([$condition]);
+}
+
+function addBrand(PDO $db, $brand) {
+    $stmt = $db->prepare("INSERT INTO Brands (name) VALUES (?)");
+    $stmt->execute([$brand]);
+}
