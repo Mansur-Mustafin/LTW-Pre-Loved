@@ -65,6 +65,31 @@ function getUser(PDO $db, string $text): ?User {
     return $user;
 }
 
+function getUserById(PDO $db, int $id): ?User {
+    $sql = "SELECT * FROM Users WHERE id = :id";
+
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+    $stmt->execute();
+
+    $userData = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$userData) return null;
+    $user = new User(
+        $userData['username'],
+        $userData['password'],
+        $userData['email'],
+        $userData['id'],
+        $userData['phonenumber'] ?? null,
+        $userData['image_path'] ?? null,
+        $userData['banned'] ?? 0,
+        $userData['admin_flag'] ?? 0,
+        $userData['address'] ?? null
+    );
+
+    return $user;
+}
+
 function updateUser(PDO $db, User $user): bool {
     $sql = "UPDATE Users SET 
                 username = :username, 

@@ -22,23 +22,22 @@ class Item {
     public ?string $size;
     public array $tags; 
 
-    public function __construct(
-        ?int $id = null,
-        ?string $brand = null,
-        ?string $model = null,
-        ?string $description = null,
-        ?string $title = null,
-        string $images = null,
-        float $price,
-        int $tradable = 0,
-        int $priority = 1,
-        int $user_id,
-        ?int $created_at = null,
-        ?string $condition = null,
-        ?string $category = null,
-        ?string $size = null,
-        ?array $tags = null
-    ) {
+    public function __construct(?int $id = null,
+                                ?string $brand = null,
+                                ?string $model = null,
+                                ?string $description = null,
+                                ?string $title = null,
+                                string $images = null,
+                                float $price,
+                                int $tradable = 0,
+                                int $priority = 1,
+                                int $user_id,
+                                ?int $created_at = null,
+                                ?string $condition = null,
+                                ?string $category = null,
+                                ?string $size = null,
+                                ?array $tags = null) 
+    {
         $this->id = $id;
         $this->brand = $brand;
         $this->model = $model;

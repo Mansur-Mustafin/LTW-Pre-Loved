@@ -5,8 +5,8 @@
 -- Insert sample data into Users table
 INSERT INTO Users (username, password, email, phonenumber, image_path, banned, admin_flag, address)
 VALUES 
-('john_doe', 'pass123', 'john.doe@example.com', '123-456-7890', '/data/images/john_doe.png', 0, 0, '123 Main St, Hometown'),
-('jane_smith', 'password', 'jane.smith@example.com', '234-567-8901', '/data/images/jane_smith.png', 0, 1, '456 Elm St, Bigcity');
+    ('john_doe', 'pass123', 'john.doe@example.com', '123-456-7890', '/data/images/john_doe.png', 0, 0, '123 Main St, Hometown'),
+    ('jane_smith', 'password', 'jane.smith@example.com', '234-567-8901', '/data/images/jane_smith.png', 0, 1, '456 Elm St, Bigcity');
 
 -- Insert sample data into Categories table
 INSERT INTO Categories (name)
@@ -341,29 +341,18 @@ VALUES
     (1, 16), -- Adidas Stan Smith
     (1, 20); -- Adidas Yeezy Boost 350
 
+-- Insert sample data into Chat table
+INSERT INTO Chats (item_id, from_user_id, to_user_id)
+VALUES
+    -- Message 1
+    (1, 1, 2),
+    -- Message 2
+    (1, 3, 1);
 
--- Insert sample data into Messages table
 -- Populate Messages table with sample messages
-INSERT INTO Messages (date_time, text, item_id, sender_id)
+INSERT INTO Messages (date_time, text, chat_id, from_user_id, to_user_id)
 VALUES 
     -- Message 1
-    (DATETIME('now'), "Hi, I'm interested in buying this item.", 1, 1),
+    (DATETIME('now'), "Hi, I'm interested in buying this item.", 1, 1, 2),
     -- Message 2
-    (DATETIME('now', '-2 days'), 'Is this still available?', 2, 2),
-    -- Message 3
-    (DATETIME('now', '-3 days'), 'Could you provide more details about the item?', 3, 3),
-    -- Message 4
-    (DATETIME('now', '-5 days'), 'I want to negotiate the price.', 4, 4),
-    -- Message 5
-    (DATETIME('now', '-1 week'), 'Would you consider a trade?', 5, 5),
-    -- Message 6
-    (DATETIME('now', '-2 weeks'), 'This looks great! Is it still up for sale?', 6, 1),
-    -- Message 7
-    (DATETIME('now', '-3 weeks'), 'Are you open to offers?', 7, 2),
-    -- Message 8
-    (DATETIME('now', '-4 weeks'), "I'm very interested in purchasing this.", 8, 3),
-    -- Message 9
-    (DATETIME('now', '-6 weeks'), 'Could you provide more pictures?', 9, 4),
-    -- Message 10
-    (DATETIME('now', '-8 weeks'), 'I have a question about the condition of the item.', 10, 5);
-
+    (DATETIME('now', '-2 days'), 'Is this still available?', 2, 2, 2);

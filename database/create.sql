@@ -90,11 +90,36 @@ CREATE TABLE Messages (
     files TEXT,
     text TEXT NOT NULL,
     item_id_exchange INTEGER,                    -- Case if some body want to exchange the item 
-    item_id INTEGER NOT NULL,                    -- For what item that message was written
-    sender_id INTEGER NOT NULL,                  -- Who send the message
-    FOREIGN KEY (item_id) REFERENCES Items(id),
-    FOREIGN KEY (sender_id) REFERENCES Users(id)
+    chat_id INTEGER NOT NULL,                    -- ID of Chat
+    from_user_id INTEGER NOT NULL,               -- Who send the message    TODO
+    to_user_id INTEGER NOT NULL,                 -- Who receive the message TODO
+    is_read INTEGER NOT NULL,                    -- Is message red
+    FOREIGN KEY (chat_id) REFERENCES Chats(id),
+    FOREIGN KEY (from_user_id) REFERENCES Users(id),
+    FOREIGN KEY (to_user_id) REFERENCES Users(id)
 );
+
+CREATE TABLE Chats (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    item_id INTEGER NOT NULL,                       -- For what item that message was written
+    from_user_id INTEGER NOT NULL,                  -- Who send the message
+    to_user_id INTEGER NOT NULL,                    -- Who receive the message
+    FOREIGN KEY (item_id) REFERENCES Items(id),
+    FOREIGN KEY (from_user_id) REFERENCES Users(id),
+    FOREIGN KEY (to_user_id) REFERENCES Users(id)
+);
+
+-- IF user 3 writes to 1, it will be stores as 1 -> 3. TODO
+CREATE TRIGGER Chats_before_insert BEFORE INSERT ON Chats
+FOR EACH ROW
+BEGIN   -- like: sort(key = from_user_id < to_user_id, chats)
+    DECLARE xx INT;
+    IF (NEW.from_user_id > NEW.to_user_id) THEN
+        SET xx = NEW.from_user_id;
+        SET NEW.from_user_id = NEW.to_user_id;
+        SET NEW.to_user_id = xx;
+    END IF;
+END;
 
 CREATE TABLE Categories (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
