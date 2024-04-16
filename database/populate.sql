@@ -5,8 +5,8 @@
 -- Insert sample data into Users table
 INSERT INTO Users (username, password, email, phonenumber, image_path, banned, admin_flag, address)
 VALUES 
-    ('john_doe', 'pass123', 'john.doe@example.com', '123-456-7890', '/data/images/john_doe.png', 0, 0, '123 Main St, Hometown'),
-    ('jane_smith', 'password', 'jane.smith@example.com', '234-567-8901', '/data/images/jane_smith.png', 0, 1, '456 Elm St, Bigcity');
+    ('john_doe', 'pass123', 'john.doe@example.com', '123-456-7890', '/data/profile_img/john_doe.jpeg', 0, 0, '123 Main St, Hometown'),
+    ('jane_smith', 'password', 'jane.smith@example.com', '234-567-8901', '/data/profile_img/jane_smith.jpeg', 0, 1, '456 Elm St, Bigcity');
 
 -- Insert sample data into Categories table
 INSERT INTO Categories (name)
@@ -345,14 +345,18 @@ VALUES
 INSERT INTO Chats (item_id, from_user_id, to_user_id)
 VALUES
     -- Message 1
-    (1, 1, 2),
+    (1, 2, 1),
     -- Message 2
     (1, 3, 1);
 
 -- Populate Messages table with sample messages
-INSERT INTO Messages (date_time, text, chat_id, from_user_id, to_user_id)
+INSERT INTO Messages (text, chat_id, from_user_id, to_user_id, date_time)
 VALUES 
     -- Message 1
-    (DATETIME('now'), "Hi, I'm interested in buying this item.", 1, 1, 2),
+    ("Hi", 1, 2, 1, strftime('%s', 'now')),
     -- Message 2
-    (DATETIME('now', '-2 days'), 'Is this still available?', 2, 2, 2);
+    ('Is this still available?', 2, 3, 1, strftime('%s', 'now')),
+    -- Message 3
+    ("Hi, I'm interested in buying this item.", 1, 2, 1, strftime('%s', 'now')),
+    -- Message 4
+    ("Ok, my brother.", 1, 1, 2, strftime('%s', 'now'));

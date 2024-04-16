@@ -2,11 +2,12 @@
 
 :root {
     --matador-yellow: #FCBA04; 
-    --matador-red: #A50104; 
+    --matador-red: #A50104;
     --matador-dark-red: #590004; 
     --matador-darker-red: #250001; 
     --matador-grey: #F3F3F3; 
     --matador-light_green: #B1DCA1;
+    --matador-pink: #dca1a1;
 }
 
 *{
@@ -71,6 +72,14 @@ button{
     text-align: center;
     background-color: var(--matador-dark-red);
     :hover{
+        color: var(--matador-yellow);
+    }
+}
+
+.fly:hover{
+    transform: scale(1.01); /* Slightly increase the size */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+    h3{
         color: var(--matador-yellow);
     }
 }
