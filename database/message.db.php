@@ -5,6 +5,7 @@ declare(strict_types=1);
 require_once(__DIR__ . '/../core/chat.class.php');
 require_once(__DIR__ . '/../core/message.class.php');
 require_once(__DIR__ . '/../database/chat.db.php');
+require_once(__DIR__ . '/../database/item.db.php');
 
 function getMessagesById(PDO $db, int $message_id): Message
 {
@@ -24,9 +25,12 @@ function getMessagesById(PDO $db, int $message_id): Message
         $row['chat_id'],
         $row['from_user_id'],
         $row['to_user_id'],
-        (bool)$row['is_read']
+        (bool)$row['is_read'],
+        $row['item_id_exchange'],
     );
-
+    if($row['item_id_exchange'] != 0){
+        $message->item_for_exchange = getItem($db, $row['item_id_exchange']);
+    }
 
     return $message;
 }
@@ -52,8 +56,12 @@ function getMessagesByChatId(PDO $db, int $chat_id): array
             chat_id: $row['chat_id'],
             from_user_id: $row['from_user_id'],
             to_user_id: $row['to_user_id'],
-            read: (bool)$row['is_read']
+            read: (bool)$row['is_read'],
+            item_id_exchange: $row['item_id_exchange'],
         );
+        if($row['item_id_exchange'] != 0){
+            $message->item_for_exchange = getItem($db, $row['item_id_exchange']);
+        }
         $messages[] = $message;
     }
 
@@ -61,19 +69,27 @@ function getMessagesByChatId(PDO $db, int $chat_id): array
 }
 
 
-function addMessage($db, int $chat_id, int $from_user_id, int $to_user_id, string $text, int $item_id=0){
+function addMessage($db, int $chat_id, int $from_user_id, int $to_user_id, string $text, int $item_id=0, int $offer_exchange=0){
     $chat = getChatById($db, $chat_id, $from_user_id);
     if($chat === null) {
         $chat_id = addChat($db, $item_id, $from_user_id, $to_user_id);
     }
-    $sql = "INSERT INTO Messages (chat_id, from_user_id, to_user_id, text)
-            VALUES (:chat_id, :from_user_id, :to_user_id, :text)";
+
+    if($offer_exchange){
+        $sql = "INSERT INTO Messages (chat_id, from_user_id, to_user_id, text, item_id_exchange)
+        VALUES (:chat_id, :from_user_id, :to_user_id, :text, :item_id_exchange)";
+    } else {
+        $sql = "INSERT INTO Messages (chat_id, from_user_id, to_user_id, text)
+        VALUES (:chat_id, :from_user_id, :to_user_id, :text)";
+    }
+
     $stmt = $db->prepare($sql);
 
     $stmt->bindParam(':chat_id', $chat_id, PDO::PARAM_INT);
     $stmt->bindParam(':from_user_id', $from_user_id, PDO::PARAM_INT);
     $stmt->bindParam(':to_user_id', $to_user_id, PDO::PARAM_INT);
     $stmt->bindParam(':text', $text, PDO::PARAM_STR);
+    if($offer_exchange) $stmt->bindParam(':item_id_exchange', $offer_exchange, PDO::PARAM_INT);
 
     $stmt->execute();
 

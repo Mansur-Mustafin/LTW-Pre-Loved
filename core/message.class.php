@@ -10,6 +10,8 @@ class Message {
     public int $from_user_id;  // TODO
     public int $to_user_id;    // TODO
     public bool $isRead;
+    public ?int $item_id_exchange;
+    public Item $item_for_exchange;
 
     public function __construct(int $id, 
                                 ?int $date_time = null, 
@@ -17,7 +19,8 @@ class Message {
                                 int $chat_id, 
                                 int $from_user_id, 
                                 int $to_user_id, 
-                                bool $read)
+                                bool $read,
+                                ?int $item_id_exchange=null)
     {
         $this->id = $id;
         $this->date_time = $date_time ?? time();
@@ -26,6 +29,7 @@ class Message {
         $this->from_user_id = $from_user_id;
         $this->to_user_id = $to_user_id;
         $this->isRead = $read;
+        $this->item_id_exchange = $item_id_exchange;
     }
 
     public function isFromUserId(int $from_user_id){

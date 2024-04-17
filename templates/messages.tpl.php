@@ -69,6 +69,7 @@ require_once(__DIR__ . '/../utils/utils.php');
             <textarea name="text" id="message_field" cols="50" rows="1" placeholder="Type here."></textarea>
             <input type="hidden" name="chat_id" value="<?= $chat->id ?>" id="chat_id_field">
             <input type="hidden" name="item_id" value="<?= $current_item->id ?>">
+            <input type="hidden" name="offer_exchange" value="" id="offer_exchange_field">
             <input type="hidden" name="from_user_id" value="<?= $current_user_id ?>">
             <input type="hidden" name="to_user_id" value="<?= $chat->getChatPartnerId($current_user_id) ?>" id="to_user_id">
 
@@ -117,6 +118,19 @@ require_once(__DIR__ . '/../utils/utils.php');
 
                 <div>
                     <p class="message_text"><?= htmlentities($message->text) ?></p>
+
+                    <?php if($message->item_id_exchange){ ?>
+                        <br>
+                        <div class="item_exchange_message">
+                            <p>Offer for exchange:
+                                <a class="item_exchange_message_link" href="/pages/item.php?item_id=<?= $message->item_id_exchange?>">
+                                    <?= $message->item_for_exchange->title ?>
+                                </a>
+                            </p>
+                            <img src="<?=$message->item_for_exchange->getImagesArray()[0]?>" alt="">
+                        </div>
+                    <?php } ?>
+
                     <p class="message_time"><?= getTimePassed($message->date_time) ?></p>
                 </div>
 

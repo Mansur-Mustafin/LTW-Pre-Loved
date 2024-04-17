@@ -5,13 +5,20 @@ var message_template_partner = document.getElementById('message_template_partner
 var chat_id_field = document.getElementById('chat_id_field')
 var to_user_id = document.getElementById('to_user_id').value
 var last_message_id = form.dataset.last_message_id ?? null
+var offer_exchange_icon = document.getElementById("offer_exchange")
+var offer_exchange_field = document.getElementById("offer_exchange_field")
 scrollMessagesDown()
 
 
 form.addEventListener("submit", function (e){
     e.preventDefault()
+    sendMessage()
+})
+
+
+function sendMessage(isOfferExchange = null){
     var form_data = new FormData(form)
-    if(form_data.get("text") == "")
+    if(form_data.get("text") == "" && !isOfferExchange)
         return
     fetch("../actions/action_send_message.php", {
         method: 'post',
@@ -31,7 +38,9 @@ form.addEventListener("submit", function (e){
                 scrollMessagesDown()
             }
         })
-})
+}
+
+
 checkNewMessages()
 setInterval(checkNewMessages, 2000)
 
@@ -60,7 +69,7 @@ function addNewMyMessage(data, id){
     var text = data.get("text")
     var new_message = message_template.cloneNode(true)
     new_message.removeAttribute("id")
-    new_message.querySelector(".message_text").innerText = text
+    new_message.querySelector(".text").innerText = text
     new_message.querySelector(".message_time").innerText = Math.floor(Date.now() / 1000);
     messages.appendChild(new_message)
     scrollMessagesDown()
@@ -69,6 +78,9 @@ function addNewMyMessage(data, id){
 function addNewPartnerMessage(data){
     last_message_id = data[data.length-1].id
     for(var i = 0; i < data.length; i++){
+        if(data[i].item_id_exchange != 0) {
+            window.location.reload()
+        }
         var text = data[i].text
         var date_time = data[i].date_time
         var new_message = message_template_partner.cloneNode(true)
@@ -88,6 +100,12 @@ function refreshPageIfNewChatId(id){
     }
 
 }
+
+offer_exchange_icon.addEventListener("click", function (e){
+    offer_exchange_field.value = 1; // TODO!
+    sendMessage(true)
+    window.location.reload()
+})
 
 function scrollMessagesDown(){
     messages.scrollTo(0, messages.scrollHeight);

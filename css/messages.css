@@ -155,4 +155,15 @@ article.message{
     p.message_time{
         opacity: 50%;
     }
+
+    
+}
+
+section#messages_block .item_exchange_message{
+    & a{
+        color: var(--matador-red);
+    }
+    img{
+        height: 10em;
+    }
 }
