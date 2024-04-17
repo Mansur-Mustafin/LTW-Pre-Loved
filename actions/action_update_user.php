@@ -37,9 +37,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit-profile'])) {
             $user->address = $_POST['new_address'];
         }
         if(isset($_FILES['profile_img']['name'])){
-            $root_folder = '/data/profile_img/';
             $filename = get_hash_path($session->getName()).'.png';
-            $save_path = $root_folder.htmlspecialchars($filename);
+            $save_path = '/data/profile_img/'.htmlspecialchars($filename);
             if (move_uploaded_file($_FILES['profile_img']['tmp_name'], __DIR__.'/..'.$save_path)) {
                 $user->image_path = $save_path;
             }

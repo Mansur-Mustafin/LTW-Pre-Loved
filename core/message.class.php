@@ -12,6 +12,7 @@ class Message {
     public bool $isRead;
     public ?int $item_id_exchange;
     public Item $item_for_exchange;
+    public ?string $filename;
 
     public function __construct(int $id, 
                                 ?int $date_time = null, 
@@ -20,7 +21,8 @@ class Message {
                                 int $from_user_id, 
                                 int $to_user_id, 
                                 bool $read,
-                                ?int $item_id_exchange=null)
+                                ?int $item_id_exchange,
+                                ?string $filename)
     {
         $this->id = $id;
         $this->date_time = $date_time ?? time();
@@ -30,11 +32,15 @@ class Message {
         $this->to_user_id = $to_user_id;
         $this->isRead = $read;
         $this->item_id_exchange = $item_id_exchange;
+        $this->filename = $filename;
     }
 
     public function isFromUserId(int $from_user_id){
         return $this->from_user_id == $from_user_id;
     }
 
+    public function isFileImage(){
+        return (bool)exif_imagetype("../data/uploaded_files/".$this->filename);
+    }
 
 }

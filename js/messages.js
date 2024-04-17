@@ -7,8 +7,12 @@ var to_user_id = document.getElementById('to_user_id').value
 var last_message_id = form.dataset.last_message_id ?? null
 var offer_exchange_icon = document.getElementById("offer_exchange")
 var offer_exchange_field = document.getElementById("offer_exchange_field")
-scrollMessagesDown()
+var attach_file_icon = document.getElementById("attach_file")
+var attach_file_field = document.getElementById("attach_file_field")
 
+setTimeout(scrollMessagesDown, 30)
+checkNewMessages()
+setInterval(checkNewMessages, 2000)
 
 form.addEventListener("submit", function (e){
     e.preventDefault()
@@ -18,8 +22,13 @@ form.addEventListener("submit", function (e){
 
 function sendMessage(isOfferExchange = null){
     var form_data = new FormData(form)
+    if(attach_file_field.value != ""){
+        form.submit()
+        return
+    }
     if(form_data.get("text") == "" && !isOfferExchange)
         return
+
     fetch("../actions/action_send_message.php", {
         method: 'post',
         body: form_data,
@@ -39,10 +48,6 @@ function sendMessage(isOfferExchange = null){
             }
         })
 }
-
-
-checkNewMessages()
-setInterval(checkNewMessages, 2000)
 
 function checkNewMessages() {
     var chat_id = form.dataset.chat_id;
@@ -78,7 +83,7 @@ function addNewMyMessage(data, id){
 function addNewPartnerMessage(data){
     last_message_id = data[data.length-1].id
     for(var i = 0; i < data.length; i++){
-        if(data[i].item_id_exchange != 0) {
+        if(data[i].item_id_exchange != 0 || data[i].files != "") {
             window.location.reload()
         }
         var text = data[i].text
@@ -102,10 +107,21 @@ function refreshPageIfNewChatId(id){
 }
 
 offer_exchange_icon.addEventListener("click", function (e){
-    offer_exchange_field.value = 1; // TODO!
+    offer_exchange_field.value = 1;
     sendMessage(true)
     window.location.reload()
 })
+
+attach_file_icon.addEventListener("click", function(){
+    attach_file_field.click();
+})
+
+attach_file_field.onchange = function (e) {
+    var file = e.target.files[0];
+    var name_block = document.getElementById("attached_file_name")
+    name_block.innerText = file.name
+    name_block.style.display = "block";
+};
 
 function scrollMessagesDown(){
     messages.scrollTo(0, messages.scrollHeight);

@@ -27,6 +27,7 @@ function getMessagesById(PDO $db, int $message_id): Message
         $row['to_user_id'],
         (bool)$row['is_read'],
         $row['item_id_exchange'],
+        $row['files'],
     );
     if($row['item_id_exchange'] != 0){
         $message->item_for_exchange = getItem($db, $row['item_id_exchange']);
@@ -58,6 +59,7 @@ function getMessagesByChatId(PDO $db, int $chat_id): array
             to_user_id: $row['to_user_id'],
             read: (bool)$row['is_read'],
             item_id_exchange: $row['item_id_exchange'],
+            filename: $row['files'],
         );
         if($row['item_id_exchange'] != 0){
             $message->item_for_exchange = getItem($db, $row['item_id_exchange']);
@@ -69,19 +71,14 @@ function getMessagesByChatId(PDO $db, int $chat_id): array
 }
 
 
-function addMessage($db, int $chat_id, int $from_user_id, int $to_user_id, string $text, int $item_id=0, int $offer_exchange=0){
+function addMessage($db, int $chat_id, int $from_user_id, int $to_user_id, string $text, int $item_id=0, int $offer_exchange=0, string $filename = ""){
     $chat = getChatById($db, $chat_id, $from_user_id);
     if($chat === null) {
         $chat_id = addChat($db, $item_id, $from_user_id, $to_user_id);
     }
 
-    if($offer_exchange){
-        $sql = "INSERT INTO Messages (chat_id, from_user_id, to_user_id, text, item_id_exchange)
-        VALUES (:chat_id, :from_user_id, :to_user_id, :text, :item_id_exchange)";
-    } else {
-        $sql = "INSERT INTO Messages (chat_id, from_user_id, to_user_id, text)
-        VALUES (:chat_id, :from_user_id, :to_user_id, :text)";
-    }
+    $sql = "INSERT INTO Messages (chat_id, from_user_id, to_user_id, text, item_id_exchange, files)
+        VALUES (:chat_id, :from_user_id, :to_user_id, :text, :item_id_exchange, :files)";
 
     $stmt = $db->prepare($sql);
 
@@ -89,7 +86,10 @@ function addMessage($db, int $chat_id, int $from_user_id, int $to_user_id, strin
     $stmt->bindParam(':from_user_id', $from_user_id, PDO::PARAM_INT);
     $stmt->bindParam(':to_user_id', $to_user_id, PDO::PARAM_INT);
     $stmt->bindParam(':text', $text, PDO::PARAM_STR);
-    if($offer_exchange) $stmt->bindParam(':item_id_exchange', $offer_exchange, PDO::PARAM_INT);
+    $offer_exchange = ($offer_exchange != 0) ? $offer_exchange : null;
+    $stmt->bindParam(':item_id_exchange', $offer_exchange, PDO::PARAM_INT);
+    $filename = $filename ?? null;
+    $stmt->bindParam(':files', $filename, PDO::PARAM_STR);
 
     $stmt->execute();
 

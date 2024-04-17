@@ -59,8 +59,8 @@ require_once(__DIR__ . '/../utils/utils.php');
         
         <?php drawMessages($chat, $current_user_id, $current_item->id); ?>
 
-        <form action="" method="post" class="message_form" id="message_form" data-chat_id="<?= $chat->id ?>"
-              data-last_message_id="<?= $chat->getLastMessageId() ?>">
+        <form action="../actions/action_send_message.php" method="post" class="message_form" id="message_form" data-chat_id="<?= $chat->id ?>"
+              data-last_message_id="<?= $chat->getLastMessageId() ?>" enctype="multipart/form-data">
 
             <img src="../assets/img/file-plus.svg" alt="Add file" id="attach_file">
             <img src="../assets/img/exchange.svg" alt="Exchange button" id="offer_exchange">
@@ -71,12 +71,16 @@ require_once(__DIR__ . '/../utils/utils.php');
             <input type="hidden" name="item_id" value="<?= $current_item->id ?>">
             <input type="hidden" name="offer_exchange" value="" id="offer_exchange_field">
             <input type="hidden" name="from_user_id" value="<?= $current_user_id ?>">
+            <input id="attach_file_field" type="file" name="file" value="" style="display: none">
             <input type="hidden" name="to_user_id" value="<?= $chat->getChatPartnerId($current_user_id) ?>" id="to_user_id">
 
             <button type="submit">
                 <img src="../assets/img/send-message.svg" alt="Send message" id="offer_exchange">
             </button>
+            
         </form>
+
+        <p id="attached_file_name"></p>
 
         <!-- TODO -->
         <div class="message_container" id="message_template">
@@ -123,11 +127,22 @@ require_once(__DIR__ . '/../utils/utils.php');
                         <br>
                         <div class="item_exchange_message">
                             <p>Offer for exchange:
-                                <a class="item_exchange_message_link" href="/pages/item.php?item_id=<?= $message->item_id_exchange?>">
+                                <a href="/pages/item.php?item_id=<?= $message->item_id_exchange?>">
                                     <?= $message->item_for_exchange->title ?>
                                 </a>
                             </p>
                             <img src="<?=$message->item_for_exchange->getImagesArray()[0]?>" alt="">
+                        </div>
+                    <?php } ?>
+
+                    <?php if($message->filename != null){ ?>
+                        <div class="attached_file">
+                            <a target="_blank" href="../data/uploaded_files/<?= $message->filename ?? "" ?>">
+                                <?= htmlspecialchars($message->filename ?? "") ?>
+                            </a>
+                            <?php if($message->isFileImage()){ ?>
+                                <img src="../data/uploaded_files/<?= $message->filename ?>" alt="attached_file_image">
+                            <?php } ?>
                         </div>
                     <?php } ?>
 

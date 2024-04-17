@@ -31,11 +31,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $to_user_id = intval($_POST['to_user_id']);
     $item_id = intval($_POST['item_id']);
     $offer_exchange = intval($_POST['offer_exchange']);
+    $filename = "";
+    if($_FILES['file']['size'] != 0){
+        $filename = time().$_FILES['file']['name'];
+        $save_path = '/data/uploaded_files/'.htmlspecialchars($filename);
+        move_uploaded_file( $_FILES['file']['tmp_name'], __DIR__.'/..'.$save_path);
+    }
 
+    $message_info = addMessage($db, $chat_id, $from_user_id, $to_user_id, $text, $item_id, $offer_exchange, $filename);
 
+    if($_FILES['file']['size'] != 0){
+        header("Location: " . $_SERVER['HTTP_REFERER']);
+        exit;
+    }
 
-    $message_info = addMessage($db, $chat_id, $from_user_id, $to_user_id, $text, $item_id, $offer_exchange);
     print(json_encode($message_info));
     http_response_code(200);
-
 }

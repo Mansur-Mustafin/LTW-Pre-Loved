@@ -82,7 +82,6 @@ section#messages_block{
     }
     form{
         margin-left: .5em;
-        height: fit-content;
         background: white;
         display: flex;
         align-items: center;
@@ -114,6 +113,11 @@ section#messages_block{
             background-color: white;
             align-items: center;
         }
+    }
+    #attached_file_name{
+        display: inline;
+        margin: 1em 0 0 1em;
+        color: var(--matador-darker-red);
     }
 }
 
@@ -154,16 +158,30 @@ article.message{
 
     p.message_time{
         opacity: 50%;
-    }
-
-    
+    } 
 }
 
 section#messages_block .item_exchange_message{
+    display: grid;
+    place-items: center;
     & a{
         color: var(--matador-red);
     }
     img{
-        height: 10em;
+        max-height: 10em;
+        display: inline-block;
+    }
+}
+
+section#messages_block .attached_file{
+    display: grid;
+    place-items: center;
+    & a{
+        color: var(--matador-red);
+    }
+    img{
+        padding-top: 1em;
+        max-width: 20em;
+        display: inline-block;
     }
 }
