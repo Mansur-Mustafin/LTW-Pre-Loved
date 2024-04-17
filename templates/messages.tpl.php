@@ -41,7 +41,7 @@ require_once(__DIR__ . '/../utils/utils.php');
             <?php if (!$chat->last_message->isRead && !$chat->last_message->isFromUserId($session->getId())) { ?>
                 <div class="is_read"></div>
             <?php } ?>
-            <p><?= htmlspecialchars($chat->last_message->text) ?></p>
+            <p><?= htmlspecialchars(substr($chat->last_message->text, 0, 50)) . (strlen($chat->last_message->text) > 100 ? '...' : '') ?></p>
             <p class="chat-time-passed"><?= htmlspecialchars(getTimePassed($chat->last_message->date_time)) ?></p>
         </a>
     </article>
@@ -83,26 +83,26 @@ require_once(__DIR__ . '/../utils/utils.php');
         <p id="attached_file_name"></p>
 
         <!-- TODO -->
-        <div class="message_container" id="message_template">
-            <div class="message my_message">
-                <div>
-                    <p class="text"></p>
-                    <div class="message_time"></div>
-                </div>
+        
+        <article id="message_template" class="message my_message">
+            <div>
+                <p class="text"></p>
+                <p class="message_time"></p>
             </div>
-        </div>
+        </article>
+        
 
-        <div class="message_container" id="message_template_partner">
-            <div class="message partner_message">
-                <div class="chat_partner_image">
-                    <img src="<?= $chat->chat_partner->image_path ?>" alt="Patrner's foto">
-                </div>
-                <div>
-                    <p class="text"></p>
-                    <div class="message_time"></div>
-                </div>
+        <article id="message_template_partner" class="message partner_message">
+
+            <figure class="profile_image">
+                <img src="<?= $chat->chat_partner->image_path ?>" alt="Partner's profile image">
+            </figure>
+
+            <div>
+                <p class="message_text"></p>
+                <p class="message_time"></p>
             </div>
-        </div>
+        </article>
 
     </section>
     <script src="../js/messages.js"></script>

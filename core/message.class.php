@@ -35,11 +35,11 @@ class Message {
         $this->filename = $filename;
     }
 
-    public function isFromUserId(int $from_user_id){
+    public function isFromUserId(int $from_user_id) : bool{
         return $this->from_user_id == $from_user_id;
     }
 
-    public function isFileImage(){
+    public function isFileImage() : bool{
         return (bool)exif_imagetype("../data/uploaded_files/".$this->filename);
     }
 

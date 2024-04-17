@@ -9,6 +9,7 @@ var offer_exchange_icon = document.getElementById("offer_exchange")
 var offer_exchange_field = document.getElementById("offer_exchange_field")
 var attach_file_icon = document.getElementById("attach_file")
 var attach_file_field = document.getElementById("attach_file_field")
+var message_field = document.getElementById('message_field');
 
 setTimeout(scrollMessagesDown, 30)
 checkNewMessages()
@@ -122,6 +123,18 @@ attach_file_field.onchange = function (e) {
     name_block.innerText = file.name
     name_block.style.display = "block";
 };
+
+message_field.addEventListener('input', function() {
+    this.style.height = 'auto'; 
+    this.style.height = (this.scrollHeight > 300 ? 300 : this.scrollHeight) + 'px';
+});
+
+message_field.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        sendMessage();
+    }
+});
 
 function scrollMessagesDown(){
     messages.scrollTo(0, messages.scrollHeight);

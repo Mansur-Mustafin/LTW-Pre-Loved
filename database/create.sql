@@ -83,7 +83,6 @@ CREATE TABLE Transactions (
     FOREIGN KEY (item_id) REFERENCES Items(id) ON DELETE SET NULL
 );
 
-
 CREATE TABLE Messages (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     date_time INTEGER,
@@ -91,8 +90,8 @@ CREATE TABLE Messages (
     text TEXT NOT NULL,
     item_id_exchange INTEGER,                    -- Case if some body want to exchange the item 
     chat_id INTEGER NOT NULL,                    -- ID of Chat
-    from_user_id INTEGER NOT NULL,               -- Who send the message    TODO
-    to_user_id INTEGER NOT NULL,                 -- Who receive the message TODO
+    from_user_id INTEGER NOT NULL,               -- Who send the message
+    to_user_id INTEGER NOT NULL,                 -- Who receive the message
     is_read INTEGER DEFAULT 0,                   -- Is message red
     FOREIGN KEY (chat_id) REFERENCES Chats(id),
     FOREIGN KEY (from_user_id) REFERENCES Users(id),
