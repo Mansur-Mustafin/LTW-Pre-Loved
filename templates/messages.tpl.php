@@ -86,7 +86,7 @@ require_once(__DIR__ . '/../utils/utils.php');
         
         <article id="message_template" class="message my_message">
             <div>
-                <p class="text"></p>
+                <p class="message_text text"></p>
                 <p class="message_time"></p>
             </div>
         </article>
@@ -99,7 +99,7 @@ require_once(__DIR__ . '/../utils/utils.php');
             </figure>
 
             <div>
-                <p class="message_text"></p>
+                <p class="message_text text"></p>
                 <p class="message_time"></p>
             </div>
         </article>
