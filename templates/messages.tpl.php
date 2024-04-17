@@ -12,7 +12,7 @@ require_once(__DIR__ . '/../utils/utils.php');
 <?php } ?>
 
 <!-- Draw block of chats  -->
-<?php function drawMessagesBlockChats(array $chats, $current_user_id, $current_item_id): void { ?>
+<?php function drawMessagesBlockChats(Session $session, array $chats, $current_user_id, $current_item_id): void { ?>
     <section id="chats_block">
         <h2>Messages</h2>
         <?php $last_message_id = 0;
@@ -20,7 +20,7 @@ require_once(__DIR__ . '/../utils/utils.php');
             if ($chat->last_message->id > $last_message_id){
                 $last_message_id = $chat->last_message->id;
             }
-            drawChat($chat, $current_item_id);
+            drawChat($session, $chat, $current_item_id);
         } ?>
         <input id="last_message_id" type="hidden" value="<?= $last_message_id ?>">
         <input id="current_user_id" type="hidden" value="<?= $current_user_id ?>">
@@ -30,7 +30,7 @@ require_once(__DIR__ . '/../utils/utils.php');
 
 
 <!-- Draw each chat -->
-<?php function drawChat(Chat $chat, int $current_item_id): void { ?>
+<?php function drawChat(Session $session, Chat $chat, int $current_item_id): void { ?>
     <article class="chat fly">
         <a href="../pages/item.php?item_id=<?= $current_item_id ?>&chat_id=<?= $chat->id ?>">
             <figure class="profile_image">
@@ -38,7 +38,7 @@ require_once(__DIR__ . '/../utils/utils.php');
                     alt="Profile image of <?= htmlspecialchars($chat->chat_partner->username) ?>">
                 <figcaption><?= htmlspecialchars($chat->chat_partner->username) ?></figcaption>
             </figure>
-            <?php if (!$chat->last_message->isRead) { ?>
+            <?php if (!$chat->last_message->isRead && !$chat->last_message->isFromUserId($session->getId())) { ?>
                 <div class="is_read"></div>
             <?php } ?>
             <p><?= htmlspecialchars($chat->last_message->text) ?></p>
@@ -70,7 +70,7 @@ require_once(__DIR__ . '/../utils/utils.php');
             <input type="hidden" name="chat_id" value="<?= $chat->id ?>" id="chat_id_field">
             <input type="hidden" name="item_id" value="<?= $current_item->id ?>">
             <input type="hidden" name="from_user_id" value="<?= $current_user_id ?>">
-            <input id="to_user_id" type="hidden" name="to_user_id" value="<?= $chat->getChatPartnerId($current_user_id) ?>">
+            <input type="hidden" name="to_user_id" value="<?= $chat->getChatPartnerId($current_user_id) ?>" id="to_user_id">
 
             <button type="submit">
                 <img src="../assets/img/send-message.svg" alt="Send message" id="offer_exchange">

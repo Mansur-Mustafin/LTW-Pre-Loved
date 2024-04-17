@@ -29,7 +29,7 @@ if(!isset($_GET['chat_id']) && $session->isLoggedIn()) {
         $chat->chat_partner = getUserById($db, $chat->getChatPartnerId($session->getId()));
     } else if($item->user_id != $session->getId()){                     // buyer and there are messages
         $chat = $chats[0];
-        header("Location: /pages/item.php?item_id=$item_id&chat_id=".$chat->getId());
+        header("Location: /pages/item.php?item_id=$item_id&chat_id=".$chat->id);
         $isCustomer = true;
     }
 } else if($session->isLoggedIn()){
@@ -54,7 +54,7 @@ drawItemMain($item, $session, $in_cart, $in_wishlist);
 if($chat !== null || $isCustomer)
     drawMessagesBlockMessages($chat, $session->getId(), $item);
 else if($chats !== null)
-    drawMessagesBlockChats($chats, $session->getId(), $item_id);
+    drawMessagesBlockChats($session, $chats, $session->getId(), $item_id);
 else if(!$session->isLoggedIn()){
     drawLoginMessage();
 }

@@ -118,9 +118,9 @@ section#messages_block{
 }
 
 #messages {
-    margin: 0 0 5em 1em;
+    margin: 0 0 2em 1em;
     min-height: 35em;
-    max-height: 43em;
+    max-height: 40em;
     position: relative;
     background-color: white;
     border-radius: 1.2em;
