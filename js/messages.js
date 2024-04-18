@@ -76,7 +76,7 @@ function addNewMyMessage(data, id){
     var new_message = message_template.cloneNode(true)
     new_message.removeAttribute("id")
     new_message.querySelector(".text").innerText = text
-    new_message.querySelector(".message_time").innerText = Math.floor(Date.now() / 1000);
+    new_message.querySelector(".message_time").innerText = 'Just now' // Math.floor(Date.now() / 1000) TODO, mas tipo, pode se deixar assim
     messages.appendChild(new_message)
     scrollMessagesDown()
 }
@@ -138,7 +138,6 @@ message_field.addEventListener('keydown', function(event) {
 
 function scrollMessagesDown(){
     messages.scrollTo(0, messages.scrollHeight);
-
 }
 
 function clearMessageField(){
