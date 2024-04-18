@@ -27,7 +27,6 @@ $brands = getEntitiesFromType($db,"Brands");
 $conditions = getEntitiesFromType($db,"Condition");
 $items = getAllItems($db,100,0,null);
 
-// if(!user->isAdmin()) die(header('Location: /'));
 
 drawHeader($session, 'Admin Page');
 drawSideBar();
