@@ -1,7 +1,8 @@
 const entitiesSection = document.querySelector("#entities-admin")
 const addButton = document.querySelector("#add-tag")
 const type = document.querySelector("#type")
-type.style.display = "none"
+if(type)
+    type.style.display = "none"
 
 if(entitiesSection && addButton) {
     addButton.addEventListener("click",  function () {

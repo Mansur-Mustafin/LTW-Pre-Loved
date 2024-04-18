@@ -39,16 +39,16 @@ async function buildPage() {
         brands = await (getEntities("Brands"))
         conditions = await (getEntities("Condition")) 
 
-        createParagraph("Users: ", users.length,analyticsSection)
-        createParagraph("Banned Users: ", users.filter((value) => value.banned).length,analyticsSection)
-        createParagraph("Admin Users: ", users.filter((value) => value.admin_flag).length,analyticsSection)
-        createParagraph("Items: " ,items.length,analyticsSection)
-        createParagraph("Tags: ", tags.length,analyticsSection)
-        createParagraph("Categories: " , categories.length, analyticsSection)
-        createParagraph("Sizes: " , sizes.length, analyticsSection)
-        createParagraph("Models: " , models.length,analyticsSection)
-        createParagraph("Brands: ", brands.length,analyticsSection)
-        createParagraph("Conditions: " , conditions.length, analyticsSection)
+        createParagraphMap("Users: ", users.length,analyticsSection)
+        createParagraphMap("Banned Users: ", users.filter((value) => value.banned).length,analyticsSection)
+        createParagraphMap("Admin Users: ", users.filter((value) => value.admin_flag).length,analyticsSection)
+        createParagraphMap("Items: " ,items.length,analyticsSection)
+        createParagraphMap("Tags: ", tags.length,analyticsSection)
+        createParagraphMap("Categories: " , categories.length, analyticsSection)
+        createParagraphMap("Sizes: " , sizes.length, analyticsSection)
+        createParagraphMap("Models: " , models.length,analyticsSection)
+        createParagraphMap("Brands: ", brands.length,analyticsSection)
+        createParagraphMap("Conditions: " , conditions.length, analyticsSection)
 
         countTags = tags.map((tag) => {
             return {key: tag.name, value:items.filter((value) => value.tags.includes(tag.name)).length}
@@ -112,7 +112,7 @@ function createGraph(parent,name,countArray,type) {
     return new Chart(ctx,config)
 }
 
-function createParagraph(key,value,parent,className) {
+function createParagraphMap(key,value,parent,className) {
     paragraph = document.createElement("p")
     paragraph.textContent = key
 

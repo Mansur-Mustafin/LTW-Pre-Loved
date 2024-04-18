@@ -7,10 +7,8 @@ if(searchUser) {
         let users = await response.json()
 
         const section = document.querySelector("#users-admin")
-        section.innerHTML = ''
+        if(section) section.innerHTML = ''
     
-        console.log(section)
-
         for(const user of users) {
             drawUserInfo(section,user)
         }
@@ -32,7 +30,6 @@ function drawUserInfo(section,user) {
 
     const userTags = document.createElement("div")
     userTags.className = "user-tags"
-    console.log(user.username)
     createParagraph(user.username,userTags,"username")
     if(user.admin_flag) {
         adminIcon = document.createElement("img")

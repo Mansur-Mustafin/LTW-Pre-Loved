@@ -5,7 +5,7 @@ if(searchItem) {
         const items = await response.json()
 
         const section = document.querySelector("#items-admin")
-        section.innerHTML = ''
+        if(section) section.innerHTML = ''
 
          for(const item of items) {
             const mainImage = JSON.parse(item.images)[0]
@@ -56,7 +56,7 @@ if(searchItem) {
 
             button = document.createElement("button")
             button.type = "submit"
-            button.name = "product-id"
+            button.name = "product_id"
             button.value = item.id
             button.textContent = "Remove"
 
@@ -67,7 +67,7 @@ if(searchItem) {
             article.appendChild(img)
             article.appendChild(productInfo)
             article.appendChild(buttonsDiv)
-            section.appendChild(article)
+            if(section) section.appendChild(article)
 
 
         }
