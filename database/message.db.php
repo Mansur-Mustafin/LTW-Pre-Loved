@@ -77,8 +77,8 @@ function addMessage($db, int $chat_id, int $from_user_id, int $to_user_id, strin
         $chat_id = addChat($db, $item_id, $from_user_id, $to_user_id);
     }
 
-    $sql = "INSERT INTO Messages (chat_id, from_user_id, to_user_id, text, item_id_exchange, files)
-        VALUES (:chat_id, :from_user_id, :to_user_id, :text, :item_id_exchange, :files)";
+    $sql = "INSERT INTO Messages (chat_id, from_user_id, to_user_id, text, item_id_exchange, files, date_time)
+        VALUES (:chat_id, :from_user_id, :to_user_id, :text, :item_id_exchange, :files, :date_time)";
 
     $stmt = $db->prepare($sql);
 
@@ -90,6 +90,7 @@ function addMessage($db, int $chat_id, int $from_user_id, int $to_user_id, strin
     $stmt->bindParam(':item_id_exchange', $offer_exchange, PDO::PARAM_INT);
     $filename = $filename ?? null;
     $stmt->bindParam(':files', $filename, PDO::PARAM_STR);
+    $stmt->bindParam(':date_time', time(), PDO::PARAM_INT);
 
     $stmt->execute();
 

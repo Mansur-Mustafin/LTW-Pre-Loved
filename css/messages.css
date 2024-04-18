@@ -19,7 +19,7 @@ figure.profile_image{
     gap: 1em;
     margin-bottom: 1em;
     img{
-        height: 2em;
+        height: 2.4em;
         border-radius: 50%;
         border: 1px solid var(--matador-darker-red);
         background-color: var(--matador-grey);
