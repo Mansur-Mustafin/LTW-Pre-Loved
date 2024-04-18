@@ -6,8 +6,8 @@ require_once(__DIR__.'/../utils/session.php');
 $session = new Session();
 
 if (!$session->isLoggedIn()) {
-  echo json_encode(['error'=> 'Permission denied']);
-  die();
+    echo json_encode(['error'=> 'Permission denied']);
+    die();
 }
 
 require_once(__DIR__.'/../core/item.class.php');
@@ -20,12 +20,16 @@ $db = getDatabaseConnection();
 
 $user = getUser($db,$session->getName());
 if(!$user->admin_flag) {
-  echo json_encode(['error'=> 'Permission denied']); 
-  die();
+    echo json_encode(['error'=> 'Permission denied']); 
+    die();
 }
 
-$user = getUser($db,$session->getName());
-if(!$user->admin_flag) die(header('Location: /'));
+const possibleEntitiesTypes = ["Categories", "Size", "Condition","Tags", "Brands", "Models"]; 
 
-$users = searchUsers($db,$_GET['search']);
-echo json_encode($users);
+if(in_array($_GET['search'],possibleEntitiesTypes)) {
+    $entities = getEntitiesFromType($db,$_GET['search']);
+    echo json_encode($entities);
+} else {
+    echo json_encode(['error'=> 'Invalid Entity']);
+}
+

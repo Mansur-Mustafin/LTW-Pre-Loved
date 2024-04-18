@@ -78,13 +78,6 @@ function drawButtons(article,user) {
 }
 
 
-function createParagraph(element,parent,className) {
-    paragraph = document.createElement("p")
-    paragraph.textContent = element
-    paragraph.className = className
-    parent.appendChild(paragraph)
-}
-
 function createButton(action,name,value,text,parent) {
     form = document.createElement("form")
     form.action = action

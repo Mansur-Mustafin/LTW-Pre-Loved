@@ -35,11 +35,9 @@ switch ($_GET['value']) {
     case 'users':
         drawUsersAdmin($allUsers);
         break;
-    /* TODO
     case 'statistics':
         drawStatisticsAdmin();
         break;
-    */
     case 'tags':
         drawEntitiesAdmin($tags,"Tags");
         break;

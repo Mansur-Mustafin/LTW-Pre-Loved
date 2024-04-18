@@ -17,12 +17,11 @@ require_once(__DIR__ . '/../pages/admin.php');
                     <p>Users</p>
                 </a>                
             </li>
-            <!-- TODO
             <li class="admin-item">
                 <a href="../pages/admin.php?value=statistics">
                     <p>Statistics</p>
                 </a>    
-            </li> -->
+            </li>
             <li class="admin-item">
                 <a href="../pages/admin.php?value=tags">
                     <p>Tags</p>
@@ -98,7 +97,10 @@ require_once(__DIR__ . '/../pages/admin.php');
 <?php }?>
 
 <?php function drawStatisticsAdmin() {?>
-    <?php echo "TODO"?>
+    <section class="admin-info">
+        <section id="analytics-admin"></section>
+        <section id="analytics-charts"></section>
+    </section>
 <?php }?>
 
 <?php function drawEntitiesAdmin(array $entities,string $type) {?>
