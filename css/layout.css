@@ -27,7 +27,7 @@ section#login-register{
 
 
 /* Items layout*/
-section#items{
+section#items, section#messages_block, section#chats_block{
     padding: 1em;
     h2{
         font-size:x-large;
