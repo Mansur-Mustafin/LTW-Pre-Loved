@@ -25,7 +25,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit-profile'])) {
 
     if($_POST['edit-profile'] == 'save'){
         if (!empty($_POST['new_username'])) {
+            $old_image_path = $user->image_path;
+
             $user->username = $_POST['new_username'];
+            $root_folder = '/data/profile_img/';
+            $filename = get_hash_path($user->username).'.png';
+            $save_path = $root_folder.htmlspecialchars($filename);
+            $user->image_path = $save_path;
+            
+            rename(__DIR__.'/..'.$old_image_path, __DIR__.'/..'.$save_path);
         }
         if (!empty($_POST['new_email'])) {
             $user->email = $_POST['new_email'];
@@ -37,15 +45,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit-profile'])) {
             $user->address = $_POST['new_address'];
         }
         if(isset($_FILES['profile_img']['name'])){
-            $filename = get_hash_path($session->getName()).'.png';
-            $save_path = '/data/profile_img/'.htmlspecialchars($filename);
-            if (move_uploaded_file($_FILES['profile_img']['tmp_name'], __DIR__.'/..'.$save_path)) {
+            if (move_uploaded_file($_FILES['profile_img']['tmp_name'], __DIR__.'/..'.$user->image_path)) {
                 $user->image_path = $save_path;
             }
         }
-        var_dump($user);
-        $session->setName($user->username);
         updateUser($db, $user);
+        $session->setName($user->username);
     }
     
     if($_POST['edit-profile'] == 'cancel'){
