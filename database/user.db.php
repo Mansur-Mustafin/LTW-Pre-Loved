@@ -65,6 +65,7 @@ function getUser(PDO $db, string $text): ?User {
     return $user;
 }
 
+<<<<<<< HEAD
 function searchUsers(PDO $db, string $keyword): ?array {
     $sql = "SELECT * FROM Users WHERE username LIKE ?";
 
@@ -88,6 +89,31 @@ function searchUsers(PDO $db, string $keyword): ?array {
     }
 
     return $users;
+=======
+function getUserById(PDO $db, int $id): ?User {
+    $sql = "SELECT * FROM Users WHERE id = :id";
+
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+    $stmt->execute();
+
+    $userData = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$userData) return null;
+    $user = new User(
+        $userData['username'],
+        $userData['password'],
+        $userData['email'],
+        $userData['id'],
+        $userData['phonenumber'] ?? null,
+        $userData['image_path'] ?? null,
+        $userData['banned'] ?? 0,
+        $userData['admin_flag'] ?? 0,
+        $userData['address'] ?? null
+    );
+
+    return $user;
+>>>>>>> 6e6039690f141d106b4ce31f31282c6b797ca53f
 }
 
 function updateUser(PDO $db, User $user): bool {

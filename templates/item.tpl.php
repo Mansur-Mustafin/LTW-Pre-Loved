@@ -1,11 +1,12 @@
 <?php 
 declare(strict_types=1);
 
-require_once(__DIR__ . '/../core/item.class.php')
+require_once(__DIR__ . '/../core/item.class.php');
+require_once(__DIR__ . '/../utils/utils.php');
 ?>
 
 <?php function drawItems(array $items, Session $session, string $title, 
-                         array $items_in_cart = array(), array $items_in_wish_list = array()) {?>
+                         array $items_in_cart = array(), array $items_in_wish_list = array()): void {?>
     <section id="items">
         <?php if (empty($items)){ ?>
             <h2>TODO handle each page item.tpl.php line 11 <?=$title?></h2>
@@ -22,11 +23,10 @@ require_once(__DIR__ . '/../core/item.class.php')
 <?php } ?>
 
 
-<?php function drawItem(Item $item, Session $session, string $title, bool $in_cart, bool $in_wish_list) {
-    $main_image = $item->getImagesArray()[0];
-    ?>
-    <article class="item">
-        <img src=<?=htmlspecialchars($main_image)?> alt="Account Profile Picture">
+<?php function drawItem(Item $item, Session $session, string $title, bool $in_cart, bool $in_wish_list): void {
+    $main_image = $item->getImagesArray()[0]; ?>
+    <article class="item fly">
+        <img src=<?=htmlspecialchars($main_image)?> alt="Item Image">
         <a href="../pages/item.php?item_id=<?=$item->id?>">
             <h3><?=htmlspecialchars($item->title)?></h3>
         </a>
@@ -46,7 +46,7 @@ require_once(__DIR__ . '/../core/item.class.php')
             </ul>
             <p><?= htmlspecialchars(substr($item->description, 0, 100)) . 
                    (strlen($item->description) > 100 ? '...' : '') ?></p>
-            <p><?=$item->getTimePassed()?></p>
+            <p><?=getTimePassed($item->created_at)?></p>
         </div>
         <div class="top-right-element"><p><?=htmlspecialchars(number_format($item->price, 2))?></p><p>$</p></div>
         <?php draw_buttons_item($item, $session, $title, $in_cart, $in_wish_list); ?>
@@ -118,7 +118,7 @@ function draw_buttons_item(Item $item, Session $session, string $title, bool $in
             <p><?= htmlspecialchars($item->description) ?></p>
         </label>
 
-        <p><?=$item->getTimePassed()?></p>
+        <p><?=getTimePassed($item->created_at)?></p>
         
         
     </article>

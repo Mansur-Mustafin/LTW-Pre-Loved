@@ -83,17 +83,29 @@ CREATE TABLE Transactions (
     FOREIGN KEY (item_id) REFERENCES Items(id) ON DELETE SET NULL
 );
 
-
 CREATE TABLE Messages (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    date_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+    date_time INTEGER,
     files TEXT,
     text TEXT NOT NULL,
     item_id_exchange INTEGER,                    -- Case if some body want to exchange the item 
-    item_id INTEGER NOT NULL,                    -- For what item that message was written
-    sender_id INTEGER NOT NULL,                  -- Who send the message
+    chat_id INTEGER NOT NULL,                    -- ID of Chat
+    from_user_id INTEGER NOT NULL,               -- Who send the message
+    to_user_id INTEGER NOT NULL,                 -- Who receive the message
+    is_read INTEGER DEFAULT 0,                   -- Is message red
+    FOREIGN KEY (chat_id) REFERENCES Chats(id),
+    FOREIGN KEY (from_user_id) REFERENCES Users(id),
+    FOREIGN KEY (to_user_id) REFERENCES Users(id)
+);
+
+CREATE TABLE Chats (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    item_id INTEGER NOT NULL,                       -- For what item that message was written
+    from_user_id INTEGER NOT NULL,                  -- Who send the message
+    to_user_id INTEGER NOT NULL,                    -- Who receive the message
     FOREIGN KEY (item_id) REFERENCES Items(id),
-    FOREIGN KEY (sender_id) REFERENCES Users(id)
+    FOREIGN KEY (from_user_id) REFERENCES Users(id),
+    FOREIGN KEY (to_user_id) REFERENCES Users(id)
 );
 
 CREATE TABLE Categories (

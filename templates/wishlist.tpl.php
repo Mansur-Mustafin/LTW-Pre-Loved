@@ -23,7 +23,7 @@ require_once(__DIR__.'/../utils/session.php')
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            var textarea = document.getElementById('expanding-textarea');
+            var textarea = document.getElementById('expanding-textarea'); // TODO id? 
 
             textarea.addEventListener('input', function() {
                 this.style.height = 'auto'; 
