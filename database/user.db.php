@@ -65,7 +65,6 @@ function getUser(PDO $db, string $text): ?User {
     return $user;
 }
 
-<<<<<<< HEAD
 function searchUsers(PDO $db, string $keyword): ?array {
     $sql = "SELECT * FROM Users WHERE username LIKE ?";
 
@@ -89,7 +88,7 @@ function searchUsers(PDO $db, string $keyword): ?array {
     }
 
     return $users;
-=======
+}
 function getUserById(PDO $db, int $id): ?User {
     $sql = "SELECT * FROM Users WHERE id = :id";
 
@@ -113,7 +112,6 @@ function getUserById(PDO $db, int $id): ?User {
     );
 
     return $user;
->>>>>>> 6e6039690f141d106b4ce31f31282c6b797ca53f
 }
 
 function updateUser(PDO $db, User $user): bool {
