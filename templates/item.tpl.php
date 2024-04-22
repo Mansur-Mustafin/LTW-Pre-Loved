@@ -36,8 +36,8 @@ require_once(__DIR__ . '/../utils/utils.php');
                     <li><?=htmlspecialchars($tag)?></li>
                 <?php } ?>
                 
-                <?php if($item->condition){?> <li>  htmlspecialchars($item->condition); </li> <?php } ?>
-                <?php if($item->size){?> <li>  htmlspecialchars($item->size); </li> <?php } ?>
+                <?php if($item->condition){?> <li>  <?=htmlspecialchars($item->condition);?> </li> <?php } ?>
+                <?php if($item->size){?> <li> <?=htmlspecialchars($item->size);?> </li> <?php } ?>
                 <?php if ($item->tradable) { ?>
                     <li>Tradable</li>
                 <?php } else { ?>
