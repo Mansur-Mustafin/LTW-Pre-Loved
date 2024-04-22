@@ -7,7 +7,7 @@ Develop a website that facilitates the buying and selling of pre-loved items. Th
 ### General
 - [X] Register a new account.
 - [X] Log in and out.
-- [X] Upload profile foto.
+- [X] Upload profile photo.
 - [X] Edit their profile, including their name, username, password, and email.
 
 ### Sellers
@@ -17,16 +17,17 @@ Develop a website that facilitates the buying and selling of pre-loved items. Th
 - [ ] Print shipping forms for items that have been sold.
 
 ### Buyers
-- Browse items using filters like category, price, and condition.
+- [ ] Browse items using filters like category, price, and condition.
 - [X] Engage with sellers to ask questions or negotiate prices.
 - [X] Add items to a wishlist.
 - Add items to a shopping cart.
 - [ ] Proceed to checkout with their shopping cart (simulate payment process).
 
 ### Admins
-- Elevate a user to admin status.
-- Introduce new item categories, sizes, conditions, and other pertinent entities.
-- Oversee and ensure the smooth operation of the entire system.
+- [X] Elevate a user to admin status.
+- [ ] Introduce new item categories, sizes, conditions, and other pertinent entities.
+- [X] Oversee and ensure the smooth operation of the entire system.
+- [ ] Statistics for the number of transactions, new users, and new items.
 
 ## Technology Stack
 - **HTML**: For structuring web content.
