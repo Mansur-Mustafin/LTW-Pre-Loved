@@ -11,23 +11,28 @@ Develop a website that facilitates the buying and selling of pre-loved items. Th
 - [X] Edit their profile, including their name, username, password, and email.
 
 ### Sellers
-- List new items, providing details such as category, brand, model, size, and condition, along with images.
-- Track and manage their listed items.
+- [ ] List new items, providing details such as category, brand, model, size, and condition, along with images. (Bruno)
+- Track and manage their listed items. (Bruno)
+  - [ ] History of items
+  - [ ] Add Delete items from history list 
 - [X] Respond to inquiries from buyers regarding their items and add further information if needed.
-- [ ] Print shipping forms for items that have been sold.
+- [ ] Print shipping forms for items that have been sold. (Mansur)
 
 ### Buyers
-- [ ] Browse items using filters like category, price, and condition.
+- [ ] Browse items using filters like category, price, and condition. (Rubem)
+  - [ ] Barra da pesquisa (para site inteiro)
+  - [ ] testar categoria fora de filtro
+  - [ ] ligar filtros
 - [X] Engage with sellers to ask questions or negotiate prices.
-- [X] Add items to a wishlist.
-- Add items to a shopping cart.
-- [ ] Proceed to checkout with their shopping cart (simulate payment process).
+- [ ] Add items to a wishlist. (Add Ajax) (Mansur)
+- [ ] Add items to a shopping cart. (Ajax) (Mansur)
+- [ ] Proceed to checkout with their shopping cart (simulate payment process). (Mansur)
 
 ### Admins
 - [X] Elevate a user to admin status.
-- [ ] Introduce new item categories, sizes, conditions, and other pertinent entities.
+- [ ] Introduce new item categories, sizes, conditions, and other pertinent entities. (Sizes) (Rubem)
 - [X] Oversee and ensure the smooth operation of the entire system.
-- [ ] Statistics for the number of transactions, new users, and new items.
+- [ ] Statistics for the number of transactions, new users, and new items. (Rubem)
 
 ## Technology Stack
 - **HTML**: For structuring web content.
@@ -40,12 +45,12 @@ Develop a website that facilitates the buying and selling of pre-loved items. Th
 ## Additional Features
 - **Rating and Review System**: A feedback mechanism for users to rate products and sellers.
 - **Promotional Features**: Options for sellers to feature their products on the main page through paid promotions.
-- **Analytics Dashboard**: A tool for sellers to track performance metrics and sales data.
-- [ ] **Multi-Currency Support**: A system to handle transactions in various currencies.
+- [ ] **Analytics Dashboard**: A tool for sellers to track performance metrics and sales data. (Rubem)
+- **Multi-Currency Support**: A system to handle transactions in various currencies.
 - **Item Swapping**: A feature allowing users to exchange items instead of monetary transactions.
 - **API Integration**: Develop a robust API to allow third-party applications to interact with the platform.
 - **Dynamic Promotions**: Implement a system for time-limited discounts, bundle deals (e.g., buy two, get one free), and quantity-based discounts (e.g., 10% off on purchases over a certain amount).
 - **User Preferences**: Allow users to set and filter searches based on personal preferences such as size, condition, gender-specific items, etc.
-- [ ] **Shipping Costs**: Calculate shipping costs depending on location (crude estimate).
+- [ ] **Shipping Costs**: Calculate shipping costs depending on location (crude estimate). (Mansur)
 - [X] **Real-Time Messaging System**: A secure and efficient communication channel for buyers and sellers.
 
