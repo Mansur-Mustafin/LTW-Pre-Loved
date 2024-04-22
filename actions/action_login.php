@@ -45,6 +45,7 @@ if($user->banned){
 
 $session->setId($user->id);
 $session->setName($user->username);
+$session->setAdmin((bool)$user->admin_flag);
 
 // TODO change this later
 if($user->admin_flag){

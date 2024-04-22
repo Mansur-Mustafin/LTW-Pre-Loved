@@ -2,24 +2,20 @@
 
 declare(strict_types=1);
 
-function getCategories(PDO $db) {
-    return $db->query("SELECT * FROM Categories")->fetchAll(PDO::FETCH_ASSOC);
+function getEntitiesFromType(PDO $db, $type) {
+    $stmt = $db->prepare("SELECT * FROM $type");
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function getBrands(PDO $db) {
-    return $db->query("SELECT * FROM Brands")->fetchAll(PDO::FETCH_ASSOC);
+function removeEntity(PDO $db,$entity,$type) {
+    $stmt = $db->prepare("DELETE FROM :type_value WHERE id=?");
+    $stmt->bindParam(':type_value',$type->value,PDO::PARAM_STR);
+    $stmt->execute([$entity]);
 }
 
-function getModels(PDO $db) {
-    return $db->query("SELECT * FROM Models")->fetchAll(PDO::FETCH_ASSOC);
+function addEntity(PDO $db, $entity,$type) {
+    $stmt = $db->prepare("INSERT INTO :type_value (name) SELECT (?) WHERE NOT EXISTS (SELECT name FROM :type_value WHERE name = ?)");
+    $stmt->bindParam(':type_value',$type,PDO::PARAM_STR);
+    $stmt->execute([$entity,$entity]);
 }
-
-function getSizes(PDO $db) {
-    return $db->query("SELECT * FROM Size")->fetchAll(PDO::FETCH_ASSOC);
-}
-
-function getConditions(PDO $db) {
-    return $db->query("SELECT * FROM Condition")->fetchAll(PDO::FETCH_ASSOC);
-}
-
-

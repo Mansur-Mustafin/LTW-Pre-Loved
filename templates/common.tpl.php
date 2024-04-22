@@ -17,9 +17,16 @@ require_once(__DIR__ . '/../utils/session.php');
         <link href="../css/profile.css" rel="stylesheet">
         <link href="../css/header.css" rel="stylesheet">
         <link href="../css/item.css" rel="stylesheet">
+        <link href="../css/admin.css" rel="stylesheet">
         <link href="../css/messages.css" rel="stylesheet">
         <title>Matador OLX | <?=$title?></title>
         <link rel="icon" type="image/x-icon" href="../assets/img/favicon.png">
+        <script type="text/javascript" src="../js/search_item.js" defer></script>
+        <script type="text/javascript" src="../js/search_user.js" defer></script>
+        <script type="text/javascript" src="../js/add_entity.js" defer></script>
+        <script type="text/javascript" src="../js/analytics_page.js" defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+
     </head>
     <body>
         <header>
@@ -35,6 +42,9 @@ require_once(__DIR__ . '/../utils/session.php');
             <nav id="header-menu">
                 <ul>
                 <?php if ($session->isLoggedIn()) {?>
+                    <?php if($session->isAdmin()) {?>
+                        <li><img src="../assets/img/control-centre.svg" alt="admin-icon"><a href="../pages/admin.php">Admin Page</a></li>
+                    <?php } ?>
                     <li><img src="../assets/img/shopping-cart.svg" alt="cart-icon"><a href="../pages/shopping_cart.php">Shopping Cart</a></li>
                     <li><img src="../assets/img/love.svg" alt="cart-icon"><a href="../pages/wishlist.php">Wish List</a></li>
                     <li><img src="../assets/img/account-icon.svg" alt="account-icon"><a href="../pages/profile.php"><?=$session->getName();?></a></li>

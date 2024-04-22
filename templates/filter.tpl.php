@@ -22,8 +22,8 @@ declare(strict_types=1);
 
 <?php function draw_filter_element(string $title, array $elements, string $name_elemrnt) { ?>
 
-    <div class="filter-element">
-        <label>
+    <article class="filter-element">
+        <label class="hover-element">
             <input type="checkbox">
             <h4><?=$title?></h4>
         </label>
@@ -39,6 +39,6 @@ declare(strict_types=1);
         <?php } ?>
 
         </ul>
-    </div>
+    </article>
 
 <?php } ?>

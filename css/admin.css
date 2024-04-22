@@ -1,0 +1,91 @@
+nav#pages{
+    h4{
+        color: black;
+        font-weight: normal;
+    }
+    .hover-element::after {
+        content: '';
+    }
+}
+
+.admin-info {
+    #admin-search-bar {
+        margin-top: 1em;
+    }
+    #add-tag, #add-item {
+        justify-self: center;
+        margin: 2em;
+        width: 92%;
+    }
+
+    .profile-img {
+        background-color: Gainsboro;
+        border-radius: 15%;
+        height: 6em;
+    }
+
+    form button{
+        padding: 1em;
+    }
+
+    ul.tags{
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    #entities-admin ul.tags li{
+        background-color: white;
+        display: flex;
+        align-items: center;
+        button{
+            margin-left: .5em;
+            padding: 0;
+            img{
+                margin: .5em;
+                width: 1.5em;
+                height: 1.5em;
+            }
+        }
+
+    }
+
+    .product {
+        img {
+            align-self: center;
+        }
+        .product-id {
+            color: gray;
+        }
+        .product-id::before {
+            content: "#";
+        }
+        .product-info {
+            color: gray;
+        }
+    }
+
+    #analytics-admin {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+
+        .item {
+            display: block;
+            padding: 1em;
+            .count {
+                font-weight: bold;
+            }
+        }
+    }
+
+    #analytics-charts {
+        margin: 0 5%;
+        display: grid;
+        grid-template-columns: 1fr 1fr; 
+        width: 30em;
+        .bar {
+            grid-column: span 2;
+            width:40em;
+        }
+    }
+}
+

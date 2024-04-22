@@ -35,8 +35,9 @@ require_once(__DIR__ . '/../utils/utils.php');
                 <?php foreach ($item->tags as $tag) { ?>
                     <li><?=htmlspecialchars($tag)?></li>
                 <?php } ?>
-                <li><?= htmlspecialchars($item->condition) ?></li>
-                <li><?= htmlspecialchars($item->size) ?></li>
+                
+                <?php if($item->condition){?> <li>  htmlspecialchars($item->condition); </li> <?php } ?>
+                <?php if($item->size){?> <li>  htmlspecialchars($item->size); </li> <?php } ?>
                 <?php if ($item->tradable) { ?>
                     <li>Tradable</li>
                 <?php } else { ?>
@@ -47,7 +48,7 @@ require_once(__DIR__ . '/../utils/utils.php');
                    (strlen($item->description) > 100 ? '...' : '') ?></p>
             <p><?=getTimePassed($item->created_at)?></p>
         </div>
-        <div class="price"><p><?=htmlspecialchars(number_format($item->price, 2))?></p><p>$</p></div>
+        <div class="top-right-element"><p><?=htmlspecialchars(number_format($item->price, 2))?></p><p>$</p></div>
         <?php draw_buttons_item($item, $session, $title, $in_cart, $in_wish_list); ?>
     </article>
 <?php } ?>
@@ -85,7 +86,7 @@ function draw_buttons_item(Item $item, Session $session, string $title, bool $in
     <article class="item-main">
 
         <h3><?=htmlspecialchars($item->title)?></h3>
-        <div class="price"><p><?=htmlspecialchars(number_format($item->price, 2))?></p><p>$</p></div>
+        <div class="top-right-element"><p><?=htmlspecialchars(number_format($item->price, 2))?></p><p>$</p></div>
 
         <img src=<?=htmlspecialchars($main_image)?> alt="Item Image">
         
@@ -96,7 +97,7 @@ function draw_buttons_item(Item $item, Session $session, string $title, bool $in
             <p><?= htmlspecialchars($item->model) ?></p>
         </label>
         <label>condition:
-            <p><?= htmlspecialchars($item->condition) ?></p>
+            <p><?= htmlspecialchars($item->condition)?></p>
         </label>
         <label>size:
             <p><?= htmlspecialchars($item->size) ?></p>

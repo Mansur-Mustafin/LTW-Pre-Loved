@@ -13,6 +13,10 @@
       return isset($_SESSION['id']);    
     }
 
+    public function isAdmin(): bool {
+      return isset($_SESSION['admin']) && ($_SESSION['admin'] == true);
+    }
+
     public function logout() {
       session_destroy();
     }
@@ -31,6 +35,10 @@
 
     public function setName(string $name) {
       $_SESSION['name'] = $name;
+    }
+
+    public function setAdmin(bool $admin) {
+      $_SESSION['admin'] = $admin;
     }
 
     public function addMessage(string $type, string $text) {

@@ -65,6 +65,30 @@ function getUser(PDO $db, string $text): ?User {
     return $user;
 }
 
+function searchUsers(PDO $db, string $keyword): ?array {
+    $sql = "SELECT * FROM Users WHERE username LIKE ?";
+
+    $stmt = $db->prepare($sql);
+    $stmt->execute([$keyword . '%']);
+
+    $users = [];
+    while( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
+        $user = new User(
+            id: $row['id'],
+            username: $row['username'],
+            email: $row['email'],
+            password: $row['password'],
+            phonenumber: $row['phonenumber'] ?? null,
+            image_path: $row['image_path'] ?? null,
+            banned: $row['banned'] ?? 0,
+            admin_flag: $row['admin_flag'] ?? 0,
+            address: $row['address'] ?? null,
+        );
+        $users[] = $user;
+    }
+
+    return $users;
+}
 function getUserById(PDO $db, int $id): ?User {
     $sql = "SELECT * FROM Users WHERE id = :id";
 
@@ -115,4 +139,28 @@ function updateUser(PDO $db, User $user): bool {
     $stmt->bindValue(':address', $user->address, PDO::PARAM_STR);
 
     return $stmt->execute();
+}
+
+function getAllUsers(PDO $db): array {
+    $sql = 'SELECT * FROM USERS';
+    $stmt = $db->prepare($sql);
+    $stmt->execute();
+
+    $users = [];
+    while( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
+        $user = new User(
+            id: $row['id'],
+            username: $row['username'],
+            email: $row['email'],
+            password: $row['password'],
+            phonenumber: $row['phonenumber'] ?? null,
+            image_path: $row['image_path'] ?? null,
+            banned: $row['banned'] ?? 0,
+            admin_flag: $row['admin_flag'] ?? 0,
+            address: $row['address'] ?? null,
+        );
+        $users[] = $user;
+    }
+
+    return $users;
 }
