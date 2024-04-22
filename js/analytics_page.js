@@ -1,11 +1,3 @@
-/* 
-+ Top 10 Brands/Categories/Tags/Conditions (graph???)
-+ Number of Items created based in the time passed (graph)
-
-+ Top 3 items in Wishlist
-+ Top 3 items in Shopping Cart (and not sold)
-*/
-
 async function getItems() {
     const response = await fetch('../api/get_items.php?search=')
     const items = await response.json()

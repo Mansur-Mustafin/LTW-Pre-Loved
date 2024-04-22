@@ -10,7 +10,7 @@
     h3{
         color: black;
     }
-    div.price p{
+    div.top-right-element p{
         display: inline;
         margin: 1em 0 0;
         font-size: larger;
@@ -31,7 +31,7 @@
         margin-left: 1em;
         margin-top: 1em;
     }
-    .price {
+    .top-right-element {
         grid-row: 1;
         grid-column: 3;
     }
@@ -78,7 +78,7 @@
         font-size: xx-large;
         margin-top: .4em;
     }
-    .price{
+    .top-right-element{
         margin: 1em 1em 0 0 ;
     }
     img{
@@ -112,7 +112,9 @@ ul.tags{
         padding: .5em;
         display: inline-block;
     }
+    li.red-tag{
+        background-color: var(--matador-red);
+        color: white;
+    }
 }
-
-
 

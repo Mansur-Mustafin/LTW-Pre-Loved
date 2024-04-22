@@ -5,7 +5,7 @@
     padding-bottom: 0.2em;
 }
 
-.filter-element > label{
+.hover-element{
     display: flex;
     transition: all .3s;
     padding: .5em;
@@ -56,7 +56,7 @@
 }
 
 /* Opened menu */
-.filter-element > label:has(input:checked){
+.hover-element:has(input:checked){
     &::after {
         transform: rotate(0deg);
     }

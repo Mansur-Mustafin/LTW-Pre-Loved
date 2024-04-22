@@ -30,13 +30,14 @@ require_once(__DIR__ . '/../core/item.class.php')
         <a href="../pages/item.php?item_id=<?=$item->id?>">
             <h3><?=htmlspecialchars($item->title)?></h3>
         </a>
-        <div>// TODO 
+        <div>
             <ul class='tags'>
                 <?php foreach ($item->tags as $tag) { ?>
                     <li><?=htmlspecialchars($tag)?></li>
                 <?php } ?>
-                <?php if($item->condition){?> <li>htmlspecialchars($item->condition)</li> <?php } ?>
-                <li><?= htmlspecialchars($item->size) ?></li>
+                
+                <?php if($item->condition){?> <li>  htmlspecialchars($item->condition); </li> <?php } ?>
+                <?php if($item->size){?> <li>  htmlspecialchars($item->size); </li> <?php } ?>
                 <?php if ($item->tradable) { ?>
                     <li>Tradable</li>
                 <?php } else { ?>
@@ -47,7 +48,7 @@ require_once(__DIR__ . '/../core/item.class.php')
                    (strlen($item->description) > 100 ? '...' : '') ?></p>
             <p><?=$item->getTimePassed()?></p>
         </div>
-        <div class="price"><p><?=htmlspecialchars(number_format($item->price, 2))?></p><p>$</p></div>
+        <div class="top-right-element"><p><?=htmlspecialchars(number_format($item->price, 2))?></p><p>$</p></div>
         <?php draw_buttons_item($item, $session, $title, $in_cart, $in_wish_list); ?>
     </article>
 <?php } ?>
@@ -85,7 +86,7 @@ function draw_buttons_item(Item $item, Session $session, string $title, bool $in
     <article class="item-main">
 
         <h3><?=htmlspecialchars($item->title)?></h3>
-        <div class="price"><p><?=htmlspecialchars(number_format($item->price, 2))?></p><p>$</p></div>
+        <div class="top-right-element"><p><?=htmlspecialchars(number_format($item->price, 2))?></p><p>$</p></div>
 
         <img src=<?=htmlspecialchars($main_image)?> alt="Item Image">
         

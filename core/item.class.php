@@ -40,8 +40,8 @@ class Item {
         ?array $tags = null
     ) {
         $this->id = $id;
-        $this->brand = $brand;
-        $this->model = $model;
+        $this->brand = $brand ?? '';
+        $this->model = $model ?? '';
         $this->description = $description ?? '';
         $this->title = $title ?? '';
         $this->images = $images ?? [self::DEFAULT_IMAGE_PATH];
@@ -50,15 +50,17 @@ class Item {
         $this->priority = $priority;
         $this->user_id = $user_id;
         $this->created_at = $created_at ?? date();
-        $this->condition = $condition ?? null;
-        $this->category = $category;
-        $this->size = $size;
+        $this->condition = $condition ?? '';
+        $this->category = $category ?? '';
+        $this->size = $size ?? '';
         $this->tags = $tags ?? array();
     }
 
     public function getImagesArray() {
         return json_decode($this->images, true);
     }
+
+    
 
     function getTimePassed() {
         $now = new DateTime();

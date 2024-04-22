@@ -14,7 +14,7 @@ require_once(__DIR__.'/../core/item.class.php');
 require_once(__DIR__.'/../database/connection.db.php');
 require_once(__DIR__.'/../database/filter.db.php');
 require_once(__DIR__.'/../database/user.db.php');
-
+require_once(__DIR__ .'/../utils/validation.php');
 
 $db = getDatabaseConnection();
 
@@ -24,12 +24,6 @@ if(!$user->admin_flag) {
     die();
 }
 
-const possibleEntitiesTypes = ["Categories", "Size", "Condition","Tags", "Brands", "Models"]; 
-
-if(in_array($_GET['search'],possibleEntitiesTypes)) {
-    $entities = getEntitiesFromType($db,$_GET['search']);
-    echo json_encode($entities);
-} else {
-    echo json_encode(['error'=> 'Invalid Entity']);
-}
-
+echo is_valid_entity($_GET['search']) 
+    ? json_encode(getEntitiesFromType($db,$_GET['search']))
+    : json_encode(['error'=> 'Invalid Entity']);
