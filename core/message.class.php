@@ -40,7 +40,10 @@ class Message {
     }
 
     public function isFileImage() : bool{
-        return (bool)exif_imagetype("../data/uploaded_files/".$this->filename);
+        return (bool)exif_imagetype("../data/uploaded_files/".substr($this->filename, 0, 3).'/'.$this->filename);
     }
 
+    public function getFullPath() : string{
+        return substr($this->filename, 0, 3).'/'.$this->filename;
+    }
 }
