@@ -32,7 +32,7 @@ Develop a website that facilitates the buying and selling of pre-loved items. Th
 - [X] Elevate a user to admin status.
 - [X] Introduce new item categories, sizes, conditions, and other pertinent entities.
 - [X] Oversee and ensure the smooth operation of the entire system.
-- [ ] Statistics for the number of transactions, new users, and new items. (Rubem)
+- [X] Statistics for the number of transactions, new users, and new items. (Rubem)
 
 ## Technology Stack
 - **HTML**: For structuring web content.

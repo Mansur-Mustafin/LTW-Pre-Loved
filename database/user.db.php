@@ -83,6 +83,7 @@ function searchUsers(PDO $db, string $keyword): ?array {
             banned: $row['banned'] ?? 0,
             admin_flag: $row['admin_flag'] ?? 0,
             address: $row['address'] ?? null,
+            created_at: $row['created_at'] ?? null,
         );
         $users[] = $user;
     }

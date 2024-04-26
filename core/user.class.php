@@ -14,6 +14,7 @@ class User {
     public ?int $banned;
     public int $admin_flag;
     public ?string $address;
+    public ?int $created_at;
 
     public function __construct(string $username, 
                                 string $password, 
@@ -23,7 +24,8 @@ class User {
                                 ?string $image_path = null,
                                 int $banned = 0, 
                                 int $admin_flag = 0, 
-                                ?string $address = null) 
+                                ?string $address = null,
+                                ?int $created_at = null) 
     {
         $this->id = $id;
         $this->username = $username;
@@ -34,5 +36,6 @@ class User {
         $this->banned = $banned;
         $this->admin_flag = $admin_flag;
         $this->address = $address ?? '';
+        $this->created_at = $created_at ?? time();
     }
 }
