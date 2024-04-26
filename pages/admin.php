@@ -25,6 +25,7 @@ $tags = getEntitiesFromType($db,"Tags");
 $categories = getEntitiesFromType($db,"Categories");
 $brands = getEntitiesFromType($db,"Brands");
 $conditions = getEntitiesFromType($db,"Condition");
+$sizes = getEntitiesFromType($db,"Size");
 $items = getAllItems($db,100,0,null);
 
 
@@ -48,6 +49,9 @@ switch ($_GET['value']) {
         break;
     case 'condition':
         drawEntitiesAdmin($conditions,"Condition");
+        break;
+    case 'size':
+        drawEntitiesAdmin($sizes,'Size');
         break;
     case 'items':
         drawItemsAdmin($items);
