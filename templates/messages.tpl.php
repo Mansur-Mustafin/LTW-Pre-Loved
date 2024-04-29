@@ -137,11 +137,11 @@ require_once(__DIR__ . '/../utils/utils.php');
 
                     <?php if($message->filename != null){ ?>
                         <div class="attached_file">
-                            <a target="_blank" href="../data/uploaded_files/<?= $message->filename ?? "" ?>">
-                                <?= htmlspecialchars($message->filename ?? "") ?>
+                            <a target="_blank" href="../data/uploaded_files/<?= $message->getFullPath() ?>">
+                                <?= htmlspecialchars(substr($message->filename, 64)) ?>
                             </a>
                             <?php if($message->isFileImage()){ ?>
-                                <img src="../data/uploaded_files/<?= $message->filename ?>" alt="attached_file_image">
+                                <img src="../data/uploaded_files/<?= $message->getFullPath() ?>" alt="attached_file_image">
                             <?php } ?>
                         </div>
                     <?php } ?>

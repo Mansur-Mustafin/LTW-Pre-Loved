@@ -20,3 +20,12 @@ function getTimePassed(int $created_at) : string {
         return 'Just now';
     }
 }
+
+function ensureFolderExists($path) {
+    if (!file_exists($path)) {
+        if (!mkdir($path)) {
+            throw new Exception("Failed to create directory: " . $path);
+        } 
+    } 
+}
+

@@ -12,6 +12,8 @@ if(!$session->isLoggedIn()) {
 
 require_once(__DIR__.'/../database/connection.db.php');
 require_once(__DIR__.'/../database/message.db.php');
+require_once(__DIR__.'/../utils/hash.php');
+require_once(__DIR__.'/../utils/utils.php');
 
 $db = getDatabaseConnection();
 
@@ -33,9 +35,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $offer_exchange = intval($_POST['offer_exchange']);
     $filename = "";
     if($_FILES['file']['size'] != 0){
-        $filename = time().$_FILES['file']['name'];
-        // TODO: make hash path 
-        $save_path = '/data/uploaded_files/'.htmlspecialchars($filename);
+        $filename = get_hash_path((string) time()).$_FILES['file']['name'];
+        $folderHash = substr($filename, 0, 3);
+        ensureFolderExists(__DIR__."/../data/uploaded_files/$folderHash/");
+
+        $save_path = '/data/uploaded_files/'.htmlspecialchars($folderHash.'/'.$filename);
+
         move_uploaded_file( $_FILES['file']['tmp_name'], __DIR__.'/..'.$save_path);
     }
 
