@@ -96,6 +96,19 @@
     }
 }
 
+#pagination-control{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2em;
+    img{
+        height: 1.3em;
+    }
+    span{
+        font-size: 1.1em;
+    }
+}
+
 ul.tags{
     li{
         margin: .5em;

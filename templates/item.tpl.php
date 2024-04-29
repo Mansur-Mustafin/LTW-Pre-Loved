@@ -5,8 +5,9 @@ require_once(__DIR__ . '/../core/item.class.php');
 require_once(__DIR__ . '/../utils/utils.php');
 ?>
 
-<?php function drawItems(array $items, Session $session, string $title, 
-                         array $items_in_cart = array(), array $items_in_wish_list = array()): void {?>
+<?php function drawItems(array $items, Session $session, string $title,
+                         array $items_in_cart = array(), array $items_in_wish_list = array(),
+                         int $page_index = 0, bool $has_more_pages = false): void {?>
     <section id="items">
         <?php if (empty($items)){ ?>
             <h2>TODO handle each page item.tpl.php line 11 <?=$title?></h2>
@@ -18,6 +19,20 @@ require_once(__DIR__ . '/../utils/utils.php');
 
                 drawItem($item, $session, $title, $in_cart, $in_wishlist);
             } ?>
+            <!-- Pagination Controls -->
+            <?php if (sizeof($items) >= 10 || $page_index != 0) { ?>
+                <nav id='pagination-control'>
+                    <button <?= $page_index == 0 ? "disabled" : "" ?> onclick="window.location.href='?page=<?=$page_index - 1?>'" >
+                        <img src="../assets/img/previous.svg" alt="Previous">
+                    </button>
+
+                    <span>Page <?=$page_index?></span>
+
+                    <button <?= !$has_more_pages ? "disabled" : "" ?> onclick="window.location.href='?page=<?=$page_index + 1?>'" >
+                        <img src="../assets/img/previous.svg" alt="Next" style='transform: rotate(180deg);'>
+                    </button>
+                </nav>
+            <?php } ?>
         <?php } ?>
     </section>
 <?php } ?>
