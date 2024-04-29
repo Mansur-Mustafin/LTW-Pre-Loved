@@ -32,7 +32,7 @@ declare(strict_types=1);
         <?php foreach($elements as $element) { ?>
             <li>
                 <label>
-                    <input type="checkbox" name="name_elemrnt" value="<?= htmlspecialchars($element['name']) ?>">
+                    <input type="checkbox" name="<?= $name_elemrnt ?>/<?= htmlspecialchars($element['name']) ?>" value="">
                     <?= htmlspecialchars($element['name']) ?>
                 </label>
             </li>
