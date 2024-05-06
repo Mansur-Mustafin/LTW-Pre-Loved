@@ -67,6 +67,7 @@ require_once(__DIR__ . '/../utils/session.php');
 <?php function drawFooter() { ?>
     </main>
     <div id = "back-button"><a href="#">Back to the top</a></div>
+    <script src="../js/scroll_up.js"></script>
     <footer>
         <nav class = "footer-list">
             <ul>
