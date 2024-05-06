@@ -29,4 +29,3 @@ drawFilter($categories, $brands, $size, $conditions);
 drawItems($items, $session, 'Find what you want to buy!', $items_in_cart, $items_in_wishlist);
 drawFooter();
 
-?>

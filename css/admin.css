@@ -57,7 +57,7 @@ nav#pages{
             color: gray;
         }
         .product-id::before {
-            content: "#";
+            content: " #";
         }
         .product-info {
             color: gray;

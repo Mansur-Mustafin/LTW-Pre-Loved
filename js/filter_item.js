@@ -1,8 +1,17 @@
 const filterItems = document.getElementById("filter")
-let itemsSection = document.getElementById("items")
+const itemsSection = document.getElementById("items")
+
+const searchBarItem = document.getElementById("item-search")
+const itemList = document.getElementById("item-list") 
+
 if(filterItems) {
-    filterItems.addEventListener("submit",async (e) => {
-        e.preventDefault();
+   filterItems.addEventListener("submit",async (e) => {
+        const responseWishList = await fetch("../api/get_wishlist.php")
+        let inWishList = await responseWishList.json()
+        const responseCart = await fetch('../api/get_shopping_cart.php')
+        let inCart = await responseCart.json()
+
+       e.preventDefault();
         const formData = new FormData(e.target)
         output = Object.entries(Object.fromEntries(formData))
         filterMap = (output
@@ -30,10 +39,27 @@ if(filterItems) {
         filteredItems.forEach((e) => e.images = (e.images.slice(2,e.images.length - 2).split(",")))
 
         filteredItems.forEach((filteredItem) => {
-            drawItem(filteredItem,{isLoggedIn:true},'Find what you want to buy!',false,false,itemsSection)
+            drawItem(filteredItem,{isLoggedIn:true},'Find what you want to buy!',inCart.includes(filteredItem.id),inWishList.includes(filteredItem.id),itemsSection)
         })
     })
 
+}
+
+if(searchBarItem) {
+    searchBarItem.addEventListener('input',async function() {
+        const response = await fetch('../api/get_items.php?search=' + this.value)
+        const items = await response.json()
+
+        const responseWishList = await fetch("../api/get_wishlist.php")
+        let inWishList = await responseWishList.json()
+        const responseCart = await fetch('../api/get_shopping_cart.php')
+        let inCart = await responseCart.json()
+            
+        itemList.innerHTML = ''
+        items.forEach((item) => {
+            drawItem(item,{isLoggedIn: true},'Find what you want to buy!', inCart.includes(item.id),inWishList.includes(item.id),itemList)
+        })
+    })
 }
 
 
@@ -72,6 +98,9 @@ function getTimePassed(createdAt) {
 
 
 function drawItem(item, session, title, inCart, inWishList,parent) {
+    if(typeof item.images == 'string') {
+        item.images = item.images.substring(1,item.images.length - 1).split(",").map((i) => i.substring(1,i.length - 1))
+    }
     const mainImage = item.images[0];
     const article = document.createElement('article');
     article.className = 'item fly';
@@ -191,7 +220,6 @@ function drawButtonsItem(item, session, title, inCart, inWishList,parent) {
             form.appendChild(deleteButton);
         }
 
-        console.log(form);
         parent.appendChild(form);
     }
 }

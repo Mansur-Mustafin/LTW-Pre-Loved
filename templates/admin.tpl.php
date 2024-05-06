@@ -79,8 +79,10 @@ require_once (__DIR__ . '/../pages/admin.php');
 <?php function drawUsersAdmin(array $allUsers, Session $session)
 { ?>
     <section class="admin-info">
-
-        <input id="admin-search-bar" type="text">
+        <div id="search-wrapper">
+            <img src="../assets/img/search.svg" alt="search-bar" id="search-icon">
+            <input class="search" id="user-admin-search" type="text">
+        </div>
         <!-- TODO: FIND A WAY TO REMOVE THIS -->
         <div id="users-admin">
             <?php foreach ($allUsers as $user) { ?>
@@ -117,9 +119,6 @@ require_once (__DIR__ . '/../pages/admin.php');
                         </p>
                     </div>
                     <div class="top-right-element">
-                        <?php if ($user->username == $session->getName()) { ?>
-                            <h4>You</h4>
-                        <?php } ?>
                     </div>
 
 
@@ -174,7 +173,10 @@ require_once (__DIR__ . '/../pages/admin.php');
 <?php function drawItemsAdmin(array $items)
 { ?>
     <section class="admin-info">
-        <input id="admin-search-bar" type="text">
+        <div id="search-wrapper">
+            <img src="../assets/img/search.svg" alt="search-bar" id="search-icon">
+            <input class="search" id="item-admin-search" type="text">
+        </div>
         <div id="items-admin">
             <!-- TODO: FIND A WAY TO REMOVE THIS -->
             <?php foreach ($items as $item) {
