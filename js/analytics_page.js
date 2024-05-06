@@ -72,9 +72,6 @@ async function buildPage() {
         createParagraphMap("Brands: ", brands.length,analyticsSection)
         createParagraphMap("Conditions: " , conditions.length, analyticsSection)
 
-        countTags = tags.map((tag) => {
-            return {key: tag.name, value:items.filter((value) => value.tags.includes(tag.name)).length}
-        })
         countCategories = categories.map((category) => {
             return {key: category.name,value: items.filter((value) => value.category == category.name).length}
         })
@@ -91,7 +88,6 @@ async function buildPage() {
 
         drawUserByMonthGraph(chartsSection)
         drawGraphByDay(chartsSection,items,"New Items by Day")
-        tagsGraph = createGraph(chartsSection,"Tags",countTags,"bar")
         categoriesGraph = createGraph(chartsSection,"Categories",countCategories,"doughnut")
         sizeGraph = createGraph(chartsSection,"Sizes",countSizes,"doughnut")
         conditionGraph = createGraph(chartsSection,"Conditions",countConditions,"doughnut")
