@@ -19,10 +19,10 @@ Develop a website that facilitates the buying and selling of pre-loved items. Th
 - [ ] Print shipping forms for items that have been sold. (Mansur)
 
 ### Buyers
-- [ ] Browse items using filters like category, price, and condition. (Rubem)
-  - [ ] Barra da pesquisa (para site inteiro)
-  - [ ] testar categoria fora de filtro
-  - [ ] ligar filtros
+- [X] Browse items using filters like category, price, and condition.
+  - [X] Barra da pesquisa (para site inteiro)
+  - [X] testar categoria fora de filtro
+  - [X] ligar filtros
 - [X] Engage with sellers to ask questions or negotiate prices.
 - [ ] Add items to a wishlist. (Add Ajax) (Mansur)
 - [ ] Add items to a shopping cart. (Ajax) (Mansur)
