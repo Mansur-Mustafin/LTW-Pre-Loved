@@ -3,10 +3,10 @@
 ********************************************************************************/
 
 -- Insert sample data into Users table
-INSERT INTO Users (username, password, email, phonenumber, image_path, banned, admin_flag, address)
+INSERT INTO Users (username, password, email, phonenumber, image_path, banned, admin_flag, address,created_at)
 VALUES 
-    ('john_doe', 'pass123', 'john.doe@example.com', '123-456-7890', '/data/profile_img/john_doe.jpeg', 0, 0, '123 Main St, Hometown'),
-    ('jane_smith', 'password', 'jane.smith@example.com', '234-567-8901', '/data/profile_img/jane_smith.jpeg', 0, 1, '456 Elm St, Bigcity');
+    ('john_doe', 'pass123', 'john.doe@example.com', '123-456-7890', '/data/profile_img/john_doe.jpeg', 0, 0, '123 Main St, Hometown',strftime('%s', 'now')),
+    ('jane_smith', 'password', 'jane.smith@example.com', '234-567-8901', '/data/profile_img/jane_smith.jpeg', 0, 1, '456 Elm St, Bigcity',strftime('%s', 'now'));
 
 -- Insert sample data into Categories table
 INSERT INTO Categories (name)
