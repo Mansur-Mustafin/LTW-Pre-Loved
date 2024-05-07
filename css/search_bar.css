@@ -15,7 +15,7 @@
     outline: none;
 }
 
-#item-search{
+#item-search, #user-admin-search, #item-admin-search{
     border: none;
     background-color: var(--matador-grey);
     width: 100%;
