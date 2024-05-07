@@ -4,14 +4,31 @@ const itemsSection = document.getElementById("items")
 const searchBarItem = document.getElementById("item-search")
 const itemList = document.getElementById("item-list") 
 
+const title = document.getElementById("title").textContent
+
+async function getSession() {
+    const response = await (await fetch("../api/get_session.php")).json();
+    let session = {};
+    session.isLoggedIn = response[2]
+    session.id = response[1]
+    return session
+}
+
 if(filterItems) {
    filterItems.addEventListener("submit",async (e) => {
-        const responseWishList = await fetch("../api/get_wishlist.php")
-        let inWishList = await responseWishList.json()
-        const responseCart = await fetch('../api/get_shopping_cart.php')
-        let inCart = await responseCart.json()
+        const session = await getSession()
+        let inWishList = false
+        let inCart = false
+        let wishList = []
+        let cart = []
+        if(session.isLoggedIn) {
+            const responseWishList = await fetch("../api/get_wishlist.php")
+            wishList = await responseWishList.json()
+            const responseCart = await fetch('../api/get_shopping_cart.php')
+            cart = await responseCart.json()
+        }
 
-       e.preventDefault();
+        e.preventDefault();
         const formData = new FormData(e.target)
         output = Object.entries(Object.fromEntries(formData))
         filterMap = (output
@@ -35,11 +52,11 @@ if(filterItems) {
             return checkCategory && checkBrand && checkSize && checkConditions
         }))
 
-        itemsSection.innerHTML = ''
+        itemList.innerHTML = ''
         filteredItems.forEach((e) => e.images = (e.images.slice(2,e.images.length - 2).split(",")))
 
         filteredItems.forEach((filteredItem) => {
-            drawItem(filteredItem,{isLoggedIn:true},'Find what you want to buy!',inCart.includes(filteredItem.id),inWishList.includes(filteredItem.id),itemsSection)
+            drawItem(filteredItem,session,'Find what you want to buy!',inCart,inWishList,itemsSection)
         })
     })
 
@@ -48,16 +65,39 @@ if(filterItems) {
 if(searchBarItem) {
     searchBarItem.addEventListener('input',async function() {
         const response = await fetch('../api/get_items.php?search=' + this.value)
-        const items = await response.json()
+        let items = await response.json()
+        const session = await getSession()
+        let inWishList = false
+        let inCart = false
+        let wishList = []
+        let cart = []
+        let userItems = [] 
+        if(session.isLoggedIn) {
+            const responseWishList = await fetch("../api/get_wishlist.php")
+            wishList = await responseWishList.json()
+            const responseCart = await fetch('../api/get_shopping_cart.php')
+            cart = await responseCart.json()
+            const responseUserItems = await fetch("../api/get_user_items.php")
+            userItems = await responseUserItems.json()
+        }
+        
+        const userItemsIds = userItems.map((e) => e.id)
 
-        const responseWishList = await fetch("../api/get_wishlist.php")
-        let inWishList = await responseWishList.json()
-        const responseCart = await fetch('../api/get_shopping_cart.php')
-        let inCart = await responseCart.json()
-            
+        if(title == 'Your Wishlist!') {
+            items = items.filter((item) => wishList.includes(item.id))
+        } else if(title == 'Time to buy!') {
+            items = items.filter((item) => cart.includes(item.id))
+        } else if(title == 'Your items to sell') {
+            items = items.filter((item) => userItemsIds.includes(item.id))
+        }
+
         itemList.innerHTML = ''
         items.forEach((item) => {
-            drawItem(item,{isLoggedIn: true},'Find what you want to buy!', inCart.includes(item.id),inWishList.includes(item.id),itemList)
+            if(session.isLoggedIn) {
+               inWishList = wishList.includes(item.id) 
+               inCart = cart.includes(item.id)
+            }
+            drawItem(item,session,title, inCart,inWishList, itemList)
         })
     })
 }
@@ -168,8 +208,7 @@ function drawItem(item, session, title, inCart, inWishList,parent) {
 }
 
 function drawButtonsItem(item, session, title, inCart, inWishList,parent) {
-    console.log(session.isLoggedIn)
-    if (session.isLoggedIn) { // Assuming session is an object with an isLoggedIn property
+     if (session.isLoggedIn) { // Assuming session is an object with an isLoggedIn property
         const form = document.createElement('form');
         form.action = '../actions/action_item_status.php';
         form.method = 'post';

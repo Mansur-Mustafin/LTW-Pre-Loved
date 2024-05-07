@@ -12,12 +12,12 @@ require_once(__DIR__ . '/../utils/session.php');
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="../css/style.css" rel="stylesheet">
         <link href="../css/layout.css" rel="stylesheet">
+        <link href="../css/search_bar.css" rel="stylesheet">
         <link href="../css/filter.css" rel="stylesheet">    
         <link href="../css/form.css" rel="stylesheet">
         <link href="../css/profile.css" rel="stylesheet">
         <link href="../css/header.css" rel="stylesheet">
         <link href="../css/item.css" rel="stylesheet">
-        <link href="../css/search_bar.css" rel="stylesheet">
         <link href="../css/header.css" rel="stylesheet">
         <link href="../css/admin.css" rel="stylesheet">
         <link href="../css/messages.css" rel="stylesheet">

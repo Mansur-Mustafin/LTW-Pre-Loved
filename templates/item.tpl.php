@@ -11,7 +11,7 @@ require_once(__DIR__ . '/../utils/utils.php');
         <?php if (empty($items)){ ?>
             <h2>TODO handle each page item.tpl.php line 11 <?=$title?></h2>
         <?php } else { ?>
-            <h2><?=$title?></h2>
+            <h2 id="title"><?=$title?></h2>
             <div id="search-wrapper">
                 <img src="../assets/img/search.svg" alt="search-bar" id="search-icon">
                 <input class="search" id="item-search" type="text">

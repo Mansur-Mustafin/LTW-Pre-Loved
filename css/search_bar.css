@@ -14,7 +14,8 @@
 .search:focus {
     outline: none;
 }
-input[type=text]{
+
+#item-search{
     border: none;
     background-color: var(--matador-grey);
     width: 100%;
