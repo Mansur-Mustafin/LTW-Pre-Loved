@@ -30,7 +30,7 @@ Develop a website that facilitates the buying and selling of pre-loved items. Th
 
 ### Admins
 - [X] Elevate a user to admin status.
-- [ ] Introduce new item categories, sizes, conditions, and other pertinent entities. (Sizes) (Rubem)
+- [X] Introduce new item categories, sizes, conditions, and other pertinent entities.
 - [X] Oversee and ensure the smooth operation of the entire system.
 - [ ] Statistics for the number of transactions, new users, and new items. (Rubem)
 

@@ -61,6 +61,12 @@ require_once (__DIR__ . '/../pages/admin.php');
                         </h4>
                     </a>
                 </li>
+                <li class="filter-element"><a href="../pages/admin.php?value=size">
+                        <h4 class="hover-element">
+                            Sizes
+                        </h4>
+                    </a>
+                </li>
                 <li class="filter-element"><a href="../pages/admin.php?value=items">
                         <h4 class="hover-element">
                             Items
