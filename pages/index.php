@@ -13,8 +13,21 @@ require_once(__DIR__ . '/../templates/filter.tpl.php');
 require_once(__DIR__ . '/../templates/item.tpl.php');
 
 // show items
+$pageIndex = isset($_GET['page']) ? (int)$_GET['page'] : 0;
+if($pageIndex < 0){
+    $pageIndex = 0;
+}
+
 $db = getDatabaseConnection();
-$items = getAllItems($db, 20, 0, $session->getId());
+$items = getAllItems($db, 11, $pageIndex * 10, $session->getId());
+
+$has_more_pages = false;
+
+if (sizeof($items) > 10){
+    $has_more_pages = true;
+    array_pop($items);
+}
+
 $items_in_cart = itemsInCart($db, $session->getId());
 $items_in_wishlist = itemsInWishlist($db, $session->getId());
 
@@ -26,7 +39,6 @@ $conditions = getEntitiesFromType($db,"Condition");
 
 drawHeader($session, 'All news');
 drawFilter($categories, $brands, $size, $conditions);
-drawItems($items, $session, 'Find what you want to buy!', $items_in_cart, $items_in_wishlist);
+drawItems($items, $session, 'Find what you want to buy!', $items_in_cart, $items_in_wishlist, $pageIndex, $has_more_pages);
 drawFooter();
 
-?>
