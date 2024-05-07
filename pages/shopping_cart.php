@@ -24,4 +24,3 @@ var_dump('TODO');
 drawItems($items, $session, 'Time to buy!', $items_in_cart, $items_in_wishlist);
 drawFooter();
 
-?>

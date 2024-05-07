@@ -26,4 +26,4 @@ else drawProfile($user, $session);
 
 drawItems($items, $session, 'Your items to sell');
 drawFooter();
-?>
+

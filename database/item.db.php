@@ -320,6 +320,30 @@ function getAllItemsFromId(PDO $db, array $items_ids): array {
     return $items;
 }
 
+function toggleCartItem(PDO $db, int $userId, int $itemId): void {
+    $checkStmt = $db->prepare("SELECT * FROM ShoppingCart WHERE user_id = ? AND item_id = ?");
+    $checkStmt->execute([$userId, $itemId]);
+    $exists = $checkStmt->fetch();
+
+    if ($exists) {
+        removeFromCart($db, $userId, $itemId);
+    } else {
+        addToCart($db, $userId, $itemId);
+    }
+}
+
+function toggleWishlistItem(PDO $db, int $userId, int $itemId): void {
+    $checkStmt = $db->prepare("SELECT * FROM Wishlist WHERE user_id = ? AND item_id = ?");
+    $checkStmt->execute([$userId, $itemId]);
+    $exists = $checkStmt->fetch();
+
+    if ($exists) {
+        removeFromWishlist($db, $userId, $itemId);
+    } else {
+        addToWishlist($db, $userId, $itemId);
+    }
+}
+
 function addToCart(PDO $db, int $userId, int $itemId): void {
     $stmt = $db->prepare("INSERT INTO ShoppingCart (user_id, item_id) VALUES (?, ?)");
     $stmt->execute([$userId, $itemId]);
@@ -338,11 +362,6 @@ function addToWishlist(PDO $db, int $userId, int $itemId): void {
 function removeFromWishlist(PDO $db, int $userId, int $itemId): void {
     $stmt = $db->prepare("DELETE FROM Wishlist WHERE user_id = ? AND item_id = ?");
     $stmt->execute([$userId, $itemId]);
-}
-
-function deleteItem(PDO $db, int $userId, int $itemId): void {
-    $stmt = $db->prepare("DELETE FROM Items WHERE id = ? AND user_id = ?");
-    $stmt->execute([$itemId, $userId]);
 }
 
 function deleteItembyId(PDO $db,int $itemId): void {

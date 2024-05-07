@@ -49,21 +49,50 @@ button:disabled{
     }
 }
 
-.buttons{
-    margin: 1em 0;
-    display: flex;
-    button {
-        flex: 1;
-        margin: .5em;
-        padding: .5em;
-    }
-}
-
 button.selected{
     background-color: var(--matador-dark-red);
+
     &:hover{
         background-color: white;
         color: var(--matador-grey);
+    }
+}
+
+.button{
+    padding: 1em;
+    border: 2px solid var(--matador-dark-red);
+    background-color: var(--matador-grey);
+    font-family: inherit;
+    transition: all .3s;
+    color: black;
+    font-size: .85em;
+    &:hover{
+        background-color: var(--matador-dark-red);
+        color: var(--matador-grey-plus);
+    }
+}
+
+.button.selected{
+    background-color: var(--matador-dark-red);
+    color: var(--matador-grey-plus);
+    &:hover{
+        background-color: var(--matador-grey);
+        color: black;
+    }
+}
+
+.button:disabled{
+    border-color: rgba(89, 0, 4, 0.5);
+}
+
+.buttons{
+    margin: 1em 0;
+    display: flex;
+    button, a {
+        flex: 1;
+        margin: .5em;
+        padding: .5em;
+        text-align: center;
     }
 }
 

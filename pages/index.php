@@ -25,9 +25,8 @@ $has_more_pages = false;
 
 if (sizeof($items) > 10){
     $has_more_pages = true;
+    array_pop($items);
 }
-array_pop($items);
-
 
 $items_in_cart = itemsInCart($db, $session->getId());
 $items_in_wishlist = itemsInWishlist($db, $session->getId());
@@ -43,4 +42,3 @@ drawFilter($categories, $brands, $size, $conditions);
 drawItems($items, $session, 'Find what you want to buy!', $items_in_cart, $items_in_wishlist, $pageIndex, $has_more_pages);
 drawFooter();
 
-?>

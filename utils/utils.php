@@ -1,6 +1,7 @@
 <?php
 
-function getTimePassed(int $created_at) : string {
+function getTimePassed(int $created_at) : string 
+{
     $now = new DateTime();
     $eventTime = new DateTime();
     $eventTime->setTimestamp($created_at);
@@ -21,7 +22,8 @@ function getTimePassed(int $created_at) : string {
     }
 }
 
-function ensureFolderExists($path) {
+function ensureFolderExists($path) 
+{
     if (!file_exists($path)) {
         if (!mkdir($path)) {
             throw new Exception("Failed to create directory: " . $path);
@@ -29,3 +31,8 @@ function ensureFolderExists($path) {
     } 
 }
 
+function urlTo(string $uri, array $params): string
+{
+    $httpQuery = http_build_query($params);
+    return "{$uri}?{$httpQuery}";
+}

@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-class User {
-    const DEFAULT_USER_IMG = '../assets/img/account-icon.svg';
+class User 
+{
+    public const DEFAULT_USER_IMG = '../assets/img/account-icon.svg';
 
     public ?int $id;
     public string $username;
@@ -15,16 +16,17 @@ class User {
     public int $admin_flag;
     public ?string $address;
 
-    public function __construct(string $username, 
-                                string $password, 
-                                string $email, 
-                                ?int $id = null, 
-                                ?string $phonenumber = null, 
-                                ?string $image_path = null,
-                                int $banned = 0, 
-                                int $admin_flag = 0, 
-                                ?string $address = null) 
-    {
+    public function __construct(
+        string $username, 
+        string $password, 
+        string $email, 
+        ?int $id = null, 
+        ?string $phonenumber = null, 
+        ?string $image_path = null,
+        int $banned = 0, 
+        int $admin_flag = 0, 
+        ?string $address = null
+    ) {
         $this->id = $id;
         $this->username = $username;
         $this->password = $password;
