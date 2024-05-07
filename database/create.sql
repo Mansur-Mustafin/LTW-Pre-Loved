@@ -32,7 +32,8 @@ CREATE TABLE Users (
     image_path TEXT,
     banned BOOLEAN DEFAULT 0,                   -- Is banned user
     admin_flag BOOLEAN DEFAULT 0,               -- User is admin
-    address TEXT
+    address TEXT,
+    created_at INTEGER
 );
 
 CREATE TABLE Items (
@@ -78,6 +79,7 @@ CREATE TABLE Transactions (
     buyer_id INTEGER NOT NULL,
     item_id INTEGER NOT NULL,
     transaction_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    created_at INTEGER,
     FOREIGN KEY (seller_id) REFERENCES Users(id) ON DELETE SET NULL,
     FOREIGN KEY (buyer_id) REFERENCES Users(id) ON DELETE SET NULL,
     FOREIGN KEY (item_id) REFERENCES Items(id) ON DELETE SET NULL
@@ -150,7 +152,7 @@ CREATE TABLE ItemTags (
 
 
 -- Its me :-)
-INSERT INTO Users (username, password, email, image_path, banned, admin_flag)
+INSERT INTO Users (username, password, email, image_path, banned, admin_flag,address,created_at)
 VALUES 
-('Mansur','$2y$10$mc3lFQMZPdD9FO7Gc.T5ful8ywIb8VVAPFNq7GNb2JEllzgiMGqrq','mansur@gmail.com','/data/profile_img/a5ec03d3e184f620948b1295a0b73a89038263f5134a0ec49083ab05331e459b.png',0,0),
-('rubem','$2y$10$mc3lFQMZPdD9FO7Gc.T5ful8ywIb8VVAPFNq7GNb2JEllzgiMGqrq','rubem@gmail.com','/data/profile_img/john_doe.jpeg',0,1);
+('Mansur','$2y$10$mc3lFQMZPdD9FO7Gc.T5ful8ywIb8VVAPFNq7GNb2JEllzgiMGqrq','mansur@gmail.com','/data/profile_img/a5ec03d3e184f620948b1295a0b73a89038263f5134a0ec49083ab05331e459b.png',0,0,'',strftime('%s', 'now')),
+('rubem','$2y$10$mc3lFQMZPdD9FO7Gc.T5ful8ywIb8VVAPFNq7GNb2JEllzgiMGqrq','rubem@gmail.com','/data/profile_img/john_doe.jpeg',0,1,'',strftime('%s', 'now'));
