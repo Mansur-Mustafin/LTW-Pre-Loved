@@ -25,4 +25,3 @@ drawWishListForm($session);
 drawItems($items, $session, 'Your Wishlist!', $items_in_cart, $items_in_wishlist);
 drawFooter();
 
-?>

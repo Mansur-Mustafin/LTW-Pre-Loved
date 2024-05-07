@@ -2,7 +2,8 @@
 
 declare(strict_types=1);
 
-class Message {
+class Message 
+{
     public int $id;
     public int $date_time;
     public string $text;
@@ -14,16 +15,17 @@ class Message {
     public Item $item_for_exchange;
     public ?string $filename;
 
-    public function __construct(int $id, 
-                                ?int $date_time = null, 
-                                string $text, 
-                                int $chat_id, 
-                                int $from_user_id, 
-                                int $to_user_id, 
-                                bool $read,
-                                ?int $item_id_exchange,
-                                ?string $filename)
-    {
+    public function __construct(
+        int $id,
+        string $text,
+        int $chat_id,
+        int $from_user_id,
+        int $to_user_id,
+        bool $read,
+        ?int $item_id_exchange,
+        ?string $filename,
+        ?int $date_time = null,
+    ) {
         $this->id = $id;
         $this->date_time = $date_time ?? time();
         $this->text = $text;
@@ -35,15 +37,18 @@ class Message {
         $this->filename = $filename;
     }
 
-    public function isFromUserId(int $from_user_id) : bool{
+    public function isFromUserId(int $from_user_id) : bool
+    {
         return $this->from_user_id == $from_user_id;
     }
 
-    public function isFileImage() : bool{
+    public function isFileImage() : bool
+    {
         return (bool)exif_imagetype("../data/uploaded_files/".substr($this->filename, 0, 3).'/'.$this->filename);
     }
 
-    public function getFullPath() : string{
+    public function getFullPath() : string
+    {
         return substr($this->filename, 0, 3).'/'.$this->filename;
     }
 }

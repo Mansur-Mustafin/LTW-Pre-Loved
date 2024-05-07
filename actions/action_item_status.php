@@ -5,7 +5,8 @@ require_once(__DIR__.'/../utils/session.php');
 $session = new Session();
 
 if (!$session->isLoggedIn()) {
-  die(header('Location: /'));
+  header('Location: /');
+  die();
 }
 
 require_once(__DIR__.'/../core/item.class.php');
@@ -14,38 +15,35 @@ require_once(__DIR__.'/../database/connection.db.php');
 
 $db = getDatabaseConnection();
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action'], $_POST['item-id'], $_POST['user-id'])) {
-  var_dump($_POST['action']);
+if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['action'], $_GET['item-id'])) {
 
-  $userId = intval($_POST['user-id']);
-  $itemId = intval($_POST['item-id']);
+  $response = [
+    'success' => true,
+  ];
 
-  switch ($_POST['action']) {
-    case 'cart-add':
-      addToCart($db, $userId, $itemId);
+  $userId = $session->getId();
+  $itemId = intval($_GET['item-id']);
+
+  switch ($_GET['action']) {
+    case 'cart-toggle':
+      toggleCartItem($db, $userId, $itemId);
       break;
-    case 'cart-delete':
-      removeFromCart($db, $userId, $itemId);
-      break;
-    case 'wishlist-add':
-      addToWishlist($db, $userId, $itemId);
-      break;
-    case 'wishlist-delete':
-      removeFromWishlist($db, $userId, $itemId);
+    case 'wishlist-toggle':
+      toggleWishlistItem($db, $userId, $itemId);
       break;
     case 'delete':
-      deleteItem($db, $userId, $itemId);
-      break;
     case 'delete-main':
-      deleteItem($db, $userId, $itemId);
-      header('Location: /pages/profile.php');
-      exit;
+      deleteItembyId($db, $itemId);
+      $response['success'] = true;
+      $response['itemId'] = $itemId;
+      $response['redirect'] = $_GET['action'] === 'delete-main' ? '/pages/profile.php' : null;
       break;
     default:
-      die(header('Location: /'));
-      break;
+      $response['success'] = false;
   }
 
+  echo json_encode($response);
+  exit();
 }
 
 header('Location: ' . $_SERVER['HTTP_REFERER']);

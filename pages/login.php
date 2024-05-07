@@ -14,4 +14,3 @@ require_once(__DIR__ . '/../templates/forms.tpl.php');
 drawHeader($session, 'Enter in account');
 drawLoginForm($session);
 drawFooter();
-?>
