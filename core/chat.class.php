@@ -38,6 +38,9 @@ class Chat
 
     public function getLastMessageId(): ?int
     {
-        return !empty($this->messages) ? end($this->messages)->id : null;
+        if(sizeof($this->messages)){
+            return $this->messages[sizeof($this->messages)-1]->id;
+        }
+        return null;
     }
 }

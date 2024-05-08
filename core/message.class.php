@@ -12,8 +12,8 @@ class Message
         public int $to_user_id,
         public bool $isRead,
         public ?int $item_id_exchange,
+        public Item $item_for_exchange,
         public ?string $filename = null,
-        public ?Item $item_for_exchange = null,
         public ?int $date_time = null
     ) {
         $this->date_time = $date_time ?? time();

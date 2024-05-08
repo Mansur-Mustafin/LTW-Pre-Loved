@@ -15,7 +15,7 @@ class User
         public ?string $image_path = null,
         public int $banned = 0,
         public int $admin_flag = 0,
-        public ?string $address = '',
+        public ?string $address = null,
         public ?int $created_at = null
     ) {
         $this->image_path = $image_path ?? self::DEFAULT_USER_IMG;

@@ -12,20 +12,27 @@ class Item
         public int $tradable = 0,
         public int $priority = 1,
         public ?int $id = null,
-        public ?string $brand = '',
-        public ?string $model = '',
-        public ?string $description = '',
-        public ?string $title = '',
+        public ?string $brand = null,
+        public ?string $model = null,
+        public ?string $description = null,
+        public ?string $title = null,
         public ?string $images = null,
         public ?int $created_at = null,
-        public ?string $condition = '',
-        public ?string $category = '',
-        public ?string $size = '',
+        public ?string $condition = null,
+        public ?string $category = null,
+        public ?string $size = null,
         public ?array $tags = null,
     ) {
+        $this->brand = $brand ?? '';
+        $this->model = $model ?? '';
+        $this->description = $description ?? '';
+        $this->title = $title ?? '';
         $this->images = $images ?? [self::DEFAULT_IMAGE_PATH];
         $this->created_at = $created_at ?? time();
-        $this->tags = $tags ?? [];
+        $this->condition = $condition ?? '';
+        $this->category = $category ?? '';
+        $this->size = $size ?? '';
+        $this->tags = $tags ?? array();
     }
 
     public function getImagesArray(): array
