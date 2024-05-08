@@ -12,7 +12,7 @@ require_once(__DIR__ . '/../utils/utils.php');
                         array $items_in_wish_list = array(),
                         int $page_index = 0, 
                         bool $has_more_pages = false): void 
-{?>
+{ ?>
     <section id="items">
         <?php if (empty($items)){ ?>
             <h2>TODO handle each page item.tpl.php line 11 <?=$title?></h2>
@@ -43,8 +43,10 @@ require_once(__DIR__ . '/../utils/utils.php');
 <?php } ?>
 
 
-<?php function drawItem(Item $item, Session $session, string $title, bool $in_cart, bool $in_wish_list): void {
+<?php function drawItem(Item $item, Session $session, string $title, bool $in_cart, bool $in_wish_list): void 
+{
     $main_image = $item->getImagesArray()[0]; ?>
+    
     <article class="item fly" data-id="<?= $item->id ?>">
         <img src=<?=htmlspecialchars($main_image)?> alt="Item Image">
         <a href="../pages/item.php?item_id=<?=$item->id?>">

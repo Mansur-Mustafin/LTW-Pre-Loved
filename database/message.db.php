@@ -19,15 +19,15 @@ function getMessagesById(PDO $db, int $message_id): Message
     $messages = [];
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     $message = new Message(
-        $row['id'],
-        $row['text'],
-        $row['chat_id'],
-        $row['from_user_id'],
-        $row['to_user_id'],
-        (bool)$row['is_read'],
-        $row['item_id_exchange'],
-        $row['files'],
-        $row['date_time'],
+        id: $row['id'],
+        date_time: $row['date_time'],
+        text: $row['text'],
+        chat_id: $row['chat_id'],
+        from_user_id: $row['from_user_id'],
+        to_user_id: $row['to_user_id'],
+        isRead: (bool)$row['is_read'],
+        item_id_exchange: $row['item_id_exchange'],
+        filename: $row['files'],
     );
     if($row['item_id_exchange'] != 0){
         $message->item_for_exchange = getItem($db, $row['item_id_exchange']);
@@ -35,7 +35,6 @@ function getMessagesById(PDO $db, int $message_id): Message
 
     return $message;
 }
-
 
 function getMessagesByChatId(PDO $db, int $chat_id): array
 {
@@ -57,7 +56,7 @@ function getMessagesByChatId(PDO $db, int $chat_id): array
             chat_id: $row['chat_id'],
             from_user_id: $row['from_user_id'],
             to_user_id: $row['to_user_id'],
-            read: (bool)$row['is_read'],
+            isRead: (bool)$row['is_read'],
             item_id_exchange: $row['item_id_exchange'],
             filename: $row['files'],
         );
@@ -70,8 +69,8 @@ function getMessagesByChatId(PDO $db, int $chat_id): array
     return $messages;
 }
 
-
-function addMessage($db, int $chat_id, int $from_user_id, int $to_user_id, string $text, int $item_id=0, int $offer_exchange=0, string $filename = ""){
+function addMessage($db, int $chat_id, int $from_user_id, int $to_user_id, string $text, int $item_id=0, int $offer_exchange=0, string $filename = ""): array
+{
     $chat = getChatById($db, $chat_id, $from_user_id);
     if($chat === null) {
         $chat_id = addChat($db, $item_id, $from_user_id, $to_user_id);
@@ -100,7 +99,8 @@ function addMessage($db, int $chat_id, int $from_user_id, int $to_user_id, strin
     ];
 }
 
-function getNewMessagesByChatIdAndMessageId(PDO $db, int $chat_id, int $message_id, int $to_user_id): array {
+function getNewMessagesByChatIdAndMessageId(PDO $db, int $chat_id, int $message_id, int $to_user_id): array 
+{
     $sql = "UPDATE Messages SET is_read = 1 WHERE 
                     Messages.chat_id = :chat_id AND
                     Messages.from_user_id = :to_user_id;";
@@ -125,7 +125,8 @@ function getNewMessagesByChatIdAndMessageId(PDO $db, int $chat_id, int $message_
     return $messages;
 }
 
-function getNewMessagesByUserIdAndMessageId(PDO $db, int $user_id, int $message_id): array {
+function getNewMessagesByUserIdAndMessageId(PDO $db, int $user_id, int $message_id): array 
+{
     $sql = "SELECT * FROM Messages WHERE 
             Messages.to_user_id = :user_id AND
             Messages.id > :message_id;";

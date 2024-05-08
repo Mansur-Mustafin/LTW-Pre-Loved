@@ -3,7 +3,8 @@ declare(strict_types=1);
 require_once(__DIR__ . '/../utils/session.php');
 ?>
 
-<?php function drawHeader(Session $session, string $title = ''){?>
+<?php function drawHeader(Session $session, string $title = '')
+{ ?>
 
     <!DOCTYPE html>
     <html lang="en">
@@ -61,7 +62,8 @@ require_once(__DIR__ . '/../utils/session.php');
 <?php } ?>
 
 
-<?php function drawFooter() { ?>
+<?php function drawFooter() 
+{ ?>
     </main>
     <div id = "back-button"><a href="#">Back to the top</a></div>
     <script src="../js/scroll_up.js"></script>
@@ -90,7 +92,8 @@ require_once(__DIR__ . '/../utils/session.php');
 <?php } ?>
 
 
-<?php function drawErrors(array $errors) { ?>
+<?php function drawErrors(array $errors) 
+{ ?>
     <ul id='errors'>
         <?php foreach($errors as $error){ ?>
             <li><p><?=$error?></p></li>
@@ -98,7 +101,8 @@ require_once(__DIR__ . '/../utils/session.php');
     </ul>
 <?php } ?>
 
-<?php function drawSuccessMsg(array $messages) { ?>
+<?php function drawSuccessMsg(array $messages) 
+{ ?>
     <ul id='success'>
         <?php foreach($messages as $message){ ?>
             <li><p><?=$message?></p></li>

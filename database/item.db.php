@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 require_once(__DIR__.'/../core/item.class.php');
 
-function getItemsUser(PDO $db, int $user_id): array {
+function getItemsUser(PDO $db, int $user_id): array 
+{
     $sql = "SELECT 
             Items.*, 
             Condition.name AS condition_name, 
@@ -51,7 +52,8 @@ function getItemsUser(PDO $db, int $user_id): array {
     return $items;
 }
 
-function getAllItems(PDO $db, int $limit, int $offset, ?int $uid): array {
+function getAllItems(PDO $db, int $limit, int $offset, ?int $uid): array 
+{
     $sql = "SELECT 
             Items.*, 
             Condition.name AS condition_name, 
@@ -111,7 +113,8 @@ function getAllItems(PDO $db, int $limit, int $offset, ?int $uid): array {
     return $items;
 }
 
-function searchItems($db, $keyword) {
+function searchItems(PDO $db, string $keyword) 
+{
     $sql = "SELECT 
             Items.*, 
             Condition.name AS condition_name, 
@@ -156,7 +159,8 @@ function searchItems($db, $keyword) {
     return $items;
 }
 
-function getItem(PDO $db, int $itemId): ?Item {
+function getItem(PDO $db, int $itemId): ?Item 
+{
     $sql = "SELECT 
             Items.*, 
             Condition.name AS condition_name, 
@@ -202,7 +206,8 @@ function getItem(PDO $db, int $itemId): ?Item {
     return null;
 }
 
-function getTagsForItem(PDO $db, int $itemId): array {
+function getTagsForItem(PDO $db, int $itemId): array 
+{
     $tagSql = "SELECT Tags.name 
                FROM ItemTags 
                JOIN Tags ON ItemTags.tag_id = Tags.id 
@@ -220,7 +225,8 @@ function getTagsForItem(PDO $db, int $itemId): array {
     return $tags;
 }
 
-function itemsInCart(PDO $db, ?int $uid): array {
+function itemsInCart(PDO $db, ?int $uid): array 
+{
     if (!isset($uid)){
         return array();
     }
@@ -241,7 +247,8 @@ function itemsInCart(PDO $db, ?int $uid): array {
     return $itemIds;
 }
 
-function itemsInWishlist(PDO $db, ?int $uid): array {
+function itemsInWishlist(PDO $db, ?int $uid): array 
+{
     if (!isset($uid)){
         return array();
     }
@@ -262,8 +269,8 @@ function itemsInWishlist(PDO $db, ?int $uid): array {
     return $itemIds;
 }
 
-
-function getAllItemsFromId(PDO $db, array $items_ids): array {
+function getAllItemsFromId(PDO $db, array $items_ids): array 
+{
     if (empty($items_ids)) {
         return [];
     }
@@ -320,7 +327,8 @@ function getAllItemsFromId(PDO $db, array $items_ids): array {
     return $items;
 }
 
-function toggleCartItem(PDO $db, int $userId, int $itemId): void {
+function toggleCartItem(PDO $db, int $userId, int $itemId): void 
+{
     $checkStmt = $db->prepare("SELECT * FROM ShoppingCart WHERE user_id = ? AND item_id = ?");
     $checkStmt->execute([$userId, $itemId]);
     $exists = $checkStmt->fetch();
@@ -332,7 +340,8 @@ function toggleCartItem(PDO $db, int $userId, int $itemId): void {
     }
 }
 
-function toggleWishlistItem(PDO $db, int $userId, int $itemId): void {
+function toggleWishlistItem(PDO $db, int $userId, int $itemId): void 
+{
     $checkStmt = $db->prepare("SELECT * FROM Wishlist WHERE user_id = ? AND item_id = ?");
     $checkStmt->execute([$userId, $itemId]);
     $exists = $checkStmt->fetch();
@@ -344,27 +353,32 @@ function toggleWishlistItem(PDO $db, int $userId, int $itemId): void {
     }
 }
 
-function addToCart(PDO $db, int $userId, int $itemId): void {
+function addToCart(PDO $db, int $userId, int $itemId): void 
+{
     $stmt = $db->prepare("INSERT INTO ShoppingCart (user_id, item_id) VALUES (?, ?)");
     $stmt->execute([$userId, $itemId]);
 }
 
-function removeFromCart(PDO $db, int $userId, int $itemId): void {
+function removeFromCart(PDO $db, int $userId, int $itemId): void 
+{
     $stmt = $db->prepare("DELETE FROM ShoppingCart WHERE user_id = ? AND item_id = ?");
     $stmt->execute([$userId, $itemId]);
 }
 
-function addToWishlist(PDO $db, int $userId, int $itemId): void {
+function addToWishlist(PDO $db, int $userId, int $itemId): void 
+{
     $stmt = $db->prepare("INSERT INTO Wishlist (user_id, item_id) VALUES (?, ?)");
     $stmt->execute([$userId, $itemId]);
 }
 
-function removeFromWishlist(PDO $db, int $userId, int $itemId): void {
+function removeFromWishlist(PDO $db, int $userId, int $itemId): void 
+{
     $stmt = $db->prepare("DELETE FROM Wishlist WHERE user_id = ? AND item_id = ?");
     $stmt->execute([$userId, $itemId]);
 }
 
-function deleteItembyId(PDO $db,int $itemId): void {
+function deleteItembyId(PDO $db,int $itemId): void 
+{
     $stmt = $db->prepare("DELETE FROM Items WHERE id = ?");
     $stmt->execute([$itemId]);
 }

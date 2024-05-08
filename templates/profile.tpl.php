@@ -7,8 +7,8 @@ require_once(__DIR__ . '/../templates/common.tpl.php');
 ?>
 
 
-<?php function drawProfile(User $user, Session $session) {?>
-    
+<?php function drawProfile(User $user, Session $session) 
+{?>
     <aside id="profile-info">
         <img src=<?=htmlspecialchars($user->image_path)?> alt="Account Profile Picture">
         <div class="user-info">
@@ -29,8 +29,8 @@ require_once(__DIR__ . '/../templates/common.tpl.php');
 <?php } ?>
 
 
-<?php function drawEditProfile(User $user) {?>
-    
+<?php function drawEditProfile(User $user) 
+{?>    
     <aside id="profile-info">
         <img id="current_profile_img" src=<?=htmlspecialchars($user->image_path)?> alt="Account Profile Picture">
         <form id="edit-profile-info" action="../actions/action_update_user.php" method="post" enctype="multipart/form-data">
@@ -57,8 +57,8 @@ require_once(__DIR__ . '/../templates/common.tpl.php');
 <?php } ?>
 
 
-<?php function drawChangePassword(User $user) {?>
-    
+<?php function drawChangePassword(User $user) 
+{?>
     <aside id="profile-info">
         <img id="current_profile_img" src=<?=htmlspecialchars($user->image_path)?> alt="Account Profile Picture">
         <form id="edit-profile-info" action="../actions/action_update_user.php" method="post" enctype="multipart/form-data">
@@ -72,5 +72,4 @@ require_once(__DIR__ . '/../templates/common.tpl.php');
             </div>
         </form>
     </aside>
-
 <?php } ?>

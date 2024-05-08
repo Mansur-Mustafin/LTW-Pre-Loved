@@ -2,7 +2,8 @@
 declare(strict_types=1);
 ?>
 
-<?php function drawFilter(array $categories, array $brands, array $sizes, array $conditions) { ?>
+<?php function drawFilter(array $categories, array $brands, array $sizes, array $conditions) 
+{ ?>
     <aside id="related">
         <h2>Filter</h2>
         <form action="#" method="get" id="filter">
@@ -20,7 +21,8 @@ declare(strict_types=1);
 <?php } ?>
 
 
-<?php function draw_filter_element(string $title, array $elements, string $name_elemrnt) { ?>
+<?php function draw_filter_element(string $title, array $elements, string $name_elemrnt) 
+{ ?>
 
     <article class="filter-element">
         <label class="hover-element">
