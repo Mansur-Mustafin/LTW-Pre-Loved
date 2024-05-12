@@ -7,7 +7,7 @@ require_once(__DIR__ . '/../templates/common.tpl.php');
 ?>
 
 
-<?php function drawProfile(User $user, Session $session) {?>
+<?php function drawProfile(User $user, Session $session,bool $isCurrentUser) {?>
     
     <aside id="profile-info">
         <img src=<?=htmlspecialchars($user->image_path)?> alt="Account Profile Picture">
@@ -17,12 +17,14 @@ require_once(__DIR__ . '/../templates/common.tpl.php');
             <p class="user-number"><?=htmlspecialchars($user->phonenumber)?></p>
             <p class="user-address"><?= htmlspecialchars($user->address) ?> </p>
         </div>
-        <form id="enable-editing-mode" method="post">
-            <div class='buttons'>
-                <button name="edit" value="profile">Edit Profile</button>
-                <button name="edit" value="password">Change Password</button>
-            </div>
-        </form>
+        <?php if($isCurrentUser) {?>
+            <form id="enable-editing-mode" method="post">
+                <div class='buttons'>
+                    <button name="edit" value="profile">Edit Profile</button>
+                    <button name="edit" value="password">Change Password</button>
+                </div>
+            </form>
+        <?php } ?>
         <?=drawErrors($session->getErrorMessages())?>
     </aside>
    
