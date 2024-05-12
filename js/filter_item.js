@@ -6,29 +6,20 @@ const itemList = document.getElementById("item-list")
 
 const title = document.getElementById("title").textContent
 
-async function getSession() {
-    const response = await (await fetch("../api/get_session.php")).json();
-    let session = {};
-    session.isLoggedIn = response[2]
-    session.id = response[1]
-    return session
-}
+const sessionId = document.getElementById("session_id").textContent
 
 if(filterItems) {
-   filterItems.addEventListener("submit",async (e) => {
-        const session = await getSession()
+   filterItems.addEventListener("submit",async function(e) {
+        e.preventDefault();
         let inWishList = false
         let inCart = false
         let wishList = []
         let cart = []
-        if(session.isLoggedIn) {
-            const responseWishList = await fetch("../api/get_wishlist.php")
-            wishList = await responseWishList.json()
-            const responseCart = await fetch('../api/get_shopping_cart.php')
-            cart = await responseCart.json()
-        }
+        const responseWishList = await fetch("../api/get_wishlist.php")
+        wishList = await responseWishList.json()
+        const responseCart = await fetch('../api/get_shopping_cart.php')
+        cart = await responseCart.json()
 
-        e.preventDefault();
         const formData = new FormData(e.target)
         output = Object.entries(Object.fromEntries(formData))
         filterMap = (output
@@ -37,6 +28,7 @@ if(filterItems) {
                 return {key:v.split("/")[0],value:v.split("/")[1]}
             }
         ))
+        // TODO : REFACTOR (THIS IS ALMOST A CRIME)
         categories = filterMap.filter((e) => e.key == "category").map((e) => e.value);
         brands = filterMap.filter((e) => e.key == "brand").map((e) => e.value);
         sizes = filterMap.filter((e) => e.key == "size").map((e) => e.value);
@@ -44,6 +36,7 @@ if(filterItems) {
 
         const response = await fetch('../api/get_items.php?search=')
         const items = await response.json()
+        console.log(items)
         filteredItems = (items.filter((item) => {
             const checkCategory = categories.length == 0 || categories.includes(item.category)
             const checkBrand = brands.length == 0 || brands.includes(item.brand)
@@ -55,9 +48,12 @@ if(filterItems) {
         itemList.innerHTML = ''
         filteredItems.forEach((e) => e.images = (e.images.slice(2,e.images.length - 2).split(",")))
 
+        const sessionValue = sessionId.textContent == '' ? {isLoggedIn:false} : {isLoggedIn:true,id:sessionId};
+
         filteredItems.forEach((filteredItem) => {
-            drawItem(filteredItem,session,'Find what you want to buy!',inCart,inWishList,itemsSection)
+            drawItem(filteredItem,sessionValue,'Find what you want to buy!',inCart,inWishList,itemList)
         })
+        updateButton();
     })
 
 }
@@ -99,9 +95,19 @@ if(searchBarItem) {
             }
             drawItem(item,session,title, inCart,inWishList, itemList)
         })
+        updateButton()
     })
 }
 
+
+async function getSession() {
+    const r = await fetch('../api/get_session.php')
+    const response = await r.json();
+    let session = {};
+    session.isLoggedIn = response[2]
+    session.id = response[1]
+    return session
+}
 
 function getTimePassed(createdAt) {
     const now = new Date();
@@ -210,8 +216,6 @@ function drawItem(item, session, title, inCart, inWishList,parent) {
 function drawButtonsItem(item, session, title, inCart, inWishList,parent) {
      if (session.isLoggedIn) { // Assuming session is an object with an isLoggedIn property
         const form = document.createElement('form');
-        form.action = '../actions/action_item_status.php';
-        form.method = 'post';
 
         const userIdInput = document.createElement('input');
         userIdInput.type = 'hidden';
@@ -225,33 +229,31 @@ function drawButtonsItem(item, session, title, inCart, inWishList,parent) {
         itemIdInput.value = item.id;
         form.appendChild(itemIdInput);
 
+        const baseUrl = `../actions/action_item_status.php?item-id=${item.id}&`
         if (title === 'Find what you want to buy!' || title === 'Your Wishlist!' || title === 'Time to buy!') {
-            const cartButton = document.createElement('button');
-            cartButton.type = 'submit';
-            cartButton.name = 'action';
-            cartButton.value = `cart-${inCart ? 'delete' : 'add'}`;
-            cartButton.className = inCart ? "selected" : "";
+            const cartButton = document.createElement('a');
+            cartButton.href = baseUrl + `action=cart-toggle`;
+            cartButton.classList.add("item-action","button");
+            if(inCart) cartButton.classList.add("selected");
             const cartImg = document.createElement('img');
             cartImg.src = '../assets/img/shopping-cart.svg';
             cartImg.alt = 'Add to Cart';
             cartButton.appendChild(cartImg);
             form.appendChild(cartButton);
 
-            const wishlistButton = document.createElement('button');
-            wishlistButton.type = 'submit';
-            wishlistButton.name = 'action';
-            wishlistButton.value = `wishlist-${inWishList ? 'delete' : 'add'}`;
-            wishlistButton.className = inWishList ? "selected" : "";
+            const wishlistButton = document.createElement('a');
+            wishlistButton.href = baseUrl + `action=wishlist-toggle`;
+            wishlistButton.classList.add("item-action","button")
+            if(inWishList) wishlistButton.classList.add("selected");
             const wishlistImg = document.createElement('img');
             wishlistImg.src = '../assets/img/love.svg';
             wishlistImg.alt = 'Add to Wishlist';
             wishlistButton.appendChild(wishlistImg);
             form.appendChild(wishlistButton);
         } else if (title === 'Your items to sell') {
-            const deleteButton = document.createElement('button');
-            deleteButton.type = 'submit';
-            deleteButton.name = 'action';
-            deleteButton.value = 'delete';
+            const deleteButton = document.createElement('a');
+            deleteButton.href = baseUrl + `action=delete`;
+            deleteButton.classList.add("item-action","button")
             const deleteImg = document.createElement('img');
             deleteImg.src = '../assets/img/trash.svg';
             deleteImg.alt = 'Delete Item';

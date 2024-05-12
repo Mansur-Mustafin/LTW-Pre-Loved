@@ -13,5 +13,5 @@ require_once(__DIR__.'/../database/item.db.php');
 $db = getDatabaseConnection();
 
 $items = searchItems($db,$_GET['search']);
-
 echo json_encode($items);
+ 
