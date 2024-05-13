@@ -159,6 +159,190 @@ function searchItems(PDO $db, string $keyword)
     return $items;
 }
 
+function filterItemsbyCategory($db, $category) 
+{
+    $sql = "SELECT 
+            Items.*, 
+            Condition.name AS condition_name, 
+            Models.name AS model_name,
+            Categories.name AS category_name,
+            Size.name AS size_name,
+            Brands.name AS brand_name
+            FROM Items
+            LEFT JOIN Condition ON Items.condition_id = Condition.id
+            LEFT JOIN Models ON Items.model_id = Models.id
+            LEFT JOIN Categories ON Items.category_id = Categories.id
+            LEFT JOIN Size ON Items.size_id = Size.id
+            LEFT JOIN Brands ON Models.brand_id = Brands.id
+            WHERE Categories.name LIKE ?";
+    $stmt = $db->prepare($sql); 
+    $stmt->execute([$category . '%']);
+
+    $items = [];
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $tags = getTagsForItem($db, $row['id']);
+
+        $item = new Item(
+            id: $row['id'],
+            brand: $row['brand_name'],
+            description: $row['description'],
+            title: $row['title'],
+            images: $row['images'],
+            price: $row['price'],
+            tradable: $row['tradable'],
+            priority: $row['priority'],
+            user_id: $row['user_id'],
+            created_at: $row['created_at'],
+            condition: $row['condition_name'],
+            model: $row['model_name'],
+            category: $row['category_name'],
+            size: $row['size_name'],
+            tags: $tags
+        );
+        $items[] = $item;
+    }
+
+    return $items;
+}
+
+function filterItemsbyBrand($db, $brand) 
+{
+    $sql = "SELECT 
+            Items.*, 
+            Condition.name AS condition_name, 
+            Models.name AS model_name,
+            Categories.name AS category_name,
+            Size.name AS size_name,
+            Brands.name AS brand_name
+            FROM Items
+            LEFT JOIN Condition ON Items.condition_id = Condition.id
+            LEFT JOIN Models ON Items.model_id = Models.id
+            LEFT JOIN Categories ON Items.category_id = Categories.id
+            LEFT JOIN Size ON Items.size_id = Size.id
+            LEFT JOIN Brands ON Models.brand_id = Brands.id
+            WHERE Brands.name LIKE ?";
+    $stmt = $db->prepare($sql); 
+    $stmt->execute([$brand . '%']);
+
+    $items = [];
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $tags = getTagsForItem($db, $row['id']);
+
+        $item = new Item(
+            id: $row['id'],
+            brand: $row['brand_name'],
+            description: $row['description'],
+            title: $row['title'],
+            images: $row['images'],
+            price: $row['price'],
+            tradable: $row['tradable'],
+            priority: $row['priority'],
+            user_id: $row['user_id'],
+            created_at: $row['created_at'],
+            condition: $row['condition_name'],
+            model: $row['model_name'],
+            category: $row['category_name'],
+            size: $row['size_name'],
+            tags: $tags
+        );
+        $items[] = $item;
+    }
+
+    return $items;
+}
+
+function filterItemsbySize($db, $size) 
+{
+    $sql = "SELECT 
+            Items.*, 
+            Condition.name AS condition_name, 
+            Models.name AS model_name,
+            Categories.name AS category_name,
+            Size.name AS size_name,
+            Brands.name AS brand_name
+            FROM Items
+            LEFT JOIN Condition ON Items.condition_id = Condition.id
+            LEFT JOIN Models ON Items.model_id = Models.id
+            LEFT JOIN Categories ON Items.category_id = Categories.id
+            LEFT JOIN Size ON Items.size_id = Size.id
+            LEFT JOIN Brands ON Models.brand_id = Brands.id
+            WHERE Size.name LIKE ?";
+    $stmt = $db->prepare($sql); 
+    $stmt->execute([$size . '%']);
+
+    $items = [];
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $tags = getTagsForItem($db, $row['id']);
+
+        $item = new Item(
+            id: $row['id'],
+            brand: $row['brand_name'],
+            description: $row['description'],
+            title: $row['title'],
+            images: $row['images'],
+            price: $row['price'],
+            tradable: $row['tradable'],
+            priority: $row['priority'],
+            user_id: $row['user_id'],
+            created_at: $row['created_at'],
+            condition: $row['condition_name'],
+            model: $row['model_name'],
+            category: $row['category_name'],
+            size: $row['size_name'],
+            tags: $tags
+        );
+        $items[] = $item;
+    }
+
+    return $items;
+}
+
+function filterItemsbyCondition($db, $condition) 
+{
+    $sql = "SELECT 
+            Items.*, 
+            Condition.name AS condition_name, 
+            Models.name AS model_name,
+            Categories.name AS category_name,
+            Size.name AS size_name,
+            Brands.name AS brand_name
+            FROM Items
+            LEFT JOIN Condition ON Items.condition_id = Condition.id
+            LEFT JOIN Models ON Items.model_id = Models.id
+            LEFT JOIN Categories ON Items.category_id = Categories.id
+            LEFT JOIN Size ON Items.size_id = Size.id
+            LEFT JOIN Brands ON Models.brand_id = Brands.id
+            WHERE Condition.name LIKE ?";
+    $stmt = $db->prepare($sql); 
+    $stmt->execute([$condition . '%']);
+
+    $items = [];
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $tags = getTagsForItem($db, $row['id']);
+
+        $item = new Item(
+            id: $row['id'],
+            brand: $row['brand_name'],
+            description: $row['description'],
+            title: $row['title'],
+            images: $row['images'],
+            price: $row['price'],
+            tradable: $row['tradable'],
+            priority: $row['priority'],
+            user_id: $row['user_id'],
+            created_at: $row['created_at'],
+            condition: $row['condition_name'],
+            model: $row['model_name'],
+            category: $row['category_name'],
+            size: $row['size_name'],
+            tags: $tags
+        );
+        $items[] = $item;
+    }
+
+    return $items;
+}
+
 function getItem(PDO $db, int $itemId): ?Item 
 {
     $sql = "SELECT 

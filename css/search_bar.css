@@ -1,0 +1,24 @@
+#search-wrapper {
+    display: flex;
+    align-items: stretch;
+    border-radius: 10px;
+    overflow: hidden;
+    max-width: 100%;
+    margin: 1em;
+    box-shadow: 2px 1px 5px 1px rgba(0, 0, 0, 0.273);
+}
+#search-icon {
+    width: 1.5em;
+    margin: 1em;
+}
+.search:focus {
+    outline: none;
+}
+
+#item-search, #user-admin-search, #item-admin-search{
+    border: none;
+    background-color: var(--matador-grey);
+    width: 100%;
+    font-size: 1em;
+    transition: all .3s;
+}

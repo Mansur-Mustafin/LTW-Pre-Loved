@@ -17,10 +17,16 @@ require_once(__DIR__ . '/../utils/utils.php');
         <?php if (empty($items)){ ?>
             <h2>TODO handle each page item.tpl.php line 11 <?=$title?></h2>
         <?php } else { ?>
-            <h2><?=$title?></h2>
-            <?php foreach($items as $item){
-                $in_cart = in_array($item->id, $items_in_cart);
-                $in_wishlist = in_array($item->id, $items_in_wish_list);
+            <h2 id="title"><?=$title?></h2>
+            <div id="search-wrapper">
+                <img src="../assets/img/search.svg" alt="search-bar" id="search-icon">
+                <input class="search" id="item-search" type="text">
+            </div>
+            <div id="item-list">
+                <?php foreach($items as $item){
+                    $in_cart = in_array($item->id, $items_in_cart);
+                    $in_wishlist = in_array($item->id, $items_in_wish_list);
+
 
                 drawItem($item, $session, $title, $in_cart, $in_wishlist);
             } ?>

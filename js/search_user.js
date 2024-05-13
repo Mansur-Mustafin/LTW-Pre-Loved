@@ -1,4 +1,4 @@
-const searchUser = document.querySelector("#admin-search-bar")
+const searchUser = document.querySelector("#user-admin-search")
 
 
 if(searchUser) {
@@ -9,83 +9,94 @@ if(searchUser) {
         const section = document.querySelector("#users-admin")
         if(section) section.innerHTML = ''
     
-        for(const user of users) {
-            drawUserInfo(section,user)
-        }
+        drawUserInfo(users)
 
     })
 }
 
-function drawUserInfo(section,user) {
-    const article = document.createElement("article")
-    article.classList.add("element","item")
+function drawUserInfo(users) {
+    const usersAdminSection = document.getElementById('users-admin');
+    users.forEach(user => {
+        const userArticle = document.createElement('article');
+        userArticle.className = 'item';
 
-    const userImg = document.createElement("img")
-    userImg.classList.add("profile-img")
-    userImg.src = user.image_path
-    userImg.alt = "User Image"
+        const profileImg = document.createElement('img');
+        profileImg.className = 'profile-img';
+        profileImg.src = user.image_path;
+        profileImg.alt = 'User Image';
+        userArticle.appendChild(profileImg);
 
-    const userInfo = document.createElement("div")
-    userInfo.className = "user-info"
+        const username = document.createElement('h3');
+        username.textContent = user.username;
+        userArticle.appendChild(username);
 
-    const userTags = document.createElement("div")
-    userTags.className = "user-tags"
-    createParagraph(user.username,userTags,"username")
-    if(user.admin_flag) {
-        adminIcon = document.createElement("img")
-        adminIcon.src =  "../assets/img/star.svg"
-        adminIcon.alt = "Admin Tag"
-        userTags.appendChild(adminIcon)
-    }
-    if(user.banned) {
-        bannedIcon = document.createElement("img")
-        bannedIcon.src = "../assets/img/banned.svg"
-        bannedIcon.alt = "Banned Tag"
-        userTags.appendChild(bannedIcon)
-    }
+        const detailsDiv = document.createElement('div');
+        if(user.admin_flag || user.banned) {
+            const tagsList = document.createElement('ul');
+            tagsList.className = "tags"
+            if (user.admin_flag) {
+                const adminTag = document.createElement('li');
+                adminTag.className = 'red-tag';
+                adminTag.textContent = 'Admin';
+                tagsList.appendChild(adminTag);
+            }
+            if (user.banned) {
+                const bannedTag = document.createElement('li');
+                bannedTag.className = 'red-tag';
+                bannedTag.textContent = 'Banned';
+                tagsList.appendChild(bannedTag);
+            }
+            detailsDiv.appendChild(tagsList);
+        }
 
-    userInfo.appendChild(userTags)
+        const detailsList = document.createElement('ul');
+        detailsList.innerHTML = `
+            <li><label>Email: ${user.email}</label></li>
+            <li><label>Phonenumber: ${user.phonenumber}</label></li>
+            <li><label>Address: ${user.address}</label></li>
+        `;
+        detailsDiv.appendChild(detailsList);
+        userArticle.appendChild(detailsDiv);
 
-    createParagraph(user.email,userInfo,"email")
-    createParagraph(user.phonenumber,userInfo,"phonenumber")
-    createParagraph(user.address,userInfo,"address")
+        const topRightElement = document.createElement('div');
+        topRightElement.className = 'top-right-element';
+        const youLabel = document.createElement('h4');
+        youLabel.textContent = '';
+        topRightElement.appendChild(youLabel);
+        
+        userArticle.appendChild(topRightElement);
 
-    article.appendChild(userImg)
-    article.appendChild(userInfo)
+        const form = document.createElement('form');
+        if (!user.banned &&!user.admin_flag) {
+            const promoteButton = document.createElement('button');
+            promoteButton.type = 'submit';
+            promoteButton.name = 'username';
+            promoteButton.value = user.username;
+            promoteButton.formaction = '../actions/action_make_user_admin.php';
+            promoteButton.formmethod = 'post';
+            promoteButton.textContent = 'Promote';
+            form.appendChild(promoteButton);
 
-    drawButtons(article,user)
+            const banButton = document.createElement('button');
+            banButton.type = 'submit';
+            banButton.name = 'username';
+            banButton.value = user.username;
+            banButton.formaction = '../actions/action_ban_user.php';
+            banButton.formmethod = 'post';
+            banButton.textContent = 'Ban';
+            form.appendChild(banButton);
+        } else if (user.banned &&!user.admin_flag) {
+            const unbanButton = document.createElement('button');
+            unbanButton.type = 'submit';
+            unbanButton.name = 'username';
+            unbanButton.value = user.username;
+            unbanButton.formaction = '../actions/action_unban_user.php';
+            unbanButton.formmethod = 'post';
+            unbanButton.textContent = 'Unban';
+            form.appendChild(unbanButton);
+        }
+        userArticle.appendChild(form);
 
-    section.appendChild(article)
-}
-
-function drawButtons(article,user) {
-    buttonDiv = document.createElement("div")
-    buttonDiv.className = "buttons"
-    if(!user.banned && !user.admin_flag ) {
-        makeAdminAction = "../actions/action_make_user_admin.php"
-        banAction = "../actions/action_ban_user.php"
-        createButton(makeAdminAction,"username",user.username,"Make Admin",buttonDiv)
-        createButton(banAction,"username",user.username,"Ban",buttonDiv)
-    } else if(user.banned && !user.admin_flag) {
-        unbanUser = "../actions/action_unban_user.php"
-        createButton(unbanUser,"username",user.username,"Unban",buttonDiv)
-    }
-
-    article.appendChild(buttonDiv)
-}
-
-
-function createButton(action,name,value,text,parent) {
-    form = document.createElement("form")
-    form.action = action
-    form.method = "post"
-
-    button = document.createElement("button")
-    button.type = "submit"
-    button.name = name
-    button.value = value
-    button.textContent = text
-
-    form.appendChild(button)
-    parent.appendChild(form)
+        usersAdminSection.appendChild(userArticle);
+    });
 }

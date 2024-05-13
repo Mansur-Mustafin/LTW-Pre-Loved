@@ -1,82 +1,67 @@
-const searchItem = document.querySelector("#admin-search-bar");
+const searchItem = document.querySelector("#item-admin-search");
 if(searchItem) {
     searchItem.addEventListener('input',async function() {
         const response = await fetch('../api/get_items.php?search=' + this.value)
         const items = await response.json()
 
-        const section = document.querySelector("#items-admin")
-        if(section) section.innerHTML = ''
+        const  itemsAdminSection = document.querySelector("#items-admin")
+        if(itemsAdminSection) itemsAdminSection.innerHTML = ''
 
-         for(const item of items) {
-            const mainImage = JSON.parse(item.images)[0]
-            const jointTags = item.tags.join(', ')
-            const article = document.createElement('article')
-            article.classList.add("element","product","item")
-            
-            const img = document.createElement('img')
-            img.src = mainImage
-            img.alt = "Product Picture"
-            const productInfo = document.createElement('div')
-            productInfo.classList.add("product-info")
+        items.forEach(item => {
+        const mainImage = JSON.parse(item.images)[0];
+        const joinedTags = item.tags.join(", ");
 
-            const productId = document.createElement("span")
-            productId.classList.add("product-id")
-            productId.textContent = item.id
+        const itemArticle = document.createElement('article');
+        itemArticle.className = 'element product item';
 
-            const anchor = document.createElement("a")
-            anchor.classList.add("product-title")
-            anchor.textContent = item.title
+        const itemImage = document.createElement('img');
+        itemImage.src = mainImage;
+        itemImage.alt = 'product-picture';
+        itemArticle.appendChild(itemImage);
 
-            const mySpan = document.createElement("span")
-            mySpan.classList.add("product-id")
-            mySpan.textContent = item.id
+        const itemLink = document.createElement('a');
+        itemLink.href = `../pages/item.php?item_id=${item.id}`;
+        const itemTitle = document.createElement('h3');
+        itemTitle.textContent = item.title;
+        const itemIdSpan = document.createElement('span');
+        itemIdSpan.className = 'product-id';
+        itemIdSpan.textContent = item.id;
+        itemTitle.appendChild(itemIdSpan);
+        itemLink.appendChild(itemTitle);
+        itemArticle.appendChild(itemLink);
 
-            anchor.appendChild(mySpan)
+        const productInfo = document.createElement('div');
+        productInfo.className = 'product-info';
+        productInfo.innerHTML = `
+            <p>Brand: ${item.brand}</p>
+            <p>Price: <span class="product-price">${item.price}</span></p>
+            <p>Tradable: ${item.tradable? "Tradable" : "not Tradable"}</p>
+            <p>Created-at: ${new Date(item.created_at).toLocaleString()}</p>
+            <p>Condition: ${item.condition}</p>
+            <p>Model: ${item.model}</p>
+            <p>Category: ${item.category}</p>
+            <p>Size: ${item.size}</p>
+            <p>Tags: ${joinedTags}</p>
+            <p>Description: ${item.description}</p>
+        `;
+        itemArticle.appendChild(productInfo);
 
-            productInfo.appendChild(anchor)
+        const topRightElement = document.createElement('div');
+        topRightElement.className = "top-right-element"
+        itemArticle.appendChild(topRightElement);
 
-            createParagraph(item.brand,productInfo,"")
-            createParagraph(item.price,productInfo,"product-price")
-            createParagraph(item.created_at,productInfo,"")
-            createParagraph(item.condition,productInfo,"")
-            createParagraph(item.model,productInfo,"")
-            createParagraph(item.category,productInfo,"")
-            createParagraph(item.size,productInfo,"")
-            createParagraph(jointTags,productInfo,"")
-            createParagraph(item.description,productInfo,"")
-            
-            buttonsDiv = document.createElement("div")
-            buttonsDiv.className = "buttons"
+        const deleteForm = document.createElement('form');
+        deleteForm.action = '../actions/action_delete_product.php';
+        deleteForm.method = 'post';
+        const deleteButton = document.createElement('button');
+        deleteButton.type = 'submit';
+        deleteButton.name = 'product_id';
+        deleteButton.value = item.id;
+        deleteButton.textContent = 'Remove';
+        deleteForm.appendChild(deleteButton);
+        itemArticle.appendChild(deleteForm);
 
-            /* DOES NOT WORK PROPERLY */
-
-            form = document.createElement("form")
-            form.action = "../actions/action_delete_product.php"
-            form.method = "post"
-
-            button = document.createElement("button")
-            button.type = "submit"
-            button.name = "product_id"
-            button.value = item.id
-            button.textContent = "Remove"
-
-
-            form.appendChild(button)
-            buttonsDiv.appendChild(form)
-
-            article.appendChild(img)
-            article.appendChild(productInfo)
-            article.appendChild(buttonsDiv)
-            if(section) section.appendChild(article)
-
-
-        }
+        itemsAdminSection.appendChild(itemArticle);
     })
-}
-
-function createParagraph(element,parent,className) {
-    paragraph = document.createElement("p")
-    paragraph.textContent = element
-    paragraph.className = className
-    parent.appendChild(paragraph)
+})
 }

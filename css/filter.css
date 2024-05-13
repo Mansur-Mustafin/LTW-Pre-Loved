@@ -73,3 +73,7 @@
     transition: all .3s;
 }
 
+
+#session_id {
+    display: none;
+}
