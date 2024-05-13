@@ -21,6 +21,6 @@ $items = getAllItemsFromId($db, $items_in_cart);
 
 drawHeader($session, 'Shopping Cart '.$session->getName());
 var_dump('TODO');
-drawItems($items, $session, 'Time to buy!', $items_in_cart, $items_in_wishlist);
+drawItems($items, $session, 'Time to buy!',true,$items_in_cart, $items_in_wishlist);
 drawFooter();
 

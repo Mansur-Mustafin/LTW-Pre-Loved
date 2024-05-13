@@ -51,7 +51,9 @@ require_once(__DIR__ . '/../utils/utils.php');
 <!-- Draw block with messages -->
 <?php function drawMessagesBlockMessages(Chat $chat, $current_user_id, $current_item): void { ?>
     <section id="messages_block">
-        <h2>Chat with: <?= $chat->chat_partner->username ?></h2>
+        <a href="../pages/profile.php?id=<?=$chat->chat_partner->id?>">
+            <h2>Chat with: <?= $chat->chat_partner->username ?></h2>
+        </a>
 
         <?php if ($chat->getChatPartnerId($current_user_id) != $current_item->user_id) { ?>
             <a href="../pages/item.php?item_id=<?= $current_item->id ?>">Back to chats</a>
@@ -116,7 +118,9 @@ require_once(__DIR__ . '/../utils/utils.php');
 
                 <?php if (!$message->isFromUserId($current_user_id)) { ?>
                     <figure class="profile_image">
-                        <img src="<?= $chat->chat_partner->image_path ?>" alt="Partner's profile image">
+                        <a href="../pages/profile.php?id=<?=$chat->chat_partner->id?>">
+                            <img src="<?= $chat->chat_partner->image_path ?>" alt="Partner's profile image">
+                        </a>
                     </figure>
                 <?php } ?>
 

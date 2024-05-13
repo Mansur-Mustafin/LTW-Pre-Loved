@@ -16,14 +16,17 @@ require_once(__DIR__ . '/../templates/profile.tpl.php');
 
 $db = getDatabaseConnection();
 
-$user = getUser($db, $session->getName());    // TODO search by id?
+$user_id = isset($_GET['id']) == null ? $session->getId() : intval($_GET['id']);
+$user = getUserById($db, $user_id);
 $items = getItemsUser($db, $user->id);
 drawHeader($session);
 
+$isCurrentUserPage = $user_id == $session->getId();
+
 if(isset($_POST['edit']) && $_POST['edit'] == 'profile') drawEditProfile($user); 
 else if (isset($_POST['edit']) && $_POST['edit'] == 'password')  drawChangePassword($user); 
-else drawProfile($user, $session); 
+else drawProfile($user, $session,$isCurrentUserPage);
 
-drawItems($items, $session, 'Your items to sell');
+drawItems($items, $session, 'Your items to sell',$isCurrentUserPage);
 drawFooter();
 
