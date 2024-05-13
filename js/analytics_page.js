@@ -33,11 +33,11 @@ const MONTHS = [
   ];
   
 function months(config) {
-var cfg = config || {};
-var count = cfg.count || 12;
-var section = cfg.section;
-var values = [];
-var i, value;
+let cfg = config || {};
+let count = cfg.count || 12;
+let section = cfg.section;
+let values = [];
+let i, value;
 
 for (i = 0; i < count; ++i) {
     value = MONTHS[Math.ceil(i) % 12];
