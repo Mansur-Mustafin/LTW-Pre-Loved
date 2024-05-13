@@ -150,6 +150,11 @@ CREATE TABLE ItemTags (
     FOREIGN KEY (tag_id) REFERENCES Tags(id) ON DELETE CASCADE
 );
 
+CREATE TABLE Visitations {
+    item_id INTEGER NOT NULL,
+    num_visit INTEGER,
+    FOREIGN (item_id) REFERENCES Items(id) ON DELETE CASCADE,
+}
 
 -- Its me :-)
 INSERT INTO Users (username, password, email, image_path, banned, admin_flag,address,created_at)

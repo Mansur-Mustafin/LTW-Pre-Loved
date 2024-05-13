@@ -49,6 +49,18 @@ require_once(__DIR__ . '/../templates/common.tpl.php');
         <?php } ?>
 
         <?php drawErrors($session->getErrorMessages()) ?>
+        <form id="enable-editing-mode" method="post">
+            <div class='buttons'>
+                <button name="edit" value="profile">Edit Profile</button>
+                <button name="edit" value="password">Change Password</button>
+            </div>
+        </form>
+        <button id="dashboard-button">
+            <a href="../pages/dashboard.php">
+                Dashboard
+            </a>
+        </button>
+        <?=drawErrors($session->getErrorMessages())?>
     </aside>
    
 <?php } ?>
