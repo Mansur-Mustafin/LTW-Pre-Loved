@@ -1,8 +1,10 @@
 <?php 
 declare(strict_types=1);
+require_once(__DIR__ . '/../utils/session.php');
 ?>
 
-<?php function drawFilter(array $categories, array $brands, array $sizes, array $conditions) { ?>
+<?php function drawFilter(Session $session, array $categories, array $brands, array $sizes, array $conditions) { ?>
+    <p id="session_id"><?= $session->getId()?></p>
     <aside id="related">
         <h2>Filter</h2>
         <form action="#" method="get" id="filter">
@@ -32,7 +34,7 @@ declare(strict_types=1);
         <?php foreach($elements as $element) { ?>
             <li>
                 <label>
-                    <input type="checkbox" name="name_elemrnt" value="<?= htmlspecialchars($element['name']) ?>">
+                    <input type="checkbox" name="<?= $name_elemrnt ?>/<?= htmlspecialchars($element['name']) ?>" value="">
                     <?= htmlspecialchars($element['name']) ?>
                 </label>
             </li>

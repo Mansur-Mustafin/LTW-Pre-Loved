@@ -1,5 +1,5 @@
 /* Para todos inputs, mas nao de type checkbox */
-input:not(input[type=checkbox]), textarea{
+input:not(input[type=checkbox]),textarea{
     padding: 1em;
     border: none;
     background-color: var(--matador-grey);
