@@ -8,11 +8,13 @@ require_once(__DIR__ . '/../utils/utils.php');
 <?php function drawItems(array $items, 
                         Session $session, 
                         string $title,
+                        bool $isCurrentUserPage,
                         array $items_in_cart = array(), 
                         array $items_in_wish_list = array(),
                         int $page_index = 0, 
-                        bool $has_more_pages = false): void 
-{ ?>
+                        bool $has_more_pages = false,
+                        ): void 
+{?>
     <section id="items">
         <?php if (empty($items)){ ?>
             <h2>TODO handle each page item.tpl.php line 11 <?=$title?></h2>
@@ -28,7 +30,7 @@ require_once(__DIR__ . '/../utils/utils.php');
                     $in_wishlist = in_array($item->id, $items_in_wish_list);
 
 
-                drawItem($item, $session, $title, $in_cart, $in_wishlist);
+                drawItem($item, $session, $title, $in_cart, $in_wishlist,$isCurrentUserPage);
             } ?>
             <!-- Pagination Controls -->
             <?php if (sizeof($items) >= 10 || $page_index != 0) { ?>
@@ -49,7 +51,13 @@ require_once(__DIR__ . '/../utils/utils.php');
 <?php } ?>
 
 
-<?php function drawItem(Item $item, Session $session, string $title, bool $in_cart, bool $in_wish_list): void 
+<?php function drawItem(Item $item, 
+                        Session $session, 
+                        string $title, 
+                        bool $in_cart, 
+                        bool $in_wish_list,
+                        bool $isCurrentUserPage
+                        ): void 
 {
     $main_image = $item->getImagesArray()[0]; ?>
     
@@ -77,14 +85,14 @@ require_once(__DIR__ . '/../utils/utils.php');
             <p><?=getTimePassed($item->created_at)?></p>
         </div>
         <div class="top-right-element"><p><?=htmlspecialchars(number_format($item->price, 2))?></p><p>$</p></div>
-        <?php draw_buttons_item($item, $session, $title, $in_cart, $in_wish_list); ?>
+        <?php draw_buttons_item($item, $session, $title, $in_cart, $in_wish_list,$isCurrentUserPage); ?>
     </article>
 <?php } ?>
 
 
 <?php
 // TODO: change problem with title SOLID
-function draw_buttons_item(Item $item, Session $session, string $title, bool $in_cart, bool $in_wish_list) 
+function draw_buttons_item(Item $item, Session $session, string $title, bool $in_cart, bool $in_wish_list,bool $isCurrentUserPage) 
 {   
     $uri = '../actions/action_item_status.php';
 
@@ -105,7 +113,7 @@ function draw_buttons_item(Item $item, Session $session, string $title, bool $in
     
     if ($session->isLoggedIn()) { ?>
         <form>
-            <?php if ($title == 'Find what you want to buy!' || $title == 'Your Wishlist!' || $title == 'Time to buy!'): ?>
+            <?php if ($title == 'Find what you want to buy!' || $title == 'Your Wishlist!' || $title == 'Time to buy!' || ($title == 'Your items to sell' && !$isCurrentUserPage)): ?>
                 <a href="<?= $cartHref ?>" class="item-action button <?= $in_cart ? "selected" : "" ?>">
                     <img src="../assets/img/shopping-cart.svg" alt="Add to Cart">
                 </a>
