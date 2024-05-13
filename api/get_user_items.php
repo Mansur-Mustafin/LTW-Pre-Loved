@@ -8,10 +8,13 @@ $session = new Session();
 
 require_once(__DIR__.'/../core/item.class.php');
 require_once(__DIR__.'/../database/connection.db.php');
-require_once(__DIR__.'/../database/item.db.php');
+require_once(__DIR__ . '/../database/user.db.php');
+require_once(__DIR__ . '/../database/item.db.php');
 
 $db = getDatabaseConnection();
 
-$items = searchItems($db,$_GET['search']);
+$user = getUser($db, $session->getName());    // TODO search by id?
+$items = getItemsUser($db, $user->id);
+
 echo json_encode($items);
- 
+

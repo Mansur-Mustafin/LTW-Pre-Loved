@@ -7,7 +7,7 @@ if(type)
 if(entitiesSection && addButton) {
     addButton.addEventListener("click",  function () {
         const button = document.createElement("article")
-        button.classList.add("element","entity","item")
+        button.id = "add-entity-article"
         addButton.style.display = "none";
 
 

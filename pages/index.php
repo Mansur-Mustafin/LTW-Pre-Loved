@@ -38,7 +38,7 @@ $size = getEntitiesFromType($db,"Size");
 $conditions = getEntitiesFromType($db,"Condition");
 
 drawHeader($session, 'Buy Now!');
-drawFilter($categories, $brands, $size, $conditions);
+drawFilter($session, $categories, $brands, $size, $conditions);
 drawItems($items, $session, 'Find what you want to buy!',true,$items_in_cart, $items_in_wishlist, $pageIndex, $has_more_pages);
 drawFooter();
 

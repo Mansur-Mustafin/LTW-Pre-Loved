@@ -9,9 +9,6 @@ nav#pages{
 }
 
 .admin-info {
-    #admin-search-bar {
-        margin-top: 1em;
-    }
     #add-tag, #add-item {
         justify-self: center;
         margin: 2em;
@@ -26,6 +23,15 @@ nav#pages{
 
     form button{
         padding: 1em;
+    }
+
+    #add-entity-article {
+        input {
+            margin: 1em;
+        }
+        button {
+            margin-left: 1em;
+        }
     }
 
     ul.tags{
@@ -57,7 +63,7 @@ nav#pages{
             color: gray;
         }
         .product-id::before {
-            content: "#";
+            content: " #";
         }
         .product-info {
             color: gray;

@@ -1,4 +1,4 @@
-var scrollUp = document.getElementById('back-button');
+let scrollUp = document.getElementById('back-button');
 
 scrollUp.addEventListener('click', function(event){
   event.preventDefault();
