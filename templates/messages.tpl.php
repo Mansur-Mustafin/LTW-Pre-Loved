@@ -7,7 +7,7 @@ require_once(__DIR__ . '/../utils/utils.php');
 
 <?php function drawLoginMessage()
 { ?>
-    <section id="messages_block_no_login">
+    <section class="message_middle">
         <h2>Make login into a system and send the message.</h2>
     </section>
 <?php } ?>

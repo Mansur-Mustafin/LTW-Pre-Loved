@@ -16,12 +16,13 @@ require_once(__DIR__ . '/../utils/utils.php');
     bool $has_more_pages = false,
     string $place = '',
 ): void { ?>
-    <section id="items">
-        <?php if (empty($items)) { ?>
-
+    <?php if (empty($items)) { ?>
+        <section class='message_middle'>
             <h2> <?= handleDifferentTitles($place); ?></h2>
+        </section>
+    <?php } else { ?>
 
-        <?php } else { ?>
+    <section id="items">
             <h2 id="title"><?= $title ?></h2>
             <div id="search-wrapper">
                 <img src="../assets/img/search.svg" alt="search-bar" id="search-icon">

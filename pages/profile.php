@@ -28,12 +28,26 @@ if(isset($_GET['action']) && $_GET['action'] == 'profile') drawEditProfile($user
 else if (isset($_GET['action']) && $_GET['action'] == 'password')  drawChangePassword($user);
 else drawProfile($user, $session,$isCurrentUserPage);
 
-if (isset($_GET['action']) && $_GET['action'] == 'transactions') {
-    $items = getBoughtItems($db, $user->id);
-    drawItems($items, $session, "Your Transactions", $isCurrentUserPage, place: 'transactions');
+
+// TODO: Is there better solution?
+// Find all items that was sold, and not filter them?
+if (isset($_GET['action'])) {
+    if ($_GET['action'] == 'sold') {
+        $allItems = getItemsUser($db, $user->id);
+        $items = array_filter($allItems, function($item) {
+            return in_array('Sold', $item->tags);
+        });
+        drawItems($items, $session, "Your Sold Items", $isCurrentUserPage, place: 'sold');
+    } elseif ($_GET['action'] == 'transactions') {
+        $items = getBoughtItems($db, $user->id);
+        drawItems($items, $session, "Your Transactions", $isCurrentUserPage, place: 'transactions');
+    }
 } else {
-    $items = getItemsUser($db, $user->id);
-    drawItems($items, $session, 'Your items to sell',$isCurrentUserPage, place: 'profile');
+    $allItems = getItemsUser($db, $user->id);
+    $items = array_filter($allItems, function($item) {
+        return !in_array('Sold', $item->tags);
+    });
+    drawItems($items, $session, 'Your items to sell', $isCurrentUserPage, place: 'profile');
 }
 
 drawFooter();

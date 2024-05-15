@@ -15,7 +15,7 @@ require_once (__DIR__ . '/../pages/admin.php');
     <aside id="related">
         <h2>Pages</h2>
 
-        <nav id="pages">
+        <nav class="pages">
 
             <ul>
 
