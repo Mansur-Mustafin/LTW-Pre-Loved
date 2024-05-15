@@ -15,9 +15,9 @@ if(filterItems) {
         let inCart = false
         let wishList = []
         let cart = []
-        const responseWishList = await fetch("../api/get_wishlist.php")
+        const responseWishList = await fetch("../api/wishlist.php")
         wishList = await responseWishList.json()
-        const responseCart = await fetch('../api/get_shopping_cart.php')
+        const responseCart = await fetch('../api/shopping_cart.php')
         cart = await responseCart.json()
 
         const formData = new FormData(e.target)
@@ -34,7 +34,7 @@ if(filterItems) {
         sizes = filterMap.filter((e) => e.key == "size").map((e) => e.value);
         conditions = filterMap.filter((e) => e.key == "condition").map((e) => e.value);
 
-        const response = await fetch('../api/get_items.php?search=')
+        const response = await fetch('../api/items.php?search=')
         const items = await response.json()
         console.log(items)
         filteredItems = (items.filter((item) => {
@@ -60,7 +60,7 @@ if(filterItems) {
 
 if(searchBarItem) {
     searchBarItem.addEventListener('input',async function() {
-        const response = await fetch('../api/get_items.php?search=' + this.value)
+        const response = await fetch('../api/items.php?search=' + this.value)
         let items = await response.json()
         const session = await getSession()
         let inWishList = false
@@ -69,11 +69,11 @@ if(searchBarItem) {
         let cart = []
         let userItems = [] 
         if(session.isLoggedIn) {
-            const responseWishList = await fetch("../api/get_wishlist.php")
+            const responseWishList = await fetch("../api/wishlist.php")
             wishList = await responseWishList.json()
-            const responseCart = await fetch('../api/get_shopping_cart.php')
+            const responseCart = await fetch('../api/shopping_cart.php')
             cart = await responseCart.json()
-            const responseUserItems = await fetch("../api/get_user_items.php")
+            const responseUserItems = await fetch("../api/user_items.php")
             userItems = await responseUserItems.json()
         }
         
@@ -101,7 +101,7 @@ if(searchBarItem) {
 
 
 async function getSession() {
-    const r = await fetch('../api/get_session.php')
+    const r = await fetch('../api/session.php')
     const response = await r.json();
     let session = {};
     session.isLoggedIn = response[2]
