@@ -3,7 +3,8 @@ declare(strict_types=1);
 require_once(__DIR__ . '/../utils/session.php');
 ?>
 
-<?php function drawFilter(Session $session, array $categories, array $brands, array $sizes, array $conditions) { ?>
+<?php function drawFilter(Session $session, array $categories, array $brands, array $sizes, array $conditions) 
+{ ?>
     <p id="session_id"><?= $session->getId()?></p>
     <aside id="related">
         <h2>Filter</h2>
@@ -15,14 +16,17 @@ require_once(__DIR__ . '/../utils/session.php');
                 draw_filter_element('Size', $sizes, 'size'); 
                 draw_filter_element('Condition', $conditions, 'condition'); 
             ?>
-
+            <div class='buttons'>
             <button type="submit">Submit</button>
+            </div>
+            
         </form>
     </aside>
 <?php } ?>
 
 
-<?php function draw_filter_element(string $title, array $elements, string $name_elemrnt) { ?>
+<?php function draw_filter_element(string $title, array $elements, string $name_elemrnt) 
+{ ?>
 
     <article class="filter-element">
         <label class="hover-element">

@@ -5,7 +5,8 @@ require_once(__DIR__ . '/../utils/session.php');
 ?>
 
 
-<?php function drawLoginForm(Session $session) {?>
+<?php function drawLoginForm(Session $session) 
+{?>
     <section id="login-register">
 
         <input type="checkbox" id="login-tuggle-checked" checked>

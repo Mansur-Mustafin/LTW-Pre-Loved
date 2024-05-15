@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 require_once(__DIR__.'/../core/user.class.php');
 
-function createUser(PDO $db, User $user) : int{
+function createUser(PDO $db, User $user) : int
+{
     $sql = "INSERT INTO Users (username, password, email, phonenumber, image_path, banned, admin_flag, address) 
             VALUES (:username, :password, :email, :phonenumber, :image_path, :banned, :admin_flag, :address)";
 
@@ -25,7 +26,8 @@ function createUser(PDO $db, User $user) : int{
     return intval($db->lastInsertId());
 }
 
-function existUser(PDO $db, string $username, string $email): bool {
+function existUser(PDO $db, string $username, string $email): bool 
+{
     // text could be email or username they are both unique
     $sql = "SELECT 1 FROM Users WHERE username = :username OR email = :email";
 
@@ -39,7 +41,8 @@ function existUser(PDO $db, string $username, string $email): bool {
     return $stmt->fetch(PDO::FETCH_ASSOC) !== false;
 }
 
-function getUser(PDO $db, string $text): ?User {
+function getUser(PDO $db, string $text): ?User 
+{
     // text could be email or username they are both unique
     $sql = "SELECT * FROM Users WHERE username = :text OR email = :text";
 
@@ -51,21 +54,22 @@ function getUser(PDO $db, string $text): ?User {
 
     if (!$userData) return null;
     $user = new User(
-        $userData['username'],
-        $userData['password'],
-        $userData['email'],
-        $userData['id'],
-        $userData['phonenumber'] ?? null,
-        $userData['image_path'] ?? null,
-        $userData['banned'] ?? 0,
-        $userData['admin_flag'] ?? 0,
-        $userData['address'] ?? null
+        username: $userData['username'],
+        password: $userData['password'],
+        email: $userData['email'],
+        id: $userData['id'],
+        phonenumber: $userData['phonenumber'],
+        image_path: $userData['image_path'],
+        banned: $userData['banned'] ?? 0,
+        admin_flag: $userData['admin_flag'] ?? 0,
+        address: $userData['address'],
+        created_at: $row['created_at'] ?? null,
     );
-    
     return $user;
 }
 
-function searchUsers(PDO $db, string $keyword): ?array {
+function searchUsers(PDO $db, string $keyword): ?array 
+{
     $sql = "SELECT * FROM Users WHERE username LIKE ?";
 
     $stmt = $db->prepare($sql);
@@ -90,7 +94,9 @@ function searchUsers(PDO $db, string $keyword): ?array {
 
     return $users;
 }
-function getUserById(PDO $db, int $id): ?User {
+
+function getUserById(PDO $db, int $id): ?User 
+{
     $sql = "SELECT * FROM Users WHERE id = :id";
 
     $stmt = $db->prepare($sql);
@@ -101,21 +107,22 @@ function getUserById(PDO $db, int $id): ?User {
 
     if (!$userData) return null;
     $user = new User(
-        $userData['username'],
-        $userData['password'],
-        $userData['email'],
-        $userData['id'],
-        $userData['phonenumber'] ?? null,
-        $userData['image_path'] ?? null,
-        $userData['banned'] ?? 0,
-        $userData['admin_flag'] ?? 0,
-        $userData['address'] ?? null
+        id: $userData['id'],
+        username: $userData['username'],
+        email: $userData['email'],
+        password: $userData['password'],
+        phonenumber: $userData['phonenumber'] ?? null,
+        image_path: $userData['image_path'] ?? null,
+        banned: $userData['banned'] ?? 0,
+        admin_flag: $userData['admin_flag'] ?? 0,
+        address: $userData['address'] ?? null,
+        created_at: $userData['created_at'] ?? null,
     );
-
     return $user;
 }
 
-function updateUser(PDO $db, User $user): bool {
+function updateUser(PDO $db, User $user): bool 
+{
     $sql = "UPDATE Users SET 
                 username = :username, 
                 password = :password, 
@@ -142,7 +149,8 @@ function updateUser(PDO $db, User $user): bool {
     return $stmt->execute();
 }
 
-function getAllUsers(PDO $db): array {
+function getAllUsers(PDO $db): array 
+{
     $sql = 'SELECT * FROM USERS';
     $stmt = $db->prepare($sql);
     $stmt->execute();

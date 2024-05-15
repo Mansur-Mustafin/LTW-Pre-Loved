@@ -17,7 +17,9 @@ require_once(__DIR__.'/../utils/session.php')
             </label>
             <?=drawErrors($session->getErrorMessages())?>
             <?=drawSuccessMsg($session->getSuccesMessages())?>
-            <button type="submit">Send</button>
+            <div class='buttons'>
+                <button type="submit">Send</button>
+            </div>
         </form>
     </aside>
 

@@ -9,6 +9,7 @@
     --matador-grey-plus: #e1e1e1;
     --matador-light-green: #B1DCA1;
     --matador-pink: #FFE1E1;
+    --matador-orange: #FFAE00;
 }
 
 *{
@@ -46,6 +47,11 @@ body *::-moz-selection{ /* Code for Firefox */
     background: var(--matador-dark-red);
 }
 
+body > main{
+    max-width: 70em;
+    margin: 0 auto;
+}
+
 html {
     font-family: 'Ruda', serif;
     color: #333;
@@ -72,13 +78,9 @@ a{
     color: var(--matador-grey);
 }
 
-body > main{
-    max-width: 70em;
-    margin: 0 auto;
-}
-
-button{
-    cursor: pointer;
+.link{
+    color: var(--matador-orange);
+    text-decoration: underline;
 }
 
 #related{
@@ -103,3 +105,4 @@ button{
         color: var(--matador-yellow);
     }
 }
+

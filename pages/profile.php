@@ -13,20 +13,27 @@ require_once(__DIR__ . '/../database/item.db.php');
 require_once(__DIR__ . '/../templates/common.tpl.php');
 require_once(__DIR__ . '/../templates/item.tpl.php');
 require_once(__DIR__ . '/../templates/profile.tpl.php');
+require_once(__DIR__ . '/../components/pdf.php');
 
 $db = getDatabaseConnection();
 
 $user_id = isset($_GET['id']) == null ? $session->getId() : intval($_GET['id']);
 $user = getUserById($db, $user_id);
-$items = getItemsUser($db, $user->id);
-drawHeader($session);
+
+drawHeader($session, $user->username);
 
 $isCurrentUserPage = $user_id == $session->getId();
 
-if(isset($_POST['edit']) && $_POST['edit'] == 'profile') drawEditProfile($user); 
-else if (isset($_POST['edit']) && $_POST['edit'] == 'password')  drawChangePassword($user); 
+if(isset($_GET['action']) && $_GET['action'] == 'profile') drawEditProfile($user);
+else if (isset($_GET['action']) && $_GET['action'] == 'password')  drawChangePassword($user);
 else drawProfile($user, $session,$isCurrentUserPage);
 
-drawItems($items, $session, 'Your items to sell',$isCurrentUserPage);
-drawFooter();
+if (isset($_GET['action']) && $_GET['action'] == 'transactions') {
+    $items = getBoughtItems($db, $user->id);
+    drawItems($items, $session, "Your Transactions", $isCurrentUserPage, [], [], 0, false, 'transactions');
+} else {
+    $items = getItemsUser($db, $user->id);
+    drawItems($items, $session, 'Your items to sell',$isCurrentUserPage);
+}
 
+drawFooter();

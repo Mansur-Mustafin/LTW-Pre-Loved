@@ -8,25 +8,16 @@ require_once(__DIR__ . '/../database/user.db.php');
 
 class Chat 
 {
-    public int $id;
-    public int $item_id;
-    public int $from_user_id;
-    public int $to_user_id;
     public array $messages = [];
     public User $chat_partner;
     public Message $last_message;
 
     public function __construct(
-        int $id,
-        int $item_id,
-        int $from_user_id,
-        int $to_user_id
-    ) {
-        $this->id = $id;
-        $this->from_user_id = $from_user_id;
-        $this->to_user_id = $to_user_id;
-        $this->item_id = $item_id;
-    }
+        public int $id,
+        public int $item_id,
+        public int $from_user_id,
+        public int $to_user_id,
+    ) {}
 
     public static function newChat( $from_user_id, $to_user_id, $item_id ) 
     {

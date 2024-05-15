@@ -4,37 +4,19 @@ declare(strict_types=1);
 
 class Message 
 {
-    public int $id;
-    public int $date_time;
-    public string $text;
-    public int $chat_id;
-    public int $from_user_id;  // TODO
-    public int $to_user_id;    // TODO
-    public bool $isRead;
-    public ?int $item_id_exchange;
-    public Item $item_for_exchange;
-    public ?string $filename;
-
     public function __construct(
-        int $id,
-        string $text,
-        int $chat_id,
-        int $from_user_id,
-        int $to_user_id,
-        bool $read,
-        ?int $item_id_exchange,
-        ?string $filename,
-        ?int $date_time = null,
+        public int $id,
+        public string $text,
+        public int $chat_id,
+        public int $from_user_id,
+        public int $to_user_id,
+        public bool $isRead,
+        public ?int $item_id_exchange = null,
+        public ?Item $item_for_exchange = null,
+        public ?string $filename = null,
+        public ?int $date_time = null
     ) {
-        $this->id = $id;
         $this->date_time = $date_time ?? time();
-        $this->text = $text;
-        $this->chat_id = $chat_id;
-        $this->from_user_id = $from_user_id;
-        $this->to_user_id = $to_user_id;
-        $this->isRead = $read;
-        $this->item_id_exchange = $item_id_exchange;
-        $this->filename = $filename;
     }
 
     public function isFromUserId(int $from_user_id) : bool
@@ -44,7 +26,7 @@ class Message
 
     public function isFileImage() : bool
     {
-        return (bool)exif_imagetype("../data/uploaded_files/".substr($this->filename, 0, 3).'/'.$this->filename);
+        return (bool)exif_imagetype("../data/uploaded_files/".$this->getFullPath());
     }
 
     public function getFullPath() : string

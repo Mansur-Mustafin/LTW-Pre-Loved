@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 require_once(__DIR__.'/../core/item.class.php');
 
-function getItemsUser(PDO $db, int $user_id): array {
+function getBoughtItems(PDO $db, int $user_id)
+{
     $sql = "SELECT 
             Items.*, 
             Condition.name AS condition_name, 
@@ -18,8 +19,8 @@ function getItemsUser(PDO $db, int $user_id): array {
             LEFT JOIN Categories ON Items.category_id = Categories.id
             LEFT JOIN Size ON Items.size_id = Size.id
             LEFT JOIN Brands ON Models.brand_id = Brands.id
-            WHERE Items.user_id = :user_id;
-            ";
+            LEFT JOIN Transactions ON Items.id = Transactions.item_id
+            WHERE Transactions.buyer_id = :user_id;";
 
     $stmt = $db->prepare($sql);
     $stmt->execute(['user_id' => $user_id]);
@@ -51,7 +52,8 @@ function getItemsUser(PDO $db, int $user_id): array {
     return $items;
 }
 
-function getAllItems(PDO $db, int $limit, int $offset, ?int $uid): array {
+function getItemsUser(PDO $db, int $user_id): array 
+{
     $sql = "SELECT 
             Items.*, 
             Condition.name AS condition_name, 
@@ -64,11 +66,60 @@ function getAllItems(PDO $db, int $limit, int $offset, ?int $uid): array {
             LEFT JOIN Models ON Items.model_id = Models.id
             LEFT JOIN Categories ON Items.category_id = Categories.id
             LEFT JOIN Size ON Items.size_id = Size.id
-            LEFT JOIN Brands ON Models.brand_id = Brands.id";
+            LEFT JOIN Brands ON Models.brand_id = Brands.id
+            WHERE Items.user_id = :user_id;";
 
-    // Conditionally add WHERE clause if uid is not null
+    $stmt = $db->prepare($sql);
+    $stmt->execute(['user_id' => $user_id]);
+
+    $items = [];
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $tags = getTagsForItem($db, $row['id']);
+
+        $item = new Item(
+            id: $row['id'],
+            brand: $row['brand_name'],
+            description: $row['description'],
+            title: $row['title'],
+            images: $row['images'],
+            price: $row['price'],
+            tradable: $row['tradable'],
+            priority: $row['priority'],
+            user_id: $row['user_id'],
+            created_at: $row['created_at'],
+            condition: $row['condition_name'],
+            model: $row['model_name'],
+            category: $row['category_name'],
+            size: $row['size_name'],
+            tags: $tags
+        );
+        $items[] = $item;
+    }
+
+    return $items;
+}
+
+function getAllItems(PDO $db, int $limit, int $offset, ?int $uid): array 
+{
+    $sql = "SELECT 
+            Items.*, 
+            Condition.name AS condition_name, 
+            Models.name AS model_name,
+            Categories.name AS category_name,
+            Size.name AS size_name,
+            Brands.name AS brand_name
+            FROM Items
+            LEFT JOIN Condition ON Items.condition_id = Condition.id
+            LEFT JOIN Models ON Items.model_id = Models.id
+            LEFT JOIN Categories ON Items.category_id = Categories.id
+            LEFT JOIN Size ON Items.size_id = Size.id
+            LEFT JOIN Brands ON Models.brand_id = Brands.id
+            LEFT JOIN Transactions ON Items.id = Transactions.item_id
+            WHERE Transactions.id is null";
+
+    // Conditionally add WHERE clause if uid is null
     if ($uid !== null) {
-        $sql .= " WHERE Items.user_id != :uid";
+        $sql .= " AND Items.user_id != :uid";
     }
 
     $sql .= " ORDER BY Items.priority DESC, Items.created_at DESC
@@ -111,7 +162,8 @@ function getAllItems(PDO $db, int $limit, int $offset, ?int $uid): array {
     return $items;
 }
 
-function searchItems($db, $keyword) {
+function searchItems(PDO $db, string $keyword) 
+{
     $sql = "SELECT 
             Items.*, 
             Condition.name AS condition_name, 
@@ -126,6 +178,7 @@ function searchItems($db, $keyword) {
             LEFT JOIN Size ON Items.size_id = Size.id
             LEFT JOIN Brands ON Models.brand_id = Brands.id
             WHERE Items.title LIKE ?";
+
     $stmt = $db->prepare($sql); 
     $stmt->execute(['%' . $keyword . '%']);
 
@@ -156,7 +209,8 @@ function searchItems($db, $keyword) {
     return $items;
 }
 
-function filterItemsbyCategory($db, $category) {
+function filterItemsbyCategory($db, $category) 
+{
     $sql = "SELECT 
             Items.*, 
             Condition.name AS condition_name, 
@@ -171,6 +225,7 @@ function filterItemsbyCategory($db, $category) {
             LEFT JOIN Size ON Items.size_id = Size.id
             LEFT JOIN Brands ON Models.brand_id = Brands.id
             WHERE Categories.name LIKE ?";
+
     $stmt = $db->prepare($sql); 
     $stmt->execute([$category . '%']);
 
@@ -200,7 +255,9 @@ function filterItemsbyCategory($db, $category) {
 
     return $items;
 }
-function filterItemsbyBrand($db, $brand) {
+
+function filterItemsbyBrand($db, $brand) 
+{
     $sql = "SELECT 
             Items.*, 
             Condition.name AS condition_name, 
@@ -215,6 +272,7 @@ function filterItemsbyBrand($db, $brand) {
             LEFT JOIN Size ON Items.size_id = Size.id
             LEFT JOIN Brands ON Models.brand_id = Brands.id
             WHERE Brands.name LIKE ?";
+
     $stmt = $db->prepare($sql); 
     $stmt->execute([$brand . '%']);
 
@@ -244,7 +302,9 @@ function filterItemsbyBrand($db, $brand) {
 
     return $items;
 }
-function filterItemsbySize($db, $size) {
+
+function filterItemsbySize($db, $size) 
+{
     $sql = "SELECT 
             Items.*, 
             Condition.name AS condition_name, 
@@ -288,7 +348,9 @@ function filterItemsbySize($db, $size) {
 
     return $items;
 }
-function filterItemsbyCondition($db, $condition) {
+
+function filterItemsbyCondition($db, $condition) 
+{
     $sql = "SELECT 
             Items.*, 
             Condition.name AS condition_name, 
@@ -333,8 +395,8 @@ function filterItemsbyCondition($db, $condition) {
     return $items;
 }
 
-
-function getItem(PDO $db, int $itemId): ?Item {
+function getItem(PDO $db, int $itemId): ?Item 
+{
     $sql = "SELECT 
             Items.*, 
             Condition.name AS condition_name, 
@@ -380,7 +442,57 @@ function getItem(PDO $db, int $itemId): ?Item {
     return null;
 }
 
-function getTagsForItem(PDO $db, int $itemId): array {
+function getBoughtItem(PDO $db, int $userId, int $itemId): ?Item
+{
+    $sql = "SELECT 
+            Items.*, 
+            Condition.name AS condition_name, 
+            Models.name AS model_name,
+            Categories.name AS category_name,
+            Size.name AS size_name,
+            Brands.name AS brand_name
+            FROM Items
+            LEFT JOIN Condition ON Items.condition_id = Condition.id
+            LEFT JOIN Models ON Items.model_id = Models.id
+            LEFT JOIN Categories ON Items.category_id = Categories.id
+            LEFT JOIN Size ON Items.size_id = Size.id
+            LEFT JOIN Brands ON Models.brand_id = Brands.id
+            LEFT JOIN Transactions ON Items.id = Transactions.item_id
+            WHERE Transactions.buyer_id = :userId AND Items.id = :itemId;";
+
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(':itemId', $itemId, PDO::PARAM_INT);
+    $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+    $stmt->execute();
+
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($row) {
+        $tags = getTagsForItem($db, $row['id']);
+
+        return new Item(
+            id: $row['id'],
+            brand: $row['brand_name'],
+            description: $row['description'],
+            title: $row['title'],
+            images: $row['images'],
+            price: $row['price'],
+            tradable: $row['tradable'],
+            priority: $row['priority'],
+            user_id: $row['user_id'],
+            created_at: $row['created_at'],
+            condition: $row['condition_name'],
+            model: $row['model_name'],
+            category: $row['category_name'],
+            size: $row['size_name'],
+            tags: $tags
+        );
+    }
+
+    return null;
+}
+
+function getTagsForItem(PDO $db, int $itemId): array 
+{
     $tagSql = "SELECT Tags.name 
                FROM ItemTags 
                JOIN Tags ON ItemTags.tag_id = Tags.id 
@@ -398,7 +510,8 @@ function getTagsForItem(PDO $db, int $itemId): array {
     return $tags;
 }
 
-function itemsInCart(PDO $db, ?int $uid): array {
+function itemsInCart(PDO $db, ?int $uid): array 
+{
     if (!isset($uid)){
         return array();
     }
@@ -419,7 +532,8 @@ function itemsInCart(PDO $db, ?int $uid): array {
     return $itemIds;
 }
 
-function itemsInWishlist(PDO $db, ?int $uid): array {
+function itemsInWishlist(PDO $db, ?int $uid): array 
+{
     if (!isset($uid)){
         return array();
     }
@@ -440,8 +554,19 @@ function itemsInWishlist(PDO $db, ?int $uid): array {
     return $itemIds;
 }
 
+function groupByUser(array $items): array
+{
+    $itemsGroups = [];
 
-function getAllItemsFromId(PDO $db, array $items_ids): array {
+    foreach ($items as $item) {
+        $itemsGroups[$item->username][] = $item;
+    }
+
+    return $itemsGroups;
+}
+
+function getAllItemsFromId(PDO $db, array $items_ids): array 
+{
     if (empty($items_ids)) {
         return [];
     }
@@ -449,6 +574,7 @@ function getAllItemsFromId(PDO $db, array $items_ids): array {
 
     $sql = "SELECT 
             Items.*, 
+            Users.username AS username, 
             Condition.name AS condition_name, 
             Models.name AS model_name,
             Categories.name AS category_name,
@@ -460,6 +586,7 @@ function getAllItemsFromId(PDO $db, array $items_ids): array {
             LEFT JOIN Categories ON Items.category_id = Categories.id
             LEFT JOIN Size ON Items.size_id = Size.id
             LEFT JOIN Brands ON Models.brand_id = Brands.id
+            LEFT JOIN Users ON Items.user_id = Users.id
             WHERE Items.id IN ($placeholders)
             ORDER BY Items.priority DESC, Items.created_at DESC;";
 
@@ -490,7 +617,8 @@ function getAllItemsFromId(PDO $db, array $items_ids): array {
             model: $row['model_name'],
             category: $row['category_name'],
             size: $row['size_name'],
-            tags: $tags
+            tags: $tags,
+            username: $row['username'],
         );
         $items[] = $item;
     }
@@ -498,7 +626,8 @@ function getAllItemsFromId(PDO $db, array $items_ids): array {
     return $items;
 }
 
-function toggleCartItem(PDO $db, int $userId, int $itemId): void {
+function toggleCartItem(PDO $db, int $userId, int $itemId): void 
+{
     $checkStmt = $db->prepare("SELECT * FROM ShoppingCart WHERE user_id = ? AND item_id = ?");
     $checkStmt->execute([$userId, $itemId]);
     $exists = $checkStmt->fetch();
@@ -510,7 +639,8 @@ function toggleCartItem(PDO $db, int $userId, int $itemId): void {
     }
 }
 
-function toggleWishlistItem(PDO $db, int $userId, int $itemId): void {
+function toggleWishlistItem(PDO $db, int $userId, int $itemId): void 
+{
     $checkStmt = $db->prepare("SELECT * FROM Wishlist WHERE user_id = ? AND item_id = ?");
     $checkStmt->execute([$userId, $itemId]);
     $exists = $checkStmt->fetch();
@@ -522,27 +652,77 @@ function toggleWishlistItem(PDO $db, int $userId, int $itemId): void {
     }
 }
 
-function addToCart(PDO $db, int $userId, int $itemId): void {
+function addToCart(PDO $db, int $userId, int $itemId): void 
+{
     $stmt = $db->prepare("INSERT INTO ShoppingCart (user_id, item_id) VALUES (?, ?)");
     $stmt->execute([$userId, $itemId]);
 }
 
-function removeFromCart(PDO $db, int $userId, int $itemId): void {
+function removeFromCart(PDO $db, int $userId, int $itemId): void 
+{
     $stmt = $db->prepare("DELETE FROM ShoppingCart WHERE user_id = ? AND item_id = ?");
     $stmt->execute([$userId, $itemId]);
 }
 
-function addToWishlist(PDO $db, int $userId, int $itemId): void {
+function addToWishlist(PDO $db, int $userId, int $itemId): void 
+{
     $stmt = $db->prepare("INSERT INTO Wishlist (user_id, item_id) VALUES (?, ?)");
     $stmt->execute([$userId, $itemId]);
 }
 
-function removeFromWishlist(PDO $db, int $userId, int $itemId): void {
+function removeFromWishlist(PDO $db, int $userId, int $itemId): void 
+{
     $stmt = $db->prepare("DELETE FROM Wishlist WHERE user_id = ? AND item_id = ?");
     $stmt->execute([$userId, $itemId]);
 }
 
-function deleteItembyId(PDO $db,int $itemId): void {
+function deleteItemById(PDO $db, int $itemId): void
+{
     $stmt = $db->prepare("DELETE FROM Items WHERE id = ?");
     $stmt->execute([$itemId]);
+}
+
+function completeCheckout(PDO $db, int $userId, array $items)
+{
+    $itemsIds = array_column($items, 'id');
+    $itemsIdsString = implode(', ', $itemsIds);
+
+    $stmt = $db->prepare("DELETE FROM Wishlist WHERE user_id = ? AND item_id in ({$itemsIdsString})");
+    $stmt->execute([$userId]);
+
+    $stmt = $db->prepare("DELETE FROM ShoppingCart WHERE user_id = ? AND item_id in ({$itemsIdsString})");
+    $stmt->execute([$userId]);
+
+    $values = [];
+    $params = [];
+
+    foreach ($items as $item) {
+        $values[] = "(?, ?, ?, ?)";
+        array_push($params, $item->user_id, $userId, $item->id, time());
+    }
+
+    $valuesString = implode(', ', $values);
+
+    $stmt = $db->prepare("INSERT INTO Transactions (seller_id, buyer_id, item_id, created_at) VALUES {$valuesString};");
+    $stmt->execute($params);
+
+    $stmt = $db->prepare("DELETE FROM ItemTags WHERE item_id IN ({$itemsIdsString})");
+    $stmt->execute();
+
+    $stmt = $db->prepare("SELECT id FROM Tags WHERE name = 'Sold'");
+    $stmt->execute();
+    $soldTagId = $stmt->fetchColumn();
+
+    $values = [];
+    $params = [];
+
+    foreach ($items as $item) {
+        $values[] = "(?, ?)";
+        array_push($params, $item->id, $soldTagId);
+    }
+
+    $valuesString = implode(', ', $values);
+
+    $stmt = $db->prepare("INSERT INTO ItemTags (item_id, tag_id) VALUES {$valuesString};");
+    $stmt->execute($params);
 }

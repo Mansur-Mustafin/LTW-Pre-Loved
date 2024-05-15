@@ -5,14 +5,16 @@ require_once(__DIR__ . '/../core/chat.class.php');
 require_once(__DIR__ . '/../utils/utils.php');
 ?>
 
-<?php function drawLoginMessage(){ ?>
+<?php function drawLoginMessage()
+{ ?>
     <section id="messages_block_no_login">
         <h2>Make login into a system and send the message.</h2>
     </section>
 <?php } ?>
 
 <!-- Draw block of chats  -->
-<?php function drawMessagesBlockChats(Session $session, array $chats, $current_user_id, $current_item_id): void { ?>
+<?php function drawMessagesBlockChats(Session $session, array $chats, $current_user_id, $current_item_id)
+{ ?>
     <section id="chats_block">
         <h2>Messages</h2>
         <?php $last_message_id = 0;
@@ -30,7 +32,8 @@ require_once(__DIR__ . '/../utils/utils.php');
 
 
 <!-- Draw each chat -->
-<?php function drawChat(Session $session, Chat $chat, int $current_item_id): void { ?>
+<?php function drawChat(Session $session, Chat $chat, int $current_item_id) 
+{ ?>
     <article class="chat fly">
         <a href="../pages/item.php?item_id=<?= $current_item_id ?>&chat_id=<?= $chat->id ?>">
             <figure class="profile_image">
@@ -49,10 +52,11 @@ require_once(__DIR__ . '/../utils/utils.php');
 
 
 <!-- Draw block with messages -->
-<?php function drawMessagesBlockMessages(Chat $chat, $current_user_id, $current_item): void { ?>
+<?php function drawMessagesBlockMessages(Chat $chat, $current_user_id, $current_item)
+{ ?>
     <section id="messages_block">
-        <a href="../pages/profile.php?id=<?=$chat->chat_partner->id?>">
-            <h2>Chat with: <?= $chat->chat_partner->username ?></h2>
+        <a href="../pages/profile.php?id=<?=$chat->chat_partner->id?>" >
+            <h2>Chat with: <span class='link'><?= $chat->chat_partner->username ?></span></h2>
         </a>
 
         <?php if ($chat->getChatPartnerId($current_user_id) != $current_item->user_id) { ?>
@@ -111,7 +115,8 @@ require_once(__DIR__ . '/../utils/utils.php');
 <?php } ?>
 
 
-<?php function drawMessages(Chat $chat, int $current_user_id, int $current_item_id): void { ?>
+<?php function drawMessages(Chat $chat, int $current_user_id, int $current_item_id)
+{ ?>
     <section id="messages">
         <?php foreach ($chat->messages as $message) { ?>
             <article class="message <?= $message->isFromUserId($current_user_id) ? "my_message" : "partner_message" ?>">

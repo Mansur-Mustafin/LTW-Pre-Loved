@@ -7,32 +7,53 @@ require_once(__DIR__ . '/../templates/common.tpl.php');
 ?>
 
 
-<?php function drawProfile(User $user, Session $session,bool $isCurrentUser) {?>
-    
+<?php function drawProfile(User $user, Session $session,bool $isCurrentUser) 
+{?>    
     <aside id="profile-info">
-        <img src=<?=htmlspecialchars($user->image_path)?> alt="Account Profile Picture">
+        <img src="<?=htmlspecialchars($user->image_path)?>" alt="Account Profile Picture">
+
         <div class="user-info">
             <p class="user-name"><?=htmlspecialchars($user->username)?></p>
             <p class="user-email"><?=htmlspecialchars($user->email)?></p>
             <p class="user-number"><?=htmlspecialchars($user->phonenumber)?></p>
             <p class="user-address"><?= htmlspecialchars($user->address) ?> </p>
         </div>
-        <?php if($isCurrentUser) {?>
-            <form id="enable-editing-mode" method="post">
+
+        <?php if ($isCurrentUser) { ?>
+            <form id="enable-editing-mode" method="get">
                 <div class='buttons'>
-                    <button name="edit" value="profile">Edit Profile</button>
-                    <button name="edit" value="password">Change Password</button>
+                    <button name="action" value="profile">Edit Profile</button>
+                    <button name="action" value="password">Change Password</button>
                 </div>
             </form>
+            <nav id="pages">
+                <ul>
+                    <li class="filter-element">
+                        <a href="../pages/profile.php">
+                            <h4 class="hover-element">
+                                Are selling
+                            </h4>
+                        </a>
+                    </li>
+
+                    <li class="filter-element">
+                        <a href="../pages/profile.php?action=transactions">
+                            <h4 class="hover-element">
+                                Bought
+                            </h4>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
         <?php } ?>
-        <?=drawErrors($session->getErrorMessages())?>
+
+        <?php drawErrors($session->getErrorMessages()) ?>
     </aside>
    
 <?php } ?>
 
-
-<?php function drawEditProfile(User $user) {?>
-    
+<?php function drawEditProfile(User $user)
+{?>    
     <aside id="profile-info">
         <img id="current_profile_img" src=<?=htmlspecialchars($user->image_path)?> alt="Account Profile Picture">
         <form id="edit-profile-info" action="../actions/action_update_user.php" method="post" enctype="multipart/form-data">
@@ -59,8 +80,8 @@ require_once(__DIR__ . '/../templates/common.tpl.php');
 <?php } ?>
 
 
-<?php function drawChangePassword(User $user) {?>
-    
+<?php function drawChangePassword(User $user) 
+{?>
     <aside id="profile-info">
         <img id="current_profile_img" src=<?=htmlspecialchars($user->image_path)?> alt="Account Profile Picture">
         <form id="edit-profile-info" action="../actions/action_update_user.php" method="post" enctype="multipart/form-data">
@@ -74,5 +95,4 @@ require_once(__DIR__ . '/../templates/common.tpl.php');
             </div>
         </form>
     </aside>
-
 <?php } ?>

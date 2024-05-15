@@ -27,14 +27,13 @@ section#login-register{
 
 
 /* Items layout*/
-section#items, section#messages_block, section#chats_block{
+section#items, section#messages_block, section#chats_block, section#payment{
     padding: 1em;
     h2{
         font-size:x-large;
         padding: 1em 1em 0;
     }
 }
-
 
 
 /* Footer */

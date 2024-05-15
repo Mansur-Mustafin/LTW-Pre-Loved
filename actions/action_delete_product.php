@@ -17,7 +17,7 @@ $db = getDatabaseConnection();
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     $product_id = $_POST['product_id'];
-    deleteItembyId($db, intval($product_id));
+    deleteItemById($db, intval($product_id));
 }
 
 header('Location: ../pages/admin.php?value=items');

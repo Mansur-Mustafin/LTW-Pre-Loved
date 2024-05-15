@@ -1,10 +1,14 @@
 function updateButton() {
-    document.querySelectorAll('.button').forEach(function(link) {
+    document.querySelectorAll('.item-action').forEach(function(link) {
         link.addEventListener('click', function(event) {
+
+            if (link.target === "_blank") {
+                return;
+            }
+
             event.preventDefault();
             const url = link.getAttribute('href');
 
-            console.log(url)
             fetch(url)
                 .then(response => response.json())
                 .then(data => {

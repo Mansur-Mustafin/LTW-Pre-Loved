@@ -28,9 +28,9 @@ $conditions = getEntitiesFromType($db,"Condition");
 $sizes = getEntitiesFromType($db,"Size");
 $items = getAllItems($db,100,0,null);
 
-
 drawHeader($session, 'Admin Page');
 drawSideBar();
+
 switch ($_GET['value']) {
     case 'users':
         drawUsersAdmin($allUsers,$session);
@@ -59,5 +59,6 @@ switch ($_GET['value']) {
     default:
         drawUsersAdmin($allUsers,$session);
         break;
-    }
+}
+
 drawFooter();
