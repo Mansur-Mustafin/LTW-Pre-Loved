@@ -553,6 +553,7 @@ function itemsInWishlist(PDO $db, ?int $uid): array
 
     return $itemIds;
 }
+
 function groupByUser(array $items): array
 {
     $itemsGroups = [];
@@ -703,5 +704,25 @@ function completeCheckout(PDO $db, int $userId, array $items)
     $valuesString = implode(', ', $values);
 
     $stmt = $db->prepare("INSERT INTO Transactions (seller_id, buyer_id, item_id, created_at) VALUES {$valuesString};");
+    $stmt->execute($params);
+
+    $stmt = $db->prepare("DELETE FROM ItemTags WHERE item_id IN ({$itemsIdsString})");
+    $stmt->execute();
+
+    $stmt = $db->prepare("SELECT id FROM Tags WHERE name = 'Sold'");
+    $stmt->execute();
+    $soldTagId = $stmt->fetchColumn();
+
+    $values = [];
+    $params = [];
+
+    foreach ($items as $item) {
+        $values[] = "(?, ?)";
+        array_push($params, $item->id, $soldTagId);
+    }
+
+    $valuesString = implode(', ', $values);
+
+    $stmt = $db->prepare("INSERT INTO ItemTags (item_id, tag_id) VALUES {$valuesString};");
     $stmt->execute($params);
 }

@@ -46,7 +46,6 @@ CREATE TABLE Items (
     priority INTEGER DEFAULT 1,
     user_id INTEGER NOT NULL,                   -- User who vending item
     category_id INTEGER,
-    buyer_id INTEGER,
     size_id INTEGER,
     condition_id INTEGER,
     model_id INTEGER,

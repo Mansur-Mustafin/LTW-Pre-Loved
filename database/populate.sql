@@ -62,7 +62,7 @@ VALUES
 
 -- Insert sample data into Tags table
 INSERT INTO Tags (name)
-VALUES 
+VALUES
     ('New'),
     ('Top seller'),
     ('Pay 1 buy 2'),
@@ -82,7 +82,8 @@ VALUES
     ('Gift Idea'),
     ('Must-Have'),
     ('Popular'),
-    ('Trending');
+    ('Trending'),
+    ('Sold');
 
 
 -- Insert sample data into Brands table
