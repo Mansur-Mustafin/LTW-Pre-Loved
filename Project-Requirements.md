@@ -25,7 +25,7 @@ Develop a website that facilitates the buying and selling of pre-loved items. Th
   - [X] ligar filtros
 - [X] Engage with sellers to ask questions or negotiate prices.
 - [X] Add items to a wishlist or shopping cart.
-- [ ] Proceed to checkout with their shopping cart (simulate payment process). (Mansur)
+- [X] Proceed to checkout with their shopping cart (simulate payment process). (Mansur)
 
 ### Admins
 - [X] Elevate a user to admin status.
@@ -47,9 +47,9 @@ Develop a website that facilitates the buying and selling of pre-loved items. Th
 - [ ] **Analytics Dashboard**: A tool for sellers to track performance metrics and sales data. (Rubem)
 - **Multi-Currency Support**: A system to handle transactions in various currencies.
 - **Item Swapping**: A feature allowing users to exchange items instead of monetary transactions.
-- [ ] **API Integration**: Develop a robust API to allow third-party applications to interact with the platform. (Rubem)
+- [X] **API Integration**: Develop a robust API to allow third-party applications to interact with the platform. (Rubem)
 - **Dynamic Promotions**: Implement a system for time-limited discounts, bundle deals (e.g., buy two, get one free), and quantity-based discounts (e.g., 10% off on purchases over a certain amount).
 - **User Preferences**: Allow users to set and filter searches based on personal preferences such as size, condition, gender-specific items, etc.
 - [ ] **Shipping Costs**: Calculate shipping costs depending on location (crude estimate). (Mansur)
 - [X] **Real-Time Messaging System**: A secure and efficient communication channel for buyers and sellers.
-- [ ] **Check other users profile** (Rubem)
+- [x] **Check other users profile** (Rubem)
