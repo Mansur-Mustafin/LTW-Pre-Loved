@@ -1,87 +1,117 @@
 <?php
-  class Session {
+
+class Session 
+{
     private array $messages;
 
-    public function __construct() {
-      session_start();
+    public function __construct()
+    {
+        session_start();
 
-      $this->messages = isset($_SESSION['messages']) ? $_SESSION['messages'] : array();
-      unset($_SESSION['messages']);
+        $this->messages = $_SESSION['messages'] ?? array();
+        unset($_SESSION['messages']);
+
+        if (!isset($_SESSION['csrf'])) {
+            $_SESSION['csrf'] = Session::generate_random_token();
+        }
     }
 
-    public function isLoggedIn() : bool {
-      return isset($_SESSION['id']);    
+    private static function generate_random_token(): string
+    {
+        return bin2hex(openssl_random_pseudo_bytes(32));
     }
 
-    public function isAdmin(): bool {
-      return isset($_SESSION['admin']) && ($_SESSION['admin'] == true);
+    public function isSameCsrf(?string $csrf) : bool
+    {
+        $isMatch = isset($csrf) && $csrf === $_SESSION['csrf'];
+        $_SESSION['csrf'] = Session::generate_random_token();
+        return $isMatch;
     }
 
-    public function logout() {
-      session_destroy();
+    public function isLoggedIn() : bool
+    {
+        return isset($_SESSION['id']);
     }
 
-    public function getId() : ?int {
-      return isset($_SESSION['id']) ? $_SESSION['id'] : null;    
+    public function isAdmin(): bool
+    {
+        return isset($_SESSION['admin']) && ($_SESSION['admin'] == true);
     }
 
-    public function getName() : ?string {
-      return isset($_SESSION['name']) ? $_SESSION['name'] : null;
+    public function logout() : void
+    {
+        session_destroy();
     }
 
-    public function setId(int $id) {
-      $_SESSION['id'] = $id;
+    public function getId() : ?int
+    {
+        return $_SESSION['id'] ?? null;
     }
 
-    public function setName(string $name) {
-      $_SESSION['name'] = $name;
+    public function getName() : ?string
+    {
+        return $_SESSION['name'] ?? null;
     }
 
-    public function setAdmin(bool $admin) {
-      $_SESSION['admin'] = $admin;
+    public function setId(int $id): void
+    {
+        $_SESSION['id'] = $id;
     }
 
-    public function addMessage(string $type, string $text) {
-      $_SESSION['messages'][] = array('type' => $type, 'text' => $text);
+    public function setName(string $name): void
+    {
+        $_SESSION['name'] = $name;
     }
 
-    public function getMessages() {
-      return $this->messages;
+    public function setAdmin(bool $admin): void
+    {
+        $_SESSION['admin'] = $admin;
     }
 
-    public function getErrorMessages(): array {
-      $errorMessages = [];
-      foreach ($this->messages as $message) {
-          if ($message['type'] === 'error') {
-              $errorMessages[] = $message['text'];
-          }
-      }
-      $this->clearMessagesOfType('error');
-      return $errorMessages;
+    public function addMessage(string $type, string $text): void
+    {
+        $_SESSION['messages'][] = array('type' => $type, 'text' => $text);
     }
 
-    public function getSuccesMessages(): array {
-      $errorMessages = [];
-      foreach ($this->messages as $message) {
-          if ($message['type'] === 'success') {
-              $errorMessages[] = $message['text'];
-          }
-      }
-      $this->clearMessagesOfType('success');
-      return $errorMessages;
+    public function getMessages()
+    {
+        return $this->messages;
     }
-    
-    public function clearMessagesOfType(string $type): void {
-      // Filter out the error messages from $this->messages
-      $this->messages = array_filter($this->messages, function ($message) use ($type) {
-          return $message['type'] !== $type;
-      });
 
-      // Clear error messages from the session
-      if (isset($_SESSION['messages'])) {
-          $_SESSION['messages'] = array_filter($_SESSION['messages'], function ($message) use ($type) {
-              return $message['type'] !== $type;
-          });
-      }
+    public function getErrorMessages(): array
+    {
+        $errorMessages = [];
+        foreach ($this->messages as $message) {
+            if ($message['type'] === 'error') {
+                $errorMessages[] = $message['text'];
+            }
+        }
+        $this->clearMessagesOfType('error');
+        return $errorMessages;
     }
-  }
+
+    public function getSuccesMessages(): array
+    {
+        $errorMessages = [];
+        foreach ($this->messages as $message) {
+            if ($message['type'] === 'success') {
+                $errorMessages[] = $message['text'];
+            }
+        }
+        $this->clearMessagesOfType('success');
+        return $errorMessages;
+    }
+  
+    public function clearMessagesOfType(string $type): void
+    {
+        $this->messages = array_filter($this->messages, function ($message) use ($type) {
+            return $message['type'] !== $type;
+        });
+
+        if (isset($_SESSION['messages'])) {
+            $_SESSION['messages'] = array_filter($_SESSION['messages'], function ($message) use ($type) {
+                return $message['type'] !== $type;
+            });
+        }
+    }
+}
