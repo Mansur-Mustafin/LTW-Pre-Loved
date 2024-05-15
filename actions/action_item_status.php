@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['action'], $_GET['item-id
       break;
     case 'delete':
     case 'delete-main':
-      deleteItembyId($db, $itemId);
+      deleteItemById($db, $itemId);
       $response['success'] = true;
       $response['itemId'] = $itemId;
       $response['redirect'] = $_GET['action'] === 'delete-main' ? '/pages/profile.php' : null;

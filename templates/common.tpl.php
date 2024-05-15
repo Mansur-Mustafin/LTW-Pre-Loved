@@ -22,6 +22,7 @@ require_once(__DIR__ . '/../utils/session.php');
         <link href="../css/header.css" rel="stylesheet">
         <link href="../css/admin.css" rel="stylesheet">
         <link href="../css/messages.css" rel="stylesheet">
+        <link href="../css/card.css" rel="stylesheet">
         <title>Matador OLX | <?=$title?></title>
         <link rel="icon" type="image/x-icon" href="../assets/img/favicon.png">
         <script type="text/javascript" src="../js/search_item.js" defer></script>
@@ -47,14 +48,14 @@ require_once(__DIR__ . '/../utils/session.php');
                 <ul>
                 <?php if ($session->isLoggedIn()) {?>
                     <?php if($session->isAdmin()) {?>
-                        <li><img src="../assets/img/control-centre.svg" alt="admin-icon"><a href="../pages/admin.php">Admin Page</a></li>
+                        <li><a href="../pages/admin.php"><img src="../assets/img/control-centre.svg" alt="admin-icon">Admin Page</a></li>
                     <?php } ?>
-                    <li><img src="../assets/img/shopping-cart.svg" alt="cart-icon"><a href="../pages/shopping_cart.php">Shopping Cart</a></li>
-                    <li><img src="../assets/img/love.svg" alt="cart-icon"><a href="../pages/wishlist.php">Wish List</a></li>
-                    <li><img src="../assets/img/account-icon.svg" alt="account-icon"><a href="../pages/profile.php"><?=$session->getName();?></a></li>
+                    <li><a href="../pages/shopping_cart.php"><img src="../assets/img/shopping-cart.svg" alt="cart-icon">Shopping Cart</a></li>
+                    <li><a href="../pages/wishlist.php"><img src="../assets/img/love.svg" alt="cart-icon">Wish List</a></li>
+                    <li><a href="../pages/profile.php"><img src="../assets/img/account-icon.svg" alt="account-icon"><?=$session->getName();?></a></li>
                     <li><a href="../actions/action_logout.php"><img src="../assets/img/logout.svg" alt="account-icon"></a></li>
                 <?php } else { ?>
-                    <li><img src="../assets/img/account-icon.svg" alt="account-icon"><a href="../pages/login.php">Login</a></li>
+                    <li><a href="../pages/login.php"><img src="../assets/img/account-icon.svg" alt="account-icon">Login</a></li>
                 <?php } ?>
                 </ul>
             </nav>

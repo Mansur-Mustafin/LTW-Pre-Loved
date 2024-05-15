@@ -16,15 +16,13 @@ $db = getDatabaseConnection();
 
 $items_in_cart = itemsInCart($db, $session->getId());
 $items_in_wishlist = itemsInWishlist($db, $session->getId());
-$isCart = true;
 
 $items = getAllItemsFromId($db, $items_in_cart);
-$itemsGroups = groupByUser($items);
 
-drawHeader($session, 'Shopping Cart ' . $session->getName());
+drawHeader($session, 'Shopping Cart '.$session->getName());
 
 include __DIR__ . '/../templates/total-cart.tpl.php';
+include __DIR__ . '/../templates/checkout.tpl.php';
 
-drawItemsGroups($itemsGroups, $session, 'Time to buy!',true, $items_in_cart, $items_in_wishlist);
 drawFooter();
 

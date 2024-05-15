@@ -35,9 +35,12 @@ header > nav#header-menu{
         height: 1.3em;
         margin-right: .4em;
     }
+    a{
+        padding: 1em 0.3em;
+    }
     li{
         transition: all .3s;
-        padding: 1em 0.7em;
+        padding: 1em 0.3em;
         margin: 0.3em;
         cursor: pointer;
     }

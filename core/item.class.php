@@ -12,6 +12,7 @@ class Item
         public int $tradable = 0,
         public int $priority = 1,
         public ?int $id = null,
+        public ?string $username = null,
         public ?string $brand = null,
         public ?string $model = null,
         public ?string $description = null,

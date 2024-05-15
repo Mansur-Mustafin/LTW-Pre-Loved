@@ -16,8 +16,10 @@ require_once(__DIR__ . '/../utils/session.php');
                 draw_filter_element('Size', $sizes, 'size'); 
                 draw_filter_element('Condition', $conditions, 'condition'); 
             ?>
-
+            <div class='buttons'>
             <button type="submit">Submit</button>
+            </div>
+            
         </form>
     </aside>
 <?php } ?>

@@ -1,0 +1,35 @@
+.card {
+    border-radius: 1em;
+    background-color: white;
+    margin: 1em 0;
+    height: auto;
+    padding: 1em;
+    ul{
+        padding: 1em 0 1em 1em;
+    }
+}
+
+.text-right {
+    float: right;
+}
+
+.radio-container label {
+    display: inline-block;
+    cursor: pointer;
+    border: 2px solid var(--matador-grey);
+    border-radius: 2em;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 3em;
+    width: 4.65em;
+}
+
+.radio-container input[type="radio"] {
+    display: none;
+}
+
+.radio-container input[type="radio"]:checked + label {
+    border: 2px solid var(--matador-red);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}

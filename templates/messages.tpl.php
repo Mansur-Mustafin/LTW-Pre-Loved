@@ -55,8 +55,8 @@ require_once(__DIR__ . '/../utils/utils.php');
 <?php function drawMessagesBlockMessages(Chat $chat, $current_user_id, $current_item)
 { ?>
     <section id="messages_block">
-        <a href="../pages/profile.php?id=<?=$chat->chat_partner->id?>">
-            <h2>Chat with: <?= $chat->chat_partner->username ?></h2>
+        <a href="../pages/profile.php?id=<?=$chat->chat_partner->id?>" >
+            <h2>Chat with: <span class='link'><?= $chat->chat_partner->username ?></span></h2>
         </a>
 
         <?php if ($chat->getChatPartnerId($current_user_id) != $current_item->user_id) { ?>

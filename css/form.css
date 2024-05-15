@@ -2,7 +2,7 @@
 input:not(input[type=checkbox]),textarea{
     padding: 1em;
     border: none;
-    background-color: var(--matador-grey);
+    background-color: transparent;
     color: black;
     border-bottom: 1px solid black;
     width: 100%;
@@ -35,6 +35,7 @@ button{
     border: 2px solid var(--matador-dark-red);
     font-family: inherit;
     transition: all .3s;
+    cursor: pointer;
     &:hover{
         background-color: var(--matador-dark-red);
         color: var(--matador-grey);
@@ -56,6 +57,12 @@ button.selected{
         background-color: white;
         color: var(--matador-grey);
     }
+}
+
+button.wide{
+    width: 80%;
+    padding: .7em 1em;
+    align-self: center;
 }
 
 .button{
@@ -123,13 +130,10 @@ button.selected{
 
 
 #login-register > button{
-    font-family: inherit;
     background-color: var(--matador-grey);
     padding: 1em;
     border: none;
     border-bottom: 1px solid var(--matador-darker-red);
-    cursor: pointer;
-    transition: all .3s;
     &:hover{
         color: var(--matador-yellow);
     }
@@ -152,18 +156,11 @@ button.selected{
 /* Wishlist form */
 form#wishlist-form{
     margin: 1em;
-    display: flex;
-    flex-direction: column;
     p{
         margin-bottom: 1em;
     }
     label{
         display: block;
         margin-bottom: 1.5em;
-    }
-    button{
-        width: 80%;
-        padding: .7em 1em;
-        align-self: center;
     }
 }

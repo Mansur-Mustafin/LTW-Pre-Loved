@@ -16,7 +16,7 @@
         font-size: larger;
         text-align: end;
     }
-}   
+}
 
 .item {
     grid-template-columns: 1fr 4fr auto;
