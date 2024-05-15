@@ -127,7 +127,7 @@ function searchItems($db, $keyword) {
             LEFT JOIN Brands ON Models.brand_id = Brands.id
             WHERE Items.title LIKE ?";
     $stmt = $db->prepare($sql); 
-    $stmt->execute([$keyword . '%']);
+    $stmt->execute(['%' . $keyword . '%']);
 
     $items = [];
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
