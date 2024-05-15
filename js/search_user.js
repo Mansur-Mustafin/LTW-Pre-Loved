@@ -3,7 +3,7 @@ const searchUser = document.querySelector("#user-admin-search")
 
 if(searchUser) {
     searchUser.addEventListener('input',async function (){
-        let response = await fetch('../api/get_users.php?search=' + this.value)
+        let response = await fetch('../api/users.php?search=' + this.value)
         let users = await response.json()
 
         const section = document.querySelector("#users-admin")

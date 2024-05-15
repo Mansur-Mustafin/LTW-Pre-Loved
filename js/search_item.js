@@ -1,7 +1,7 @@
 const searchItem = document.querySelector("#item-admin-search");
 if(searchItem) {
     searchItem.addEventListener('input',async function() {
-        const response = await fetch('../api/get_items.php?search=' + this.value)
+        const response = await fetch('../api/items.php?search=' + this.value)
         const items = await response.json()
 
         const  itemsAdminSection = document.querySelector("#items-admin")

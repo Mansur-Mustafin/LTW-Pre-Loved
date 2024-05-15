@@ -1,17 +1,17 @@
 async function getItems() {
-    const response = await fetch('../api/get_items.php?search=')
+    const response = await fetch('../api/items.php?search=')
     const items = await response.json()
     return items
 }
 
 async function getUsers() {
-    const response = await fetch('../api/get_users.php?search=')
+    const response = await fetch('../api/users.php?search=')
     const users = await response.json()
     return users
 }
 
 async function getEntities(type) {
-    const response = await fetch('../api/get_entities.php?search='+type)
+    const response = await fetch('../api/entities.php?search='+type)
     const entities = await response.json()
     return entities
 }
