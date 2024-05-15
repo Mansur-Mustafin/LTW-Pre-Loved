@@ -30,10 +30,10 @@ else drawProfile($user, $session,$isCurrentUserPage);
 
 if (isset($_GET['action']) && $_GET['action'] == 'transactions') {
     $items = getBoughtItems($db, $user->id);
-    drawItems($items, $session, "Your Transactions", $isCurrentUserPage, [], [], 0, false, 'transactions');
+    drawItems($items, $session, "Your Transactions", $isCurrentUserPage, place: 'transactions');
 } else {
     $items = getItemsUser($db, $user->id);
-    drawItems($items, $session, 'Your items to sell',$isCurrentUserPage);
+    drawItems($items, $session, 'Your items to sell',$isCurrentUserPage, place: 'profile');
 }
 
 drawFooter();

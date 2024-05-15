@@ -14,11 +14,13 @@ require_once(__DIR__ . '/../utils/utils.php');
     array $items_in_wish_list = [],
     int $page_index = 0,
     bool $has_more_pages = false,
-    string $place = null,
+    string $place = '',
 ): void { ?>
     <section id="items">
         <?php if (empty($items)) { ?>
-            <h2>TODO handle each page item.tpl.php line 11 <?=$title?></h2>
+
+            <h2> <?= handleDifferentTitles($place); ?></h2>
+
         <?php } else { ?>
             <h2 id="title"><?= $title ?></h2>
             <div id="search-wrapper">
@@ -48,10 +50,11 @@ require_once(__DIR__ . '/../utils/utils.php');
     array $items_in_wish_list = array(),
     int $page_index = 0,
     bool $has_more_pages = false,
+    string $place = '',
 ): void { ?>
     <section id="items">
         <?php if (empty($items)){ ?>
-            <h2>TODO handle each page item.tpl.php line 11 <?=$title?></h2>
+            <h2> <?= handleDifferentTitles($place); ?> </h2>
         <?php } else { ?>
             <h2 id="title"><?= $title ?></h2>
             <div id="search-wrapper">
@@ -85,7 +88,7 @@ require_once(__DIR__ . '/../utils/utils.php');
                         $in_cart = in_array($item->id, $items_in_cart);
                         $in_wishlist = in_array($item->id, $items_in_wish_list);
 
-                        drawItem($item, $session, $title, $in_cart, $in_wishlist, $isCurrentUserPage);
+                        drawItem($item, $session, $title, $in_cart, $in_wishlist, $isCurrentUserPage, $place);
                     }
                 }
 
@@ -96,6 +99,32 @@ require_once(__DIR__ . '/../utils/utils.php');
         <?php } ?>
     </section>
 <?php } ?>
+
+<?php function handleDifferentTitles($place)
+{
+    $titleEmptyList = '';
+    switch ($place) {
+        case 'home':
+            $titleEmptyList = 'Houston, we have a problem';
+            break;
+        case 'profile':
+            $titleEmptyList = 'Add new item to sell!';
+            break;
+        case 'transactions':
+            $titleEmptyList = 'You didn\'t buy item yet.';
+            break;
+        case 'shopcard':
+            $titleEmptyList = 'Add items to Shopping Card!';
+            break;
+        case 'wishlist':
+            $titleEmptyList = 'Add item to WishList!';
+            break;
+        default:
+            $titleEmptyList = 'Here is no items.';
+            break;
+    }
+    echo $titleEmptyList;
+} ?>
 
 <?php function pagination($itemsCount, $page_index, $has_more_pages) { ?>
     <?php if ($itemsCount >= 10 || $page_index != 0) { ?>
@@ -176,14 +205,14 @@ function draw_buttons_item(Item $item, Session $session, string $title, bool $in
     
     if ($session->isLoggedIn()) { ?>
         <form>
-            <?php if ($title == 'Find what you want to buy!' || $title == 'Your Wishlist!' || $title == 'Time to buy!' || ($title == 'Your items to sell' && !$isCurrentUserPage)): ?>
+            <?php if ($place == 'main' || $place == 'wishlist' || $place == 'shopcard' || ($place == 'profile' && !$isCurrentUserPage)): ?>
                 <a href="<?= $cartHref ?>" class="item-action button <?= $in_cart ? "selected" : "" ?>">
                     <img src="../assets/img/shopping-cart.svg" alt="Add to Cart">
                 </a>
                 <a href="<?= $wishlistHref ?>" class="item-action button <?= $in_wish_list ? "selected" : "" ?>">
                     <img src="../assets/img/love.svg" alt="Add to Wishlist">
                 </a>
-            <?php elseif ($title == 'Your items to sell'): ?>
+            <?php elseif ($place == 'profile'): ?>
                 <a href="<?= $deleteHref ?>" class="item-action button">
                     <img src="../assets/img/trash.svg" alt="Delete Item">
                 </a>

@@ -25,6 +25,6 @@ drawHeader($session, 'Shopping Cart ' . $session->getName());
 
 include __DIR__ . '/../templates/total-cart.tpl.php';
 
-drawItemsGroups($itemsGroups, $session, 'Time to buy!',true, $items_in_cart, $items_in_wishlist);
+drawItemsGroups($itemsGroups, $session, 'Time to buy!',true, $items_in_cart, $items_in_wishlist, place: 'shopcard');
 drawFooter();
 

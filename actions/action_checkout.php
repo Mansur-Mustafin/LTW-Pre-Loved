@@ -9,6 +9,7 @@ $session = new Session();
 if (!$session->isLoggedIn()) die(header('Location: /'));
 
 require_once(__DIR__ . '/../database/item.db.php');
+require_once(__DIR__ . '/../database/transaction.db.php');
 require_once(__DIR__ . '/../database/connection.db.php');
 
 $db = getDatabaseConnection();
