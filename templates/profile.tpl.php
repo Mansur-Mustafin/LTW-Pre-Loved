@@ -9,6 +9,7 @@ require_once(__DIR__ . '/../templates/common.tpl.php');
 
 <?php function drawProfile(User $user, Session $session,bool $isCurrentUser) 
 {?>    
+    <p class="hidden" id="session_id"><?= $session->getId()?></p>
     <aside id="profile-info">
         <img src="<?=htmlspecialchars($user->image_path)?>" alt="Account Profile Picture">
 
