@@ -1,4 +1,4 @@
-let form = document.getElementById('message_form')
+/*let form = document.getElementById('message_form')
 let messages = document.getElementById('messages')
 let message_template = document.getElementById('message_template')
 let message_template_partner = document.getElementById('message_template_partner')

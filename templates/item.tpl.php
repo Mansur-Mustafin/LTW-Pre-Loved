@@ -216,6 +216,10 @@ function draw_buttons_item(Item $item, Session $session, string $title, bool $in
         'item-id' => $item->id,
         'action' => 'delete-main',
     ]);
+    $editHref = urlTo($uri, [
+        'item-id' => $item->id,
+        'action' => 'edit-main',
+    ]);
 
     ?>
     <aside>
@@ -224,7 +228,13 @@ function draw_buttons_item(Item $item, Session $session, string $title, bool $in
         <h3><?=htmlspecialchars($item->title)?></h3>
         <div class="top-right-element"><p><?=htmlspecialchars(number_format($item->price, 2))?></p><p>$</p></div>
 
-        <img src=<?=htmlspecialchars($main_image)?> alt="Item Image">
+        <div id="image-nav">
+        <?php foreach($item->getImagesArray() as $image) { ?>
+            <figure>
+            <img src="<?=htmlspecialchars($image, ENT_QUOTES, 'UTF-8')?>" alt="Item Image" style="max-width: 256px; max-height: 256px;">
+            </figure>
+        <?php } ?>
+        </div>
         
         <label>brand:
             <p><?= htmlspecialchars($item->brand) ?></p>
@@ -266,7 +276,7 @@ function draw_buttons_item(Item $item, Session $session, string $title, bool $in
                 <a href="<?= $deleteHref ?>" class="item-action button">
                     Delete Item
                 </a>
-                <a href="" class="item-action button">
+                <a href="<?= $editHref ?>" class="item-action button">
                     Edit Item
                 </a>
             <?php else: ?>
@@ -282,4 +292,163 @@ function draw_buttons_item(Item $item, Session $session, string $title, bool $in
     <?php } ?>
 
     </aside>
+<?php } ?>
+<?php function drawAddItem(PDO $db, Session $session) { ?>
+  <form id="add-item-form" action="../actions/action_add_item.php" method="post" enctype="multipart/form-data">
+    <h2>Add new Item</h2>
+    <div class="error-messages">
+        <?= drawErrors($session->getErrorMessages()) ?>
+    </div>
+    <label for="item-name">Title:</label>
+    <input type="text" id="item-title" name="item-title" required>
+    <label for="item-description">Description:</label>
+    <textarea id="item-description" name="item-description"></textarea>
+    <label for="image-paths">Images:</label>
+    <input type="file" name="item-images[]" id="item-images" accept="image/*" multiple>
+    <label for="item-category">Category:</label>
+    <?php
+    $stmt = $db->query('SELECT id, name FROM Categories');
+
+    $categories = $stmt->fetchAll();
+    ?>
+    <select id="item-category" name="item-category" required>
+    <?php foreach($categories as $category){ ?>
+    <option value="<?= htmlspecialchars($category['name']); ?>">
+        &nbsp<?= htmlspecialchars($category['name']); ?></option>
+        <?php } ?>
+    </select>
+    <label for="item-brand">Brand:</label>
+    <input type="text" id="item-brand" name="item-brand" required>
+    <label for="item-model">Model:</label>
+    <input type="text" id="item-model" name="item-model" required>
+    <label for="item-condition">Condition:</label>
+    <?php
+    $stmt = $db->query('SELECT id, name FROM Condition');
+
+    $conditions = $stmt->fetchAll();
+    ?>
+    <select id="item-condition" name="item-condition">
+    <?php foreach($conditions as $condition){ ?>
+    <option value="<?= htmlspecialchars($condition['name']); ?>">
+        &nbsp<?= htmlspecialchars($condition['name']); ?></option>
+        <?php }?>
+    </select>
+    <label for="item-price" min="0" inputmode="numeric">Price:</label>
+    <input type="number" id="item-price" name="item-price" step="0.01" required>
+    <label for="tradableItem">Tradable item:</label>
+    <input type="checkbox" id="tradable-item" name="tradable-item"><br>
+    <label for="item-size">Size:</label>
+    <?php
+    $stmt = $db->query('SELECT id, name FROM Size');
+
+    $sizes = $stmt->fetchAll();
+    ?>
+    <select id="item-size" name="item-size">
+    <?php foreach($sizes as $size){ ?>
+    <option value="<?= htmlspecialchars($size['name']); ?>">
+        &nbsp<?= htmlspecialchars($size['name']); ?></option>
+        <?php }?>
+    </select>
+    <div id="item-tag-wrapper">
+        <label for="item-tags">Item Tags:</label>
+        <?php
+            $stmt = $db->query('SELECT id, name FROM Tags');
+            $tags = $stmt->fetchAll();
+        ?>
+        <select id="item-tags" name="item-tags[]" multiple>
+        <?php foreach ($tags as $tag){?>
+            <option value="<?= htmlspecialchars($tag['name']); ?>">
+            &nbsp;<?= htmlspecialchars($tag['name']); ?></option>
+        <?php }?>
+        </select>
+    </div>
+    <div id="submit-item-button"><button type="submit">Add Item</button></div>
+  </form>
+<?php } ?>
+
+<?php function drawEditItem(PDO $db, int $itemId, Session $session) { ?>
+  <form id="add-item-form" action="../actions/action_edit_item.php?item_id=<?php echo $itemId; ?>" method="post" enctype="multipart/form-data">
+    <h2>Edit Item</h2>
+    <div class="error-messages">
+        <?= drawErrors($session->getErrorMessages()) ?>
+    </div>
+    <label for="item-name">Title:</label>
+    <input type="text" id="item-title" name="item-title" required>
+    <label for="item-description">Description:</label>
+    <textarea id="item-description" name="item-description"></textarea>
+    <label for="item-images">Images:</label>
+    <input type="file" name="item-images[]" id="item-images" accept="image/*" multiple>
+    <label for="item-category">Category:</label>
+    <?php
+    $stmt = $db->query('SELECT id, name FROM Categories');
+
+    $categories = $stmt->fetchAll();
+    ?>
+    <select id="item-category" name="item-category" required>
+    <?php foreach($categories as $category){ ?>
+    <option value="<?= htmlspecialchars($category['name']); ?>">
+        &nbsp<?= htmlspecialchars($category['name']); ?></option>
+        <?php } ?>
+    </select>
+    <label for="item-model">Model:</label>
+    <?php
+    $stmt = $db->query('SELECT id, name FROM Models');
+
+    $models = $stmt->fetchAll();
+    ?>
+    <select id="item-model" name="item-model" required>
+    <?php foreach($models as $model){ ?>
+    <option value="<?= htmlspecialchars($model['name']); ?>">
+        &nbsp<?= htmlspecialchars($model['name']); ?></option>
+        <?php } ?>
+    </select>
+    <label for="item-condition">Condition:</label>
+    <?php
+    $stmt = $db->query('SELECT id, name FROM Condition');
+
+    $conditions = $stmt->fetchAll();
+    ?>
+    <select id="item-condition" name="item-condition">
+    <?php foreach($conditions as $condition){ ?>
+    <option value="<?= htmlspecialchars($condition['name']); ?>">
+        &nbsp<?= htmlspecialchars($condition['name']); ?></option>
+        <?php }?>
+    </select>
+    <label for="item-price" min="0" inputmode="numeric">Price:</label>
+    <input type="number" id="item-price" name="item-price" step="0.01" required>
+    <label for="tradableItem">Tradable item:</label>
+    <input type="checkbox" id="tradable-item" name="tradable-item"><br>
+    <label for="item-size">Size:</label>
+    <?php
+    $stmt = $db->query('SELECT id, name FROM Size');
+
+    $sizes = $stmt->fetchAll();
+    ?>
+    <select id="item-size" name="item-size">
+    <?php foreach($sizes as $size){ ?>
+    <option value="<?= htmlspecialchars($size['name']); ?>">
+        &nbsp<?= htmlspecialchars($size['name']); ?></option>
+        <?php }?>
+    </select>
+    <label for="item-tags">Item Tags:</label>
+    <?php
+        $stmt = $db->query('SELECT id, name FROM Tags');
+        $tags = $stmt->fetchAll();
+    ?>
+    <select id="item-tags" name="item-tags[]" multiple>
+    <div id="item-tag-wrapper">
+        <label for="item-tags">Item Tags:</label>
+        <?php
+            $stmt = $db->query('SELECT id, name FROM Tags');
+            $tags = $stmt->fetchAll();
+        ?>
+        <select id="item-tags" name="item-tags[]" multiple>
+        <?php foreach ($tags as $tag){?>
+            <option value="<?= htmlspecialchars($tag['name']); ?>">
+            &nbsp;<?= htmlspecialchars($tag['name']); ?></option>
+        <?php }?>
+        </select>
+    </div>
+    <div id="submit-item-button"><button type="submit">Edit Item</button></div>
+  </form>
 <?php } ?>

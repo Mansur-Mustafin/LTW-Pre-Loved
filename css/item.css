@@ -122,4 +122,55 @@ ul.tags{
         color: white;
     }
 }
-
+#image-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+}
+figure {
+    flex: 1 1 20em;
+}
+figure img {
+    width: 100%;
+    height: auto;
+}
+#item-tag-wrapper {
+    .hidden {
+        display: none;
+    }
+    .ul-tags {
+        display: flex;
+        padding-bottom: 1em;
+        li {
+            display: flex;
+            margin-right: 0.5em;
+            background-color: white;
+            border: solid 1px black;
+            padding: 0.1em;
+            p {
+                align-self: center;
+                padding-left: 0.1em;
+            }
+            button {
+                border: none;
+                background-color: inherit;
+                &:hover {
+                    color: black;
+                }
+            }
+        }
+    }
+    .dropdown-tags {
+        background-color: white;
+        overflow: auto;
+        max-height: 10em;
+        li {
+            padding: 1em;
+            &:hover {
+                background-color: var(--matador-red);
+                color: white;
+            }
+        }
+    }
+}
