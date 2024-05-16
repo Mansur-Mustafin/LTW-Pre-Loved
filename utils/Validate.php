@@ -85,7 +85,7 @@ class Validate
             $errorMessagePart = $min === $max ? $min : "from {$min} to {$max}";
             $errorMessage = "Length of {$attribute} must be {$errorMessagePart} symbols";
 
-            if ($length <= $min || $length >= $max) {
+            if ($length < $min || $length > $max) {
                 $this->addError($attribute, $errorMessage);
             }
         }
