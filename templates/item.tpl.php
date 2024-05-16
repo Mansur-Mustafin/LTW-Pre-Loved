@@ -123,7 +123,11 @@ require_once(__DIR__ . '/../utils/utils.php');
     bool $isCurrentUserPage,
     string $place = null,
 ): void {
-    $main_image = $item->getImagesArray()[0]; ?>
+    if (isset($item->getImagesArray()[0]) && ($item->getImagesArray()[0] !== '')) {
+        $main_image = $item->getImagesArray()[0];
+    } else {
+        $main_image = "../assets/img/default_item.svg";
+    } ?>
     
     <article class="item fly" data-id="<?= $item->id ?>">
         <img src=<?=htmlspecialchars($main_image)?> alt="Item Image">
@@ -199,7 +203,6 @@ function draw_buttons_item(Item $item, Session $session, string $title, bool $in
 
 <?php function drawItemMain(Item $item, Session $session, bool $in_cart, bool $in_wish_list) 
 {
-    $main_image = $item->getImagesArray()[0];
     $uri = '../actions/action_item_status.php';
 
     $cartHref = urlTo($uri, [
@@ -229,12 +232,18 @@ function draw_buttons_item(Item $item, Session $session, string $title, bool $in
         <div class="top-right-element"><p><?=htmlspecialchars(number_format($item->price, 2))?></p><p>$</p></div>
 
         <div id="image-nav">
-        <?php foreach($item->getImagesArray() as $image) { ?>
-            <figure>
-            <img src="<?=htmlspecialchars($image, ENT_QUOTES, 'UTF-8')?>" alt="Item Image" style="max-width: 256px; max-height: 256px;">
-            </figure>
-        <?php } ?>
-        </div>
+        <?php if (isset($item->getImagesArray()[0])) {
+                foreach($item->getImagesArray() as $image) { ?>
+                    <figure>
+                        <img src="<?=htmlspecialchars($image, ENT_QUOTES, 'UTF-8')?>" alt="Item Image" style="max-width: 256px; max-height: 256px;">
+                    </figure>
+        <?php }
+                } else { ?>
+                    <figure>
+                    <img src="../assets/img/default_item.svg" alt="Item Image" style="max-width: 256px; max-height: 256px;">
+                    </figure>
+                    <?php }?>
+            </div>
         
         <label>brand:
             <p><?= htmlspecialchars($item->brand) ?></p>
@@ -376,7 +385,7 @@ function draw_buttons_item(Item $item, Session $session, string $title, bool $in
     <input type="text" id="item-title" name="item-title" required>
     <label for="item-description">Description:</label>
     <textarea id="item-description" name="item-description"></textarea>
-    <label for="item-images">Images:</label>
+    <label for="image-paths">Images:</label>
     <input type="file" name="item-images[]" id="item-images" accept="image/*" multiple>
     <label for="item-category">Category:</label>
     <?php
@@ -390,18 +399,10 @@ function draw_buttons_item(Item $item, Session $session, string $title, bool $in
         &nbsp<?= htmlspecialchars($category['name']); ?></option>
         <?php } ?>
     </select>
+    <label for="item-brand">Brand:</label>
+    <input type="text" id="item-brand" name="item-brand" required>
     <label for="item-model">Model:</label>
-    <?php
-    $stmt = $db->query('SELECT id, name FROM Models');
-
-    $models = $stmt->fetchAll();
-    ?>
-    <select id="item-model" name="item-model" required>
-    <?php foreach($models as $model){ ?>
-    <option value="<?= htmlspecialchars($model['name']); ?>">
-        &nbsp<?= htmlspecialchars($model['name']); ?></option>
-        <?php } ?>
-    </select>
+    <input type="text" id="item-model" name="item-model" required>
     <label for="item-condition">Condition:</label>
     <?php
     $stmt = $db->query('SELECT id, name FROM Condition');
@@ -430,12 +431,6 @@ function draw_buttons_item(Item $item, Session $session, string $title, bool $in
         &nbsp<?= htmlspecialchars($size['name']); ?></option>
         <?php }?>
     </select>
-    <label for="item-tags">Item Tags:</label>
-    <?php
-        $stmt = $db->query('SELECT id, name FROM Tags');
-        $tags = $stmt->fetchAll();
-    ?>
-    <select id="item-tags" name="item-tags[]" multiple>
     <div id="item-tag-wrapper">
         <label for="item-tags">Item Tags:</label>
         <?php
@@ -449,6 +444,6 @@ function draw_buttons_item(Item $item, Session $session, string $title, bool $in
         <?php }?>
         </select>
     </div>
-    <div id="submit-item-button"><button type="submit">Edit Item</button></div>
+    <div id="submit-item-button"><button type="submit">Add Item</button></div>
   </form>
 <?php } ?>

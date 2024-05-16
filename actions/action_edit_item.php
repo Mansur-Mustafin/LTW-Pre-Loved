@@ -87,7 +87,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
   } else {
     $userId = intval(getUser($db, $session->getName())->id);
     $oldItem = intval($_GET["item_id"]);
-    deleteItem($db, $userId, $oldItem);
+    deleteItemById($db, $oldItem);
   }
 }
 header('Location: ../pages/profile.php');

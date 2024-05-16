@@ -783,7 +783,11 @@ function addItem(Session $session, PDO $db, Item $item): bool {
 
 function addItemTags(Session $session, PDO $db) : bool{
     $itemId = (int)$db->lastInsertId();
-    $itemTags = $_POST['item-tags'];
+    if (isset($item['item-tags'])) {
+        $itemTags = $_POST['item-tags'];
+    } else {
+        $itemTags = [];
+    }
     foreach($itemTags as $tag){
         $tagId = getElementId($tag, 'Tags', $db);
         if($tagId === -1){
