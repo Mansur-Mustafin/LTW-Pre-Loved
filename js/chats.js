@@ -1,4 +1,4 @@
-/*let last_message_id = document.getElementById("last_message_id").value
+let last_message_id = document.getElementById("last_message_id").value
 let user_id = document.getElementById("current_user_id").value
 setInterval(checkNewMessages, 2000)
 
