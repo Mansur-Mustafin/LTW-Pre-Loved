@@ -237,27 +237,6 @@ VALUES
     ('Nike Blazer Mid', "Nike Blazer Mid '77 Vintage sneakers in sail colorway", '["../assets/img/default_item.svg"]', 99.99, 1, 1, 3, 2, 1, 1, 8, strftime('%s', 'now')),
     ('Adidas Yeezy Boost 350', 'Adidas Yeezy Boost 350 V2 sneakers in triple white colorway', '["../assets/img/default_item.svg"]', 219.99, 1, 1, 4, 2, 1, 1, 15, strftime('%s', 'now'));
 
-INSERT INTO Visitations (item_id,num_visit)
-VALUES
-    (1,0)
-    (2,0)
-    (4,0)
-    (5,0)
-    (6,0)
-    (7,0)
-    (8,0)
-    (9,0)
-    (10,0)
-    (11,0)
-    (12,0)
-    (13,0)
-    (15,0)
-    (16,0)
-    (17,0)
-    (18,0)
-    (19,0)
-    (20,0)
-    (21,0)
 
 -- Insert sample data into ItemTags table
 -- Insert tags for items into ItemTags table
