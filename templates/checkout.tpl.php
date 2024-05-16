@@ -1,6 +1,7 @@
 <?php
 
 /** @var array $items */
+/** @var Session $session */
 
 declare(strict_types=1);
 
@@ -24,7 +25,13 @@ foreach ($items as $item) {
     <h2 class="title">Payment method:</h2>
 
     <div class="card">
+
+        <?php drawErrors($session->getErrorMessages()) ?>
+
         <form id="buy" class="simple-form" action="../actions/action_checkout.php" method="post">
+
+            <?= Request::generateCsrfTokenInput() ?>
+
             <div class="radio-container">
                 <input type="radio" name="cardType" value="visa" id="visa" onclick="toggleFields()" required>
                 <label for="visa" style="background-image: url('/assets/img/visa.png')"></label>
