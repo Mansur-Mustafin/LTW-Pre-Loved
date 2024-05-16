@@ -9,7 +9,7 @@ $session = new Session();
 require_once (__DIR__ . '/../templates/common.tpl.php');
 ?>
 
-<?php function drawDashboard(array $items) 
+<?php function drawDashboard(array $items,array $transactions,float $earnings) 
 { ?>
     <section id="dashboard">
         <div class="previous-page">
@@ -21,19 +21,15 @@ require_once (__DIR__ . '/../templates/common.tpl.php');
             <ul>
                 <li>
                     <p class="dashboard-tag">Earnings</p>
-                    <p class="dashboard-value">$15000</p>
-                </li>
-                <li>
-                    <p class="dashboard-tag">Rating</p>
-                    <p class="dashboard-value">5.00</p>
+                    <p class="dashboard-value">$<?=$earnings?></p>
                 </li>
                 <li>
                     <p class="dashboard-tag">Sold Items</p>
-                    <p class="dashboard-value">5</p>
+                    <p class="dashboard-value"><?=sizeof($transactions)?></p>
                 </li>
                 <li>
                     <p class="dashboard-tag">Items</p>
-                    <p class="dashboard-value">13</p>
+                    <p class="dashboard-value"><?=sizeof($items)?></p>
                 </li>
             </ul>
         </div>

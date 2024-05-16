@@ -16,6 +16,12 @@ async function getEntities(type) {
     return entities
 }
 
+async function getTransactions() {
+    const response = await fetch('../api/transactions.php')
+    const transactions = await response.json()
+    return transactions
+}
+
 
 const MONTHS = [
     'January',
@@ -54,6 +60,7 @@ async function buildPage() {
     if(analyticsSection && chartsSection) {
         users = await getUsers()
         items = await getItems()
+        transactions = await getTransactions()
         tags = await getEntities("Tags")
         categories = await (getEntities("Categories"))
         sizes = await (getEntities("Size"))
@@ -85,7 +92,7 @@ async function buildPage() {
             return {key: brand.name,value: items.filter((value) => value.brand == brand.name).length}
         })
 
-
+        drawTransactionsByMonthGraph(transactions,chartsSection)
         drawUserByMonthGraph(chartsSection)
         drawGraphByDay(chartsSection,items,"New Items by Day")
         categoriesGraph = createGraph(chartsSection,"Categories",countCategories,"doughnut")
@@ -93,6 +100,16 @@ async function buildPage() {
         conditionGraph = createGraph(chartsSection,"Conditions",countConditions,"doughnut")
         brandGraph = createGraph(chartsSection,"Brands",countBrands,"doughnut")
     }
+}
+
+function drawTransactionsByMonthGraph(transactions,chartsSection) {
+    monthIndex = Array.from({length: 12}, (v, k) => k+1); 
+    formattedElements = transactions.map((e) => (new Date(1000 * e.created_at)))
+    monthsUsers = formattedElements
+        .filter((e) => e.getFullYear() == new Date().getFullYear())
+        .map((e) => e.getMonth())
+    monthsCountUsers = monthIndex.map((month) => monthsUsers.filter((e) => e == month).length)
+    createGraphLine(chartsSection,months(monthsCountUsers.length),monthsCountUsers,"Transactions by Month")
 }
 
 function drawUserByMonthGraph(chartsSection) {

@@ -12,9 +12,9 @@
     padding: 1em;
     ul {
         display: flex;
-        justify-content: space-around;
+        justify-content: space-between;
         li {
-            min-width: 12em;
+            min-width: 17em;
             height: 10em;
             background-color: var(--matador-dark-red);
             color: white;
@@ -30,4 +30,9 @@
             border-radius: 5%;
         }
     }
+}
+#dashboard-graph {
+    grid-column-end: 2 span;
+    width: 90%;
+    padding: 3em;
 }

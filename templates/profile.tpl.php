@@ -44,23 +44,18 @@ require_once(__DIR__ . '/../templates/common.tpl.php');
                             </h4>
                         </a>
                     </li>
+                    <li class="filter-element">
+                        <a href="../pages/dashboard.php">
+                            <h4 class="hover-element">
+                                Dashboard
+                            </h4>
+                        </a>
+                    </li>
                 </ul>
             </nav>
         <?php } ?>
 
         <?php drawErrors($session->getErrorMessages()) ?>
-        <form id="enable-editing-mode" method="post">
-            <div class='buttons'>
-                <button name="edit" value="profile">Edit Profile</button>
-                <button name="edit" value="password">Change Password</button>
-            </div>
-        </form>
-        <button id="dashboard-button">
-            <a href="../pages/dashboard.php">
-                Dashboard
-            </a>
-        </button>
-        <?=drawErrors($session->getErrorMessages())?>
     </aside>
    
 <?php } ?>

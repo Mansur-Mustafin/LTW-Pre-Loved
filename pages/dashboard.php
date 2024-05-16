@@ -18,8 +18,13 @@ $db = getDatabaseConnection();
 $user = getUser($db,$session->getName());
 
 $userItems = getItemsUser($db,$session->getId());
+$userTransactions = getBoughtItems($db,$session->getId());
+$earnings = 0;
 
+foreach($userTransactions as $transaction) {
+    $earnings += $transaction->price;
+}
 
 drawHeader($session,"Dashboard");
-drawDashboard([]);
+drawDashboard($userItems,$userTransactions,$earnings);
 drawFooter();
