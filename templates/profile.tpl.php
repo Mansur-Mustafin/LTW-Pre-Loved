@@ -27,7 +27,7 @@ require_once(__DIR__ . '/../templates/common.tpl.php');
                     <button name="action" value="password">Change Password</button>
                 </div>
             </form>
-            <nav id="pages">
+            <nav class="pages">
                 <ul>
                     <li class="filter-element">
                         <a href="../pages/profile.php">
@@ -48,6 +48,13 @@ require_once(__DIR__ . '/../templates/common.tpl.php');
                         <a href="../pages/dashboard.php">
                             <h4 class="hover-element">
                                 Dashboard
+                            </h4>
+                        </a>
+                    </li>
+                    <li class="filter-element">
+                        <a href="../pages/profile.php?action=sold">
+                            <h4 class="hover-element">
+                                Sold
                             </h4>
                         </a>
                     </li>

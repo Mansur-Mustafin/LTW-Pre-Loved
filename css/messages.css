@@ -2,7 +2,7 @@
     display: none;
 }
 
-section#messages_block_no_login {
+section.message_middle {
     display: grid;
     place-items: center;
 }
