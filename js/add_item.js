@@ -14,6 +14,8 @@ if(itemTags) {
     tagsUL.classList.add("ul-tags")
     itemTags.appendChild(tagsUL)
 
+    console.log(tagsUL)
+
     label = document.createElement("label")
     label.textContent = "Tags"
     itemTags.appendChild(label)
@@ -36,7 +38,7 @@ if(itemTags) {
 
 async function displayAutoComplete(dropDown,tagsUL,input,itemTagsSelect,parent) {
     dropDown.innerHTML = ''
-    let response = await fetch('../api/get_entities.php?search=Tags')
+    let response = await fetch('../api/entities.php?search=Tags')
     let tags = await response.json()
     let matchingTags = tags.filter((tag) => tag.name.toLowerCase().startsWith(input.toLowerCase() ?? '') && !currentTags.includes(tag.name)).map((tag) => tag.name)
     matchingTags.forEach(element => {

@@ -262,12 +262,17 @@ function draw_buttons_item(Item $item, Session $session, string $title, bool $in
         <div class="top-right-element"><p><?=htmlspecialchars(number_format($item->price, 2))?></p><p>$</p></div>
 
         <div id="image-nav">
-        <?php if (isset($item->getImagesArray()[0])) {
-                foreach($item->getImagesArray() as $image) { ?>
-                    <figure>
-                        <img src="<?=htmlspecialchars($image, ENT_QUOTES, 'UTF-8')?>" alt="Item Image" style="max-width: 256px; max-height: 256px;">
-                    </figure>
-        <?php }
+        <?php if (isset($item->getImagesArray()[0])) { ?>
+                <div class="slideshow">
+                        <?php foreach($item->getImagesArray() as $image) { ?>
+                            <figure class="slide fade">
+                            <img src="<?=htmlspecialchars($image, ENT_QUOTES, 'UTF-8')?>" alt="Item Image" style="max-width: 256px; max-height: 256px;">
+                            </figure>
+                        <?php } ?>
+                        <a class="prev" onclick="plusSlide(-1)">&#10094</a>
+                        <a class="next" onclick="plusSlide(1)">&#10095</a>
+                </div>
+        <?php 
                 } else { ?>
                     <figure>
                     <img src="../assets/img/default_item.svg" alt="Item Image" style="max-width: 256px; max-height: 256px;">
@@ -331,6 +336,30 @@ function draw_buttons_item(Item $item, Session $session, string $title, bool $in
     <?php } ?>
 
     </aside>
+    <script>
+        let slideIndex = 1
+        showSlides(slideIndex)
+
+        function plusSlide(n) {
+            showSlides(slideIndex += n)
+        }
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n)
+        }
+
+        function showSlides(n) {
+            let i = 0
+            let slides = document.getElementsByClassName('slide')
+            if(n > slides.length) {slideIndex = 1}
+            if(n < 1) {slideIndex = slides.length}
+            for(i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none"
+            }
+            slides[slideIndex - 1].style.display = "block"
+        }
+
+    </script>
 <?php } ?>
 <?php function drawAddItem(PDO $db, Session $session) { ?>
   <form id="add-item-form" action="../actions/action_add_item.php" method="post" enctype="multipart/form-data">
@@ -343,7 +372,8 @@ function draw_buttons_item(Item $item, Session $session, string $title, bool $in
     <label for="item-description">Description:</label>
     <textarea id="item-description" name="item-description"></textarea>
     <label for="image-paths">Images:</label>
-    <input type="file" name="item-images[]" id="item-images" accept="image/*" multiple>
+    <input type="file" name="item-images[]" id="item-images" accept="image/*" onchange="loadFile(event)" multiple>
+    <div id="image-item-wrapper"></div>
     <label for="item-category">Category:</label>
     <?php
     $stmt = $db->query('SELECT id, name FROM Categories');
@@ -403,6 +433,21 @@ function draw_buttons_item(Item $item, Session $session, string $title, bool $in
     </div>
     <div id="submit-item-button"><button type="submit">Add Item</button></div>
   </form>
+    <script>
+        let loadFile = function(event) {
+            let itemImageWrapper = document.getElementById('image-item-wrapper')
+            
+            itemImageWrapper.innerHTML = ''
+
+            let imageList = [...event.target.files]
+            imageList.forEach((e) => {
+                const image = document.createElement('img')
+                image.classList.add("image-upload")
+                image.src = URL.createObjectURL(e)
+                itemImageWrapper.appendChild(image)
+            })
+        }
+    </script>
 <?php } ?>
 
 <?php function drawEditItem(PDO $db, int $itemId, Session $session) { ?>

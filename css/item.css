@@ -174,3 +174,37 @@ figure img {
         }
     }
 }
+.image-upload {
+    margin: 1em;
+    max-width: 15em;
+    max-height: 10em;
+}
+
+#image-nav {
+    max-width: 100%;
+    grid-column-end: 2 span;
+    .slideshow {
+        max-width: 100%;
+        position: relative;
+        margin: auto;
+
+        img {
+            width: 80%;
+        }
+
+        .slide {
+            display: none;
+        }
+
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            color: var(--matador-red);
+        }
+
+        .next {
+            right: 0;
+        }
+    }
+}
