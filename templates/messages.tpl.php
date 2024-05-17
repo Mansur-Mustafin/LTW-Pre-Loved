@@ -26,6 +26,7 @@ require_once(__DIR__ . '/../utils/utils.php');
         } ?>
         <input id="last_message_id" type="hidden" value="<?= $last_message_id ?>">
         <input id="current_user_id" type="hidden" value="<?= $current_user_id ?>">
+        <input id="current_item_id" type="hidden" value="<?= $current_item_id ?>">
         <script src="../js/chats.js"></script>
     </section>
 <?php } ?>
