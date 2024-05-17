@@ -44,7 +44,13 @@ require_once(__DIR__ . '/../templates/common.tpl.php');
                             </h4>
                         </a>
                     </li>
-
+                    <li class="filter-element">
+                        <a href="../pages/dashboard.php">
+                            <h4 class="hover-element">
+                                Dashboard
+                            </h4>
+                        </a>
+                    </li>
                     <li class="filter-element">
                         <a href="../pages/profile.php?action=sold">
                             <h4 class="hover-element">

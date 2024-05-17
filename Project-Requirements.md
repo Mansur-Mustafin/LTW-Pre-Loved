@@ -31,7 +31,7 @@ Develop a website that facilitates the buying and selling of pre-loved items. Th
 - [X] Elevate a user to admin status.
 - [X] Introduce new item categories, sizes, conditions, and other pertinent entities.
 - [X] Oversee and ensure the smooth operation of the entire system.
-- [ ] Statistics for the number of transactions, new users, and new items. (Rubem)
+- [X] Statistics for the number of transactions, new users, and new items. (Rubem)
 
 ## Technology Stack
 - **HTML**: For structuring web content.
@@ -44,7 +44,7 @@ Develop a website that facilitates the buying and selling of pre-loved items. Th
 ## Additional Features
 - **Rating and Review System**: A feedback mechanism for users to rate products and sellers.
 - **Promotional Features**: Options for sellers to feature their products on the main page through paid promotions.
-- [ ] **Analytics Dashboard**: A tool for sellers to track performance metrics and sales data. (Rubem)
+- [X] **Analytics Dashboard**: A tool for sellers to track performance metrics and sales data. (Rubem)
 - **Multi-Currency Support**: A system to handle transactions in various currencies.
 - **Item Swapping**: A feature allowing users to exchange items instead of monetary transactions.
 - [X] **API Integration**: Develop a robust API to allow third-party applications to interact with the platform. (Rubem)
