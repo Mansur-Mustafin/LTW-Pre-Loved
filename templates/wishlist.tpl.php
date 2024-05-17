@@ -1,7 +1,9 @@
 <?php 
+
 declare(strict_types=1);
 
 require_once(__DIR__.'/../utils/session.php')
+
 ?>
 
 <?php function drawWishListForm(Session $session){ ?>
@@ -15,8 +17,10 @@ require_once(__DIR__.'/../utils/session.php')
             <label>
                 Your Message <textarea id='expanding-textarea' name="wishlist-message" rows="1" placeholder="Add a personal message (optional)"></textarea>
             </label>
-            <?=drawErrors($session->getErrorMessages())?>
-            <?=drawSuccessMsg($session->getSuccesMessages())?>
+
+            <?php drawErrors($session->getErrorMessages()) ?>
+            <?php drawSuccessMsg($session->getSuccessMessages()) ?>
+
             <div class='buttons'>
                 <button type="submit">Send</button>
             </div>
