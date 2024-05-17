@@ -2,39 +2,43 @@
 
 require_once "/home/mansur/Desktop/LTW/project/database/connection.db.php";
 require_once "/home/mansur/Desktop/LTW/project/core/user.class.php";
+require_once "/home/mansur/Desktop/LTW/project/core/item.class.php";
 require_once "/home/mansur/Desktop/LTW/project/database/QueryBuilder.php";
 
 $db = getDatabaseConnection();
+$userId = 1;
+$itemId = 2;
 
-function getAllUsers(PDO $db): array 
+function getTagsForItem(PDO $db, int $itemId): array 
 {
-    $sql = 'SELECT * FROM USERS';
-    $stmt = $db->prepare($sql);
-    $stmt->execute();
+    $qb = new QueryBuilder();
 
-    $users = [];
-    while( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
-        $user = new User(
-            id: $row['id'],
-            username: $row['username'],
-            email: $row['email'],
-            password: $row['password'],
-            phonenumber: $row['phonenumber'] ?? null,
-            image_path: $row['image_path'] ?? null,
-            banned: $row['banned'] ?? 0,
-            admin_flag: $row['admin_flag'] ?? 0,
-            address: $row['address'] ?? null,
-        );
-        $users[] = $user;
-    }
+    $qb->select("Tags.name")
+        ->from("Tags")
+        ->join("ItemTags", "ItemTags.tag_id = Tags.id")
+        ->where(["ItemTags.item_id", "=", $itemId]);
 
-    return $users;
+    $result = $qb->all();
+    return array_column($result, "name");
 }
 
+$checkStmt = $db->prepare("SELECT * FROM ShoppingCart WHERE user_id = ? AND item_id = ?");
+$checkStmt->execute([$userId, $itemId]);
+$exists = $checkStmt->fetch();
 
-$qb = new QueryBuilder("User");
-$qb->select()
-    ->from("Users");
+// -----------------------------------------------
+
+$qb = new QueryBuilder();
+
+$result = $qb->select()
+    ->from("ShoppingCart")
+    ->where(["user_id", "=", $userId])
+    ->where(["item_id", "=", $itemId])
+    ->all();
+$result = !empty($result);
+
+// -----------------------------------------------
+
 
 ?>
 
@@ -50,10 +54,10 @@ $qb->select()
     <h1>Test DB Functions</h1>
     Real:
     <br>
-    <?= var_dump(getAllUsers($db)); ?> <br><br><br>
+    <?= var_dump($exists); ?> <br><br><br>
     getQuery(): <br>
-    <?= print_r($qb->getQuery()); ?> <br><br><br>
-    Query:<br>
-    <?= var_dump($qb->all()); ?> <br><br><br>
+    <?= print_r(""); ?> <br><br><br>
+    Result:<br>
+    <?= var_dump($result); ?> <br><br><br>
 </body>
 </html>

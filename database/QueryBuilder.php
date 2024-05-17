@@ -16,7 +16,13 @@ class QueryBuilder
 
     public function select(string $select = '*'): static
     {
-        $this->queryParts['select'] = $select;
+        if ($select != '*'){
+            $this->queryParts['select'][] = $select;
+        } else {
+            // previous selec columns will be selected by '*'
+            $this->queryParts['select'] = ['*'];
+        }
+        
         return $this;
     }
 
@@ -26,15 +32,40 @@ class QueryBuilder
         return $this;
     }
 
+    public function join(string $tableName, string $condition): static
+    {
+        $this->queryParts['join'][] = ['table' => $tableName,'condition'=> $condition];
+        return $this;
+    }
+
     public function where(array $where, string $operator = 'AND'): static
     {
         $this->queryParts['where'][] = ['condition' => $where, 'operator' => $operator];
         return $this;
     }
 
-    public function orderBy(string $orderBy): static
+    public function order(string $order, string $dir = 'DESC'): mixed
     {
-        $this->queryParts['orderBy'] = $orderBy;
+        if ($dir != 'ASC' && $dir != 'DESC')
+            return $this;
+
+        if (isset($this->queryParts['order'])) {
+            $this->queryParts['order'] .= ", {$order} {$dir}";
+        } else {
+            $this->queryParts['order'] = "{$order} {$dir}";
+        }
+        return $this;
+    }
+
+    public function offset(int $offset): static
+    {
+        $this->queryParts['offset'] = $offset;
+        return $this;
+    }
+
+    public function limit(int $limit): static
+    {
+        $this->queryParts['limit'] = $limit;
         return $this;
     }
 
@@ -65,7 +96,6 @@ class QueryBuilder
 
         foreach ($params as $key => $value) {
             $stmt->bindValue($key, $value);
-            ?> <!-- <br> <?= var_dump($key) ?> => <?= var_dump($value) ?> <br> --> <?php
         }
         
         return $stmt;
@@ -73,9 +103,21 @@ class QueryBuilder
 
     public function getQuery(): array
     {
-        $query = "SELECT {$this->queryParts['select']} FROM {$this->queryParts['from']}";
-        $bindParams = [];
+        $select = !empty($this->queryParts['select']) ? implode(", ", $this->queryParts['select']) : '*';
 
+        $fromTable = $this->queryParts['from'];
+        
+        $query = "SELECT {$select} FROM {$fromTable}";
+        $bindParams = [];
+        
+        // Handle joins
+        if (!empty($this->queryParts['join'])) {
+            foreach ($this->queryParts['join'] as $join) {
+                $query .= " LEFT JOIN {$join['table']} ON {$join['condition']}";
+            }
+        }
+        
+        // Handle where
         if (!empty($this->queryParts['where'])) {
             $conditions = [];
             $index = 1;
@@ -96,6 +138,23 @@ class QueryBuilder
             }
 
             $query .= implode(' ', $conditions);
+        }
+        
+        // Handle order
+        if (!empty($this->queryParts['order'])) {
+            $query .= " ORDER BY " . $this->queryParts['order'];
+        }
+
+        // Handle limit
+        if (isset($this->queryParts['limit'])) {
+            $query .= " LIMIT :limit";
+            $bindParams[':limit'] = $this->queryParts['limit'];
+        }
+
+        // Handle offset
+        if (isset($this->queryParts['offset'])) {
+            $query .= " OFFSET :offset";
+            $bindParams[':offset'] = $this->queryParts['offset'];
         }
 
         return [$query, $bindParams];
@@ -126,6 +185,33 @@ class QueryBuilder
         {
             case 'User':
                 return new User($row['username'], $row['password'], $row['email']);
+            case 'Item':
+                return new Item($row['price'], $row['user_id']);
         }
+    }
+
+    // Some functions that for specific classes:
+    
+    public function setupItemJoins() : static 
+    {
+        $this->join("Condition", "Items.condition_id = Condition.id")
+            ->join("Models", "Items.model_id = Models.id")
+            ->join("Categories", "Items.category_id = Categories.id")
+            ->join("Size", "Items.size_id = Size.id")
+            ->join("Brands", "Models.brand_id = Brands.id");
+
+        return $this;
+    }
+
+    public function setupItemSelect() : static 
+    {
+        $this->select("Items.*")
+            ->select("Condition.name AS condition")
+            ->select("Models.name AS model")
+            ->select("Categories.name AS category")
+            ->select("Size.name AS size")
+            ->select("Brands.name AS brand");
+
+        return $this;
     }
 }

@@ -44,8 +44,8 @@ require_once(__DIR__ . '/../utils/utils.php');
     Session $session,
     string $title,
     bool $isCurrentUserPage,
-    array $items_in_cart = array(),
-    array $items_in_wish_list = array(),
+    array $items_in_cart = [],
+    array $items_in_wish_list = [],
     int $page_index = 0,
     bool $has_more_pages = false,
 ): void { ?>
