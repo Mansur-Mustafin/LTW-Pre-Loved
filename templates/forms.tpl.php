@@ -20,7 +20,7 @@ require_once(__DIR__ . '/../utils/session.php');
             <label>
                 Password <input type="password" name="password">
             </label>
-            <?=drawErrors($session->getErrorMessages())?>
+            <?php drawErrors($session->getErrorMessages()) ?>
             <button formaction="../actions/action_login.php" formmethod="post">Login</button>
         </form>
         <form id="register-form">

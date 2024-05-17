@@ -40,3 +40,16 @@ form#edit-profile-info{
         cursor: pointer;
     }
 }
+
+#dashboard-button {
+    margin-left: .5em;
+    width: 95%;
+    a {
+        color: black;
+    }
+    &:hover {
+        a {
+            color: white;
+        }
+    }
+}

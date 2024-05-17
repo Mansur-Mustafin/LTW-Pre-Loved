@@ -22,6 +22,6 @@ $items = getAllItemsFromId($db, $items_in_wishlist);
 
 drawHeader($session, 'Wishlist');
 drawWishListForm($session);
-drawItems($items, $session, 'Your Wishlist!', true,$items_in_cart, $items_in_wishlist);
+drawItems($items, $session, 'Your Wishlist!', true, $items_in_cart, $items_in_wishlist, place: 'wishlist');
 drawFooter();
 
