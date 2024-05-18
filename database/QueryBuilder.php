@@ -125,7 +125,7 @@ class QueryBuilder
 
             foreach ($this->queryParts['where'] as $i => $part) {
                 if (count($part['condition']) !== 3) {
-                    throw new Exception("Each 'where' condition must have exactly 3 elements.");
+                    continue;
                 }
 
                 [$column, $operator, $value] = $part['condition'];
@@ -160,7 +160,7 @@ class QueryBuilder
         return [$query, $bindParams];
     }
 
-    private function convertToModels(array $result)
+    public function convertToModels(array $result)
     {
         $models = [];
         
@@ -170,7 +170,6 @@ class QueryBuilder
 
             foreach ($row as $key => $value) {
                 $model->{$key} = $value;
-                ?> <!-- <?= $key; ?> <?= $value; ?> <br> --><?php
             }
             $model->ensureDefaultValues();
             $models[] = $model;
@@ -179,15 +178,13 @@ class QueryBuilder
         return $models;
     }
 
-    private function convertToModel(string $model, array $row) 
+    public function convertToModel(string $model, array $row) 
     {
-        switch($model)
-        {
-            case 'User':
-                return new User($row['username'], $row['password'], $row['email']);
-            case 'Item':
-                return new Item($row['price'], $row['user_id']);
-        }
+        return match ($model) {
+            'User' => new User($row['username'], $row['password'], $row['email']),
+            'Item' => new Item($row['price'], $row['user_id']),
+            default => null,
+        };
     }
 
     // Some functions that for specific classes:

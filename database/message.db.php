@@ -16,7 +16,6 @@ function getMessagesById(PDO $db, int $message_id): Message
 
     $stmt->execute();
 
-    $messages = [];
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     $message = new Message(
         id: $row['id'],

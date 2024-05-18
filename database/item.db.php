@@ -5,7 +5,7 @@ declare(strict_types=1);
 require_once(__DIR__.'/../core/item.class.php');
 require_once(__DIR__.'/../database/QueryBuilder.php');
 
-function getBoughtItems(PDO $db, int $user_id)
+function getBoughtItems(PDO $db, int $user_id) : array
 {
     $qb = new QueryBuilder("Item");
 
@@ -18,7 +18,7 @@ function getBoughtItems(PDO $db, int $user_id)
     $result = $qb->all();
     if (isset($result) && count($result) > 0) {
         foreach ($result as $item) {
-            $item->tags = getTagsForItem($db, $item->id);
+            $item->tags = getTagsForItem($item->id);
         }
     }
 
@@ -37,7 +37,7 @@ function getItemsUser(PDO $db, int $user_id): array
     $result = $qb->all();
     if (isset($result) && count($result) > 0) {
         foreach ($result as $item) {
-            $item->tags = getTagsForItem($db, $item->id);
+            $item->tags = getTagsForItem($item->id);
         }
     }
 
@@ -67,14 +67,14 @@ function getAllItems(PDO $db, int $limit, int $offset, ?int $uid): array
     $result = $qb->all();
     if (isset($result) && count($result) > 0) {
         foreach ($result as $item) {
-            $item->tags = getTagsForItem($db, $item->id);
+            $item->tags = getTagsForItem($item->id);
         }
     }
 
     return $result;
 }
 
-function searchItems(PDO $db, string $keyword) 
+function searchItems(PDO $db, string $keyword) : array
 {
     $qb = new QueryBuilder("Item");
 
@@ -86,85 +86,10 @@ function searchItems(PDO $db, string $keyword)
     $result = $qb->all();
     if (isset($result) && count($result) > 0) {
         foreach ($result as $item) {
-            $item->tags = getTagsForItem($db, $item->id);
+            $item->tags = getTagsForItem($item->id);
         }
     }
 
-    return $result;
-}
-
-function filterItemsbyCategory($db, $category) 
-{
-    $qb = new QueryBuilder("Item");
-
-    $qb ->setupItemSelect()
-        ->from("Items")
-        ->setupItemJoins()
-        ->where(["Categories.name", "LIKE", $category]);
-
-    $result = $qb->all();
-    if (isset($result) && count($result) > 0) {
-        foreach ($result as $item) {
-            $item->tags = getTagsForItem($db, $item->id);
-        }
-    }
-
-    return $result;
-}
-
-function filterItemsbyBrand($db, $brand) 
-{
-    $qb = new QueryBuilder("Item");
-
-    $qb ->setupItemSelect()
-        ->from("Items")
-        ->setupItemJoins()
-        ->where(["Brands.name", "LIKE", $brand]);
-
-    $result = $qb->all();
-    if (isset($result) && count($result) > 0) {
-        foreach ($result as $item) {
-            $item->tags = getTagsForItem($db, $item->id);
-        }
-    }
-
-    return $result;
-}
-
-function filterItemsbySize($db, $size) 
-{
-    $qb = new QueryBuilder("Item");
-
-    $qb ->setupItemSelect()
-        ->from("Items")
-        ->setupItemJoins()
-        ->where(["Size.name", "LIKE", $size]);
-
-    $result = $qb->all();
-    if (isset($result) && count($result) > 0) {
-        foreach ($result as $item) {
-            $item->tags = getTagsForItem($db, $item->id);
-        }
-    }
-
-    return $result;
-}
-
-function filterItemsbyCondition($db, $condition) 
-{   
-    $qb = new QueryBuilder("Item");
-
-    $qb ->setupItemSelect()
-        ->from("Items")
-        ->setupItemJoins()
-        ->where(["Condition.name", "LIKE", $condition]);
-
-    $result = $qb->all();
-    if (isset($result) && count($result) > 0) {
-        foreach ($result as $item) {
-            $item->tags = getTagsForItem($db, $item->id);
-        }
-    }
     return $result;
 }
 
@@ -179,7 +104,7 @@ function getItem(PDO $db, int $itemId): ?Item
 
     $result = $qb->all();
     if (isset($result) && count($result) > 0) {
-        $result[0]->tags = getTagsForItem($db, $itemId);
+        $result[0]->tags = getTagsForItem($itemId);
     } 
     return $result[0];
 }
@@ -197,12 +122,12 @@ function getBoughtItem(PDO $db, int $userId, int $itemId): ?Item
 
     $result = $qb->all();
     if (isset($result) && count($result) > 0) {
-        $result[0]->tags = getTagsForItem($db, $itemId);
+        $result[0]->tags = getTagsForItem($itemId);
     } 
     return $result[0];
 }
 
-function getTagsForItem(PDO $db, int $itemId): array 
+function getTagsForItem(int $itemId): array 
 {
     $qb = new QueryBuilder();
 
@@ -259,58 +184,38 @@ function getAllItemsFromId(PDO $db, array $items_ids): array
     }
     $placeholders = implode(',', array_fill(0, count($items_ids), '?'));
 
-    $sql = "SELECT 
-            Items.*, 
-            Users.username AS username, 
-            Condition.name AS condition_name, 
-            Models.name AS model_name,
-            Categories.name AS category_name,
-            Size.name AS size_name,
-            Brands.name AS brand_name
-            FROM Items
-            LEFT JOIN Condition ON Items.condition_id = Condition.id
-            LEFT JOIN Models ON Items.model_id = Models.id
-            LEFT JOIN Categories ON Items.category_id = Categories.id
-            LEFT JOIN Size ON Items.size_id = Size.id
-            LEFT JOIN Brands ON Models.brand_id = Brands.id
-            LEFT JOIN Users ON Items.user_id = Users.id
-            WHERE Items.id IN ($placeholders)
-            ORDER BY Items.priority DESC, Items.created_at DESC;";
+    $qb = new QueryBuilder("Item");
+    $db = getDatabaseConnection();
 
-    $stmt = $db->prepare($sql);
+    $qb->setupItemSelect()
+        ->select("Users.username AS username")
+        ->from("Items")
+        ->setupItemJoins()
+        ->join("Users", "Items.user_id = Users.id");
 
+    [$query, $bindParams] = $qb->getQuery();
+    $query = $query . "
+        WHERE Items.id IN ($placeholders)
+        ORDER BY Items.priority DESC, Items.created_at DESC;
+    ";
+
+    $stmt = $qb->createCommand($db, $query, $bindParams);
+    
     foreach ($items_ids as $index => $itemId) {
         $stmt->bindValue(($index + 1), $itemId, PDO::PARAM_INT);
     }
+    
+    $result = $stmt->execute()->fetchAll(PDO::FETCH_ASSOC);
 
-    $stmt->execute();
-
-    $items = [];
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $tags = getTagsForItem($db, $row['id']);
-
-        $item = new Item(
-            id: $row['id'],
-            brand: $row['brand_name'],
-            description: $row['description'],
-            title: $row['title'],
-            images: $row['images'],
-            price: $row['price'],
-            tradable: $row['tradable'],
-            priority: $row['priority'],
-            user_id: $row['user_id'],
-            created_at: $row['created_at'],
-            condition: $row['condition_name'],
-            model: $row['model_name'],
-            category: $row['category_name'],
-            size: $row['size_name'],
-            tags: $tags,
-            username: $row['username'],
-        );
-        $items[] = $item;
+    $result = $qb->convertToModels($result);
+    
+    if (isset($result) && count($result) > 0) {
+        foreach ($result as $item) {
+            $item->tags = getTagsForItem($item->id);
+        }
     }
 
-    return $items;
+    return $result;
 }
 
 function toggleCartItem(PDO $db, int $userId, int $itemId): void 
