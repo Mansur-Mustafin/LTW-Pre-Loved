@@ -38,6 +38,9 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['action'], $_GET['item-id
       $response['itemId'] = $itemId;
       $response['redirect'] = $_GET['action'] === 'delete-main' ? '/pages/profile.php' : null;
       break;
+    case 'edit-main':
+      header('Location: ../pages/edit_item.php?item_id=' . $itemId);
+      exit;
     default:
       $response['success'] = false;
   }
