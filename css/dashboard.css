@@ -1,0 +1,38 @@
+.previous-page {
+    height: 2em;
+    a {
+        color: gray;
+        padding-left: 1em;
+    }
+}
+
+#dashboard {
+    grid-column-end: 2 span;
+    width: 90%;
+    padding: 1em;
+    ul {
+        display: flex;
+        justify-content: space-between;
+        li {
+            min-width: 17em;
+            height: 10em;
+            background-color: var(--matador-dark-red);
+            color: white;
+            padding: 1em;
+            margin: 1em;
+            .dashboard-tag {
+                font-size: smaller;
+            }
+            .dashboard-value {
+                font-size: 3em;
+                font-size-adjust:0.5;
+            }
+            border-radius: 5%;
+        }
+    }
+}
+#dashboard-graph {
+    grid-column-end: 2 span;
+    width: 90%;
+    padding: 3em;
+}

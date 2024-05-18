@@ -7,7 +7,7 @@ require_once(__DIR__ . '/../utils/utils.php');
 
 <?php function drawLoginMessage()
 { ?>
-    <section id="messages_block_no_login">
+    <section class="message_middle">
         <h2>Make login into a system and send the message.</h2>
     </section>
 <?php } ?>
@@ -26,6 +26,7 @@ require_once(__DIR__ . '/../utils/utils.php');
         } ?>
         <input id="last_message_id" type="hidden" value="<?= $last_message_id ?>">
         <input id="current_user_id" type="hidden" value="<?= $current_user_id ?>">
+        <input id="current_item_id" type="hidden" value="<?= $current_item_id ?>">
         <script src="../js/chats.js"></script>
     </section>
 <?php } ?>

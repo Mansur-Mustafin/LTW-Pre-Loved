@@ -21,6 +21,7 @@ require_once(__DIR__ . '/../utils/session.php');
         <link href="../css/item.css" rel="stylesheet">
         <link href="../css/header.css" rel="stylesheet">
         <link href="../css/admin.css" rel="stylesheet">
+        <link href="../css/dashboard.css" rel="stylesheet">
         <link href="../css/messages.css" rel="stylesheet">
         <link href="../css/card.css" rel="stylesheet">
         <title>Matador OLX | <?=$title?></title>
@@ -30,6 +31,7 @@ require_once(__DIR__ . '/../utils/session.php');
         <script type="text/javascript" src="../js/add_entity.js" defer></script>
         <script type="text/javascript" src="../js/analytics_page.js" defer></script>
         <script type="text/javascript" src="../js/filter_item.js" defer></script>
+        <script type="text/javascript" src="../js/dashboard.js" defer></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
 
     </head>

@@ -124,14 +124,17 @@ function getNewMessagesByChatIdAndMessageId(PDO $db, int $chat_id, int $message_
     return $messages;
 }
 
-function getNewMessagesByUserIdAndMessageId(PDO $db, int $user_id, int $message_id): array 
+function getNewMessagesByUserIdAndMessageId(PDO $db, int $user_id, int $message_id, int $item_id): array 
 {
-    $sql = "SELECT * FROM Messages WHERE 
-            Messages.to_user_id = :user_id AND
-            Messages.id > :message_id;";
+    $sql = "SELECT Messages.*, Chats.item_id as item_id 
+            FROM Messages 
+            JOIN Chats ON Messages.chat_id = Chats.id
+            WHERE Messages.to_user_id = :user_id AND
+                Messages.id > :message_id AND 
+                item_id = :item_id;";
 
     $stmt = $db->prepare($sql);
-    $stmt->execute(['user_id' => $user_id, 'message_id' => $message_id]);
+    $stmt->execute(['user_id' => $user_id, 'message_id' => $message_id, 'item_id' => $item_id]);
 
     $messages = [];
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
