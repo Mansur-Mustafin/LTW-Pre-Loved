@@ -77,6 +77,7 @@ function getUser(PDO $db, string $text): ?User
         ->where(['username', '=', $text], 'OR')
         ->where(['email', '=', $text]);
 
+    if(!$qb->all()) return null;
     return $qb->all()[0];
 }
 
