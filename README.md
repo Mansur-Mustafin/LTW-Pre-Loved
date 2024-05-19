@@ -2,8 +2,8 @@
 
 ## Group ltw06g04
 
-- Mansur Mustafin (up202102355) 40%
-- Bruno (up202107143) 20%
+- Mansur Mustafin (up202102355) 50%
+- Bruno (up202107143) 10%
 - Rubem Neto (up202207086) 40%
 
 ## Install Instructions
@@ -13,11 +13,12 @@
 3. **Refresh the Database**: `./refresh`
 4. **Run Locally**: `php -S localhost:9000`
 
-## Domain model
+Below is a table outlining the credentials required to access the system:
 
-Below simple UML class diagram with all the key concepts:
-
-![alt text](assets/docs/image-3.png)
+| Username | Password |
+|----------|----------|
+| Mansur   | qwerty123|
+| rubem    | qwerty123|
 
 ## External Libraries
 
@@ -79,5 +80,5 @@ We also implemented the following additional requirements (you can add more):
 - [X] **API Integration**
 - [ ] **Dynamic Promotions**
 - [X] **User Preferences**
-- [X] **Shipping Costs**
+- [ ] **Shipping Costs**: (not delivered, but implemented)
 - [X] **Real-Time Messaging System**
