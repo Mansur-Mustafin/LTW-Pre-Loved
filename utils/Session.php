@@ -7,12 +7,32 @@ class Session
 
     private array $messages;
 
-    public function __construct()
+    public function __construct(bool $initDefaultSessionParams = true)
     {
-        session_start();
+        self::checkSession();
 
-        $this->messages = isset($_SESSION['messages']) ? $_SESSION['messages'] : array();
+        if ($initDefaultSessionParams) {
+            self::initDefaultSessionParams();
+        }
+
+        $this->messages = $_SESSION['messages'] ?? array();
         unset($_SESSION['messages']);
+    }
+
+    public static function initDefaultSessionParams(): void
+    {
+        Session::checkSession();
+
+        if (empty($_SESSION['csrf_token'])) {
+            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+        }
+    }
+
+    public static function checkSession(): void
+    {
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
     }
 
     public function isLoggedIn(): bool
@@ -38,6 +58,11 @@ class Session
     public function getName(): ?string
     {
         return isset($_SESSION['name']) ? $_SESSION['name'] : null;
+    }
+
+    public function getCsrfToken(): ?string
+    {
+        return $_SESSION['csrf_token'];
     }
 
     public function setId(int $id)

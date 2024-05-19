@@ -4,9 +4,9 @@ const itemsSection = document.getElementById("items")
 const searchBarItem = document.getElementById("item-search")
 const itemList = document.getElementById("item-list") 
 
-const title = document.getElementById("title").textContent
+const title = document.getElementById("title")?.textContent
 
-const sessionId = document.getElementById("session_id").textContent
+const sessionId = document.getElementById("session_id")?.textContent
 
 if(filterItems) {
    filterItems.addEventListener("submit",async function(e) {

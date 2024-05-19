@@ -1,13 +1,14 @@
 <?php
 declare(strict_types=1);
 
-require_once(__DIR__.'/../utils/session.php');
+require_once(__DIR__ . '/../utils/Session.php');
+require_once(__DIR__ . '/../utils/Request.php');
 
 $session = new Session();
+$request = new Request();
 
-if(!$session->isLoggedIn()) {
-    die(header('Location: /'));
-}
+if(!$session->isLoggedIn()) die(header('Location: /'));
+
 
 require_once(__DIR__.'/../utils/hash.php');
 require_once(__DIR__.'/../utils/validation.php');
@@ -17,17 +18,16 @@ require_once(__DIR__.'/../core/user.class.php');
 
 $db = getDatabaseConnection();
 
-
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit-profile'])) {
+if ($request->isPost() && $request->post('edit-profile') !== null) {
     // TODO validate user email.
     $user = getUser($db, $session->getName());
     var_dump($user);
 
-    if($_POST['edit-profile'] == 'save'){
-        if (!empty($_POST['new_username'])) {
+    if($request->post('edit-profile') == 'save'){
+        if (!empty($request->post('new_username'))) {
             $old_image_path = $user->image_path;
 
-            $user->username = $_POST['new_username'];
+            $user->username = $request->post('new_username');
             $root_folder = '/data/profile_img/';
             $filename = get_hash_path($user->username).'.png';
             $save_path = $root_folder.htmlspecialchars($filename);
@@ -35,14 +35,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit-profile'])) {
             
             rename(__DIR__.'/..'.$old_image_path, __DIR__.'/..'.$save_path);
         }
-        if (!empty($_POST['new_email'])) {
-            $user->email = $_POST['new_email'];
+        if (!empty($request->post('new_email'))) {
+            $user->email = $request->post('new_email');
         }
-        if (!empty($_POST['new_phonenumber'])) {
-            $user->phonenumber = $_POST['new_phonenumber'];
+        if (!empty($request->post('new_phonenumber'))) {
+            $user->phonenumber = $request->post('new_phonenumber');
         }
-        if (!empty($_POST['new_address'])) {
-            $user->address = $_POST['new_address'];
+        if (!empty($request->post('new_address'))) {
+            $user->address = $request->post('new_address');
         }
         if(isset($_FILES['profile_img']['name'])){
             if (move_uploaded_file($_FILES['profile_img']['tmp_name'], __DIR__.'/..'.$user->image_path)) {
@@ -60,15 +60,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit-profile'])) {
 }
 
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['change-password'])) {
+if ($request->isPost() && $request->post('change-password') !== null) {
 
     $user = getUser($db, $session->getName());
     var_dump($user);
 
-    if($_POST['change-password'] == 'save'){
-        $new_password = $_POST['new_password'];
-        $new_password_conf = $_POST['new_password_confirmation'];
-        $old_password = $_POST['old_password'];
+    if ($request->post('change-password') == 'save') {
+        $new_password = $request->post('new_password');
+        $new_password_conf = $request->post('new_password_confirmation');
+        $old_password = $request->post('old_password');
 
         if (empty($new_password) || empty($new_password_conf) || empty($old_password) ){
             die(header('Location: ../pages/profile.php'));

@@ -1,13 +1,14 @@
 <?php
 declare(strict_types=1);
 
-require_once(__DIR__.'/../utils/session.php');
+require_once(__DIR__ . '/../utils/Session.php');
+require_once(__DIR__ . '/../utils/Request.php');
 
 $session = new Session();
+$request = new Request();
 
-if(!$session->isLoggedIn()) {
-    die(header('Location: /'));
-}
+if(!$session->isLoggedIn()) die(header('Location: /'));
+
 
 require_once(__DIR__.'/../database/connection.db.php');
 require_once(__DIR__ . '/../database/item.db.php');
@@ -15,10 +16,10 @@ require_once(__DIR__.'/../utils/validation.php');
 
 $db = getDatabaseConnection();
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST['email'];
-    $email = 'mustafin.mansur02@gmail.com'; // TODO 
-    $message = $_POST['wishlist-message'];
+if ($request->isPost()) {
+    $email = $request->post('email');
+    $email = 'mustafin.mansur02@gmail.com'; // TODO: change this email.
+    $message = $request->post('wishlist-message');
 
     if(!is_valid_email($email)){
         $session->addMessage('error', 'Invalid email format');

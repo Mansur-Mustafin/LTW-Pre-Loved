@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-require_once(__dir__.'/../utils/session.php');
+require_once(__dir__.'/../utils/Session.php');
 $session = new session();
 
 
