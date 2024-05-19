@@ -38,7 +38,10 @@ if ($request->isPost()) {
     if($_FILES['file']['size'] != 0){
         $filename = get_hash_path((string) time()).$_FILES['file']['name'];
         $folderHash = substr($filename, 0, 3);
-        ensureFolderExists(__DIR__."/../data/uploaded_files/$folderHash/");
+        try {
+            ensureFolderExists(__DIR__ . "/../data/uploaded_files/$folderHash/");
+        } catch (Exception $e) {
+        }
 
         $save_path = '/data/uploaded_files/'.htmlspecialchars($folderHash.'/'.$filename);
 

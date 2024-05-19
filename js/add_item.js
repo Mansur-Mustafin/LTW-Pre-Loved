@@ -32,7 +32,7 @@ if(itemTags) {
 
     tagsInput.addEventListener('input', async function () {
         let input = this.value
-        displayAutoComplete(dropDown,tagsUL,input,itemTagsSelect,itemTags)
+        await displayAutoComplete(dropDown, tagsUL, input, itemTagsSelect, itemTags)
     })
 }
 

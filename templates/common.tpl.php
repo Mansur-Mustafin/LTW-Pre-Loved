@@ -79,13 +79,13 @@ require_once(__DIR__ . '/../utils/Session.php');
     <footer>
         <nav class = "footer-list">
             <ul>
-                <h3>Support</h3>
+                Support
                 <li><a href = "#">Who are we?</a></li>
                 <li><a href = "#">Contact us</a></li>
                 <li><a href = "#">Give us feedback!</a></li>
             </ul>
             <ul>
-                <h3>Socials</h3>
+                Socials
                 <li><a href = "#">Facebook</a></li>
                 <li><a href = "#">Instagram</a></li>
                 <li><a href = "#">X</a></li>

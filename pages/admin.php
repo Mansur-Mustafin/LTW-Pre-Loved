@@ -32,9 +32,6 @@ drawHeader($session, 'Admin Page');
 drawSideBar();
 
 switch ($_GET['value']) {
-    case 'users':
-        drawUsersAdmin($allUsers,$session);
-        break;
     case 'statistics':
         drawStatisticsAdmin();
         break;

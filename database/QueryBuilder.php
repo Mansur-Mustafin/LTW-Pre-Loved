@@ -44,7 +44,7 @@ class QueryBuilder
         return $this;
     }
 
-    public function order(string $order, string $dir = 'DESC'): mixed
+    public function order(string $order, string $dir = 'DESC'): static
     {
         if ($dir != 'ASC' && $dir != 'DESC')
             return $this;

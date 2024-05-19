@@ -22,5 +22,5 @@ if($request->isPost()){
     addEntity($db,$value,$type);
 }
 
-header("Location: ../pages/admin.php?value=". strtolower($type) ."");   // TODO: .""?
+header("Location: ../pages/admin.php?value=". strtolower($type));   // TODO: .""?
 exit;

@@ -44,33 +44,33 @@ if(filterItems) {
         cart = await responseCart.json()
 
         const formData = new FormData(e.target)
-        output = Object.entries(Object.fromEntries(formData))
-        filterMap = (output
-            .map(([k,v]) => k)
-            .map((v) => {
-                return {key:v.split("/")[0],value:v.split("/")[1]}
-            }
-        ))
+       let output = Object.entries(Object.fromEntries(formData))
+       let filterMap = (output
+           .map(([k, v]) => k)
+           .map((v) => {
+                   return {key: v.split("/")[0], value: v.split("/")[1]}
+               }
+           ))
         // TODO : REFACTOR (THIS IS ALMOST A CRIME)
-        categories = filterMap.filter((e) => e.key == "category").map((e) => e.value);
-        brands = filterMap.filter((e) => e.key == "brand").map((e) => e.value);
-        sizes = filterMap.filter((e) => e.key == "size").map((e) => e.value);
-        conditions = filterMap.filter((e) => e.key == "condition").map((e) => e.value);
+       let categories = filterMap.filter((e) => e.key == "category").map((e) => e.value);
+       let brands = filterMap.filter((e) => e.key == "brand").map((e) => e.value);
+       let sizes = filterMap.filter((e) => e.key == "size").map((e) => e.value);
+       let conditions = filterMap.filter((e) => e.key == "condition").map((e) => e.value);
 
         const response = await fetch('../api/items.php?search=')
         const items = await response.json()
-        filteredItems = (items.filter((item) => {
-            const checkCategory = categories.length == 0 || categories.includes(item.category)
-            const checkBrand = brands.length == 0 || brands.includes(item.brand)
-            const checkSize = sizes.length == 0 || sizes.includes(item.size)
-            const  checkConditions = conditions.length == 0 || conditions.includes(item.condition)
-            return checkCategory && checkBrand && checkSize && checkConditions && item.user_id != sessionId
-        }))
+       let filteredItems = (items.filter((item) => {
+           const checkCategory = categories.length === 0 || categories.includes(item.category)
+           const checkBrand = brands.length === 0 || brands.includes(item.brand)
+           const checkSize = sizes.length === 0 || sizes.includes(item.size)
+           const checkConditions = conditions.length === 0 || conditions.includes(item.condition)
+           return checkCategory && checkBrand && checkSize && checkConditions && item.user_id !== sessionId
+       }))
 
         itemList.innerHTML = ''
         filteredItems.forEach((e) => e.images = (e.images.slice(2,e.images.length - 2).split(",")))
 
-        const sessionValue = sessionId.textContent == '' ? {isLoggedIn:false} : {isLoggedIn:true,id:sessionId};
+        const sessionValue = sessionId.textContent === '' ? {isLoggedIn:false} : {isLoggedIn:true,id:sessionId};
 
         filteredItems.forEach((filteredItem) => {
             drawItem(filteredItem,sessionValue,'Find what you want to buy!',inCart,inWishList,itemList)

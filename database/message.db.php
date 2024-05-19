@@ -19,7 +19,6 @@ function getMessagesById(PDO $db, int $message_id): Message
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     $message = new Message(
         id: $row['id'],
-        date_time: $row['date_time'],
         text: $row['text'],
         chat_id: $row['chat_id'],
         from_user_id: $row['from_user_id'],
@@ -27,6 +26,7 @@ function getMessagesById(PDO $db, int $message_id): Message
         isRead: (bool)$row['is_read'],
         item_id_exchange: $row['item_id_exchange'],
         filename: $row['files'],
+        date_time: $row['date_time'],
     );
     if($row['item_id_exchange'] != 0){
         $message->item_for_exchange = getItem($db, $row['item_id_exchange']);
@@ -50,7 +50,6 @@ function getMessagesByChatId(PDO $db, int $chat_id): array
 
         $message = new Message(
             id: $row['id'],
-            date_time: $row['date_time'],
             text: $row['text'],
             chat_id: $row['chat_id'],
             from_user_id: $row['from_user_id'],
@@ -58,6 +57,7 @@ function getMessagesByChatId(PDO $db, int $chat_id): array
             isRead: (bool)$row['is_read'],
             item_id_exchange: $row['item_id_exchange'],
             filename: $row['files'],
+            date_time: $row['date_time'],
         );
         if($row['item_id_exchange'] != 0){
             $message->item_for_exchange = getItem($db, $row['item_id_exchange']);

@@ -87,7 +87,7 @@ require_once (__DIR__ . '/../utils/Request.php');
     <section class="admin-info">
         <div id="search-wrapper">
             <img src="../assets/img/search.svg" alt="search-bar" id="search-icon">
-            <input class="search" id="user-admin-search" type="text">
+            <label for="user-admin-search"></label><input class="search" id="user-admin-search" type="text">
         </div>
         <!-- TODO: FIND A WAY TO REMOVE THIS -->
         <div id="users-admin">
@@ -112,7 +112,7 @@ require_once (__DIR__ . '/../utils/Request.php');
                                 </label>
                             </li>
                             <li>
-                                <label>Phonenumber:
+                                <label>Phone number:
                                     <?= htmlspecialchars($user->phonenumber) ?>
                                 </label>
                             </li>
@@ -122,7 +122,6 @@ require_once (__DIR__ . '/../utils/Request.php');
                                 </label>
                             </li>
                         </ul>
-                        </p>
                     </div>
                     <div class="top-right-element">
                     </div>
@@ -183,7 +182,7 @@ require_once (__DIR__ . '/../utils/Request.php');
     <section class="admin-info">
         <div id="search-wrapper">
             <img src="../assets/img/search.svg" alt="search-bar" id="search-icon">
-            <input class="search" id="item-admin-search" type="text">
+            <label for="item-admin-search"></label><input class="search" id="item-admin-search" type="text">
         </div>
         <div id="items-admin">
             <!-- TODO: FIND A WAY TO REMOVE THIS -->

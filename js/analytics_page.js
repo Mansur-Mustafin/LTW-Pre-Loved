@@ -1,25 +1,21 @@
 async function getItems() {
     const response = await fetch('../api/items.php?search=')
-    const items = await response.json()
-    return items
+    return await response.json()
 }
 
 async function getUsers() {
     const response = await fetch('../api/users.php?search=')
-    const users = await response.json()
-    return users
+    return await response.json()
 }
 
 async function getEntities(type) {
     const response = await fetch('../api/entities.php?search='+type)
-    const entities = await response.json()
-    return entities
+    return await response.json()
 }
 
 async function getTransactions() {
     const response = await fetch('../api/transactions.php')
-    const transactions = await response.json()
-    return transactions
+    return await response.json()
 }
 
 
@@ -57,7 +53,24 @@ async function buildPage() {
     const analyticsSection = document.getElementById("analytics-admin")
     const chartsSection = document.getElementById("analytics-charts")
 
-    if(analyticsSection && chartsSection) {
+    let users;
+    let items;
+    let transactions;
+    let tags;
+    let categories;
+    let sizes;
+    let models;
+    let brands;
+    let conditions;
+    let countCategories;
+    let countSizes;
+    let countConditions;
+    let countBrands;
+    let categoriesGraph;
+    let sizeGraph;
+    let conditionGraph;
+    let brandGraph;
+    if (analyticsSection && chartsSection) {
         users = await getUsers()
         items = await getItems()
         transactions = await getTransactions()
@@ -66,70 +79,70 @@ async function buildPage() {
         sizes = await (getEntities("Size"))
         models = await (getEntities("Models"))
         brands = await (getEntities("Brands"))
-        conditions = await (getEntities("Condition")) 
+        conditions = await (getEntities("Condition"))
 
-        createParagraphMap("Users: ", users.length,analyticsSection)
-        createParagraphMap("Banned Users: ", users.filter((value) => value.banned).length,analyticsSection)
-        createParagraphMap("Admin Users: ", users.filter((value) => value.admin_flag).length,analyticsSection)
-        createParagraphMap("Items: " ,items.length,analyticsSection)
-        createParagraphMap("Tags: ", tags.length,analyticsSection)
-        createParagraphMap("Categories: " , categories.length, analyticsSection)
-        createParagraphMap("Sizes: " , sizes.length, analyticsSection)
-        createParagraphMap("Models: " , models.length,analyticsSection)
-        createParagraphMap("Brands: ", brands.length,analyticsSection)
-        createParagraphMap("Conditions: " , conditions.length, analyticsSection)
+        createParagraphMap("Users: ", users.length, analyticsSection)
+        createParagraphMap("Banned Users: ", users.filter((value) => value.banned).length, analyticsSection)
+        createParagraphMap("Admin Users: ", users.filter((value) => value.admin_flag).length, analyticsSection)
+        createParagraphMap("Items: ", items.length, analyticsSection)
+        createParagraphMap("Tags: ", tags.length, analyticsSection)
+        createParagraphMap("Categories: ", categories.length, analyticsSection)
+        createParagraphMap("Sizes: ", sizes.length, analyticsSection)
+        createParagraphMap("Models: ", models.length, analyticsSection)
+        createParagraphMap("Brands: ", brands.length, analyticsSection)
+        createParagraphMap("Conditions: ", conditions.length, analyticsSection)
 
         countCategories = categories.map((category) => {
-            return {key: category.name,value: items.filter((value) => value.category == category.name).length}
+            return {key: category.name, value: items.filter((value) => value.category === category.name).length}
         })
         countSizes = sizes.map((size) => {
-            return {key: size.name,value: items.filter((value) => value.size == size.name).length}
+            return {key: size.name, value: items.filter((value) => value.size === size.name).length}
         })
         countConditions = conditions.map((condition) => {
-            return {key: condition.name,value: items.filter((value) => value.condition == condition.name).length}
+            return {key: condition.name, value: items.filter((value) => value.condition === condition.name).length}
         })
         countBrands = brands.map((brand) => {
-            return {key: brand.name,value: items.filter((value) => value.brand == brand.name).length}
+            return {key: brand.name, value: items.filter((value) => value.brand === brand.name).length}
         })
 
-        drawTransactionsByMonthGraph(transactions,chartsSection)
+        drawTransactionsByMonthGraph(transactions, chartsSection)
         drawUserByMonthGraph(chartsSection)
-        drawGraphByDay(chartsSection,items,"New Items by Day")
-        categoriesGraph = createGraph(chartsSection,"Categories",countCategories,"doughnut")
-        sizeGraph = createGraph(chartsSection,"Sizes",countSizes,"doughnut")
-        conditionGraph = createGraph(chartsSection,"Conditions",countConditions,"doughnut")
-        brandGraph = createGraph(chartsSection,"Brands",countBrands,"doughnut")
+        drawGraphByDay(chartsSection, items, "New Items by Day")
+        categoriesGraph = createGraph(chartsSection, "Categories", countCategories, "doughnut")
+        sizeGraph = createGraph(chartsSection, "Sizes", countSizes, "doughnut")
+        conditionGraph = createGraph(chartsSection, "Conditions", countConditions, "doughnut")
+        brandGraph = createGraph(chartsSection, "Brands", countBrands, "doughnut")
     }
 }
 
 function drawTransactionsByMonthGraph(transactions,chartsSection) {
-    monthIndex = Array.from({length: 12}, (v, k) => k+1); 
-    formattedElements = transactions.map((e) => (new Date(1000 * e.created_at)))
-    monthsUsers = formattedElements
-        .filter((e) => e.getFullYear() == new Date().getFullYear())
+    monthIndex = Array.from({length: 12}, (v, k) => k+1);
+    let formattedElements = transactions.map((e) => (new Date(1000 * e.created_at)))
+    let monthsUsers = formattedElements
+        .filter((e) => e.getFullYear() === new Date().getFullYear())
         .map((e) => e.getMonth())
-    monthsCountUsers = monthIndex.map((month) => monthsUsers.filter((e) => e == month).length)
+    let monthsCountUsers = monthIndex.map((month) => monthsUsers.filter((e) => e === month).length)
     createGraphLine(chartsSection,months(monthsCountUsers.length),monthsCountUsers,"Transactions by Month")
 }
 
 function drawUserByMonthGraph(chartsSection) {
-    monthIndex = Array.from({length: 12}, (v, k) => k+1); 
-    formattedCreatedAtUsers = users.map((e) => (new Date(1000 * e.created_at)))
-    monthsUsers = formattedCreatedAtUsers
-        .filter((e) => e.getFullYear() == new Date().getFullYear())
+    let monthIndex = Array.from({length: 12}, (v, k) => k + 1);
+    let formattedCreatedAtUsers = users.map((e) => (new Date(1000 * e.created_at)))
+    let monthsUsers = formattedCreatedAtUsers
+        .filter((e) => e.getFullYear() === new Date().getFullYear())
         .map((e) => e.getMonth())
-    monthsCountUsers = monthIndex.map((month) => monthsUsers.filter((e) => e == month).length)
+    let monthsCountUsers = monthIndex.map((month) => monthsUsers.filter((e) => e === month).length)
     createGraphLine(chartsSection,months(monthsCountUsers.length),monthsCountUsers,"Users by Month")
 }
 
 function drawGraphByDay(chartsSection,values,name) {
-    daysInCurrentMonth = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate()
-    currentYear = new Date().getFullYear()
-    dayIndex = Array.from({length:daysInCurrentMonth},(v,k) => k+1)
-    formattedData = values.map((e) => (new Date(1000 * e.created_at)))
-    daysItems = formattedData
-        .filter((e) => e.getFullYear() == new Date().getFullYear() && e.getMonth() == new Date().getMonth())
-    daysCountItems = dayIndex.map((day) => daysItems.filter((e) => e.getDate() == day).length)
+    let daysInCurrentMonth = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate()
+    let currentYear = new Date().getFullYear()
+    let dayIndex = Array.from({length: daysInCurrentMonth}, (v, k) => k + 1)
+    let formattedData = values.map((e) => (new Date(1000 * e.created_at)))
+    let daysItems = formattedData
+        .filter((e) => e.getFullYear() === new Date().getFullYear() && e.getMonth() === new Date().getMonth())
+    let daysCountItems = dayIndex.map((day) => daysItems.filter((e) => e.getDate() === day).length)
     console.log(daysCountItems)
     createGraphLine(chartsSection,dayIndex,daysCountItems,name)
 }
@@ -139,10 +152,10 @@ function createGraph(parent,name,countArray,type) {
     const div = document.createElement("div")
     div.classList.add("graph",type)
     div.appendChild(ctx)
-    parent.appendChild(div) 
+    parent.appendChild(div)
 
-    labels = countArray.map((e) => e.key);
-    values = countArray.map((e) => e.value);
+    let labels = countArray.map((e) => e.key);
+    let values = countArray.map((e) => e.value);
     const data = {
         labels: labels,
         datasets: [{
@@ -171,7 +184,7 @@ function createGraph(parent,name,countArray,type) {
 }
 
 function createParagraphMap(key,value,parent,className) {
-    paragraph = document.createElement("p")
+    let paragraph = document.createElement("p")
     paragraph.textContent = key
 
     const valueSpan = document.createElement("span")
@@ -208,4 +221,4 @@ function createGraphLine(parent, labels,values,name) {
     return new Chart(ctx,config)
 }
 
-buildPage()
+buildPage().then(r => null )

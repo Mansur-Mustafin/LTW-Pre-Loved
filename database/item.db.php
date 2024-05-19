@@ -311,7 +311,7 @@ function addItem(Session $session, PDO $db, Item $item): bool {
         $stmt->execute();
         $brandId = $db->lastInsertId();
     }
-    $modelId = getModelId($item->model, (int)$brandId, $db);
+    $modelId = getModelId($item->model, $db);
     if($modelId === -1){
         $sql = "INSERT INTO Models (brand_id, name) VALUES (:brand_id, :model)";
         $stmt = $db->prepare($sql);
@@ -366,7 +366,7 @@ function updateItem(Session $session, PDO $db, Item $item, int $oldID): bool {
         $stmt->execute();
         $brandId = $db->lastInsertId();
     }
-    $modelId = getModelId($item->model, (int)$brandId, $db);
+    $modelId = getModelId($item->model, $db);
     //var_dump($item->model);
     if($modelId === -1){
         $models = getEntitiesFromType($db,"Models");
@@ -436,7 +436,7 @@ function getElementId(string $element, string $table, PDO $db) : int{
         return -1;
     }
 }
-function getModelId(string $model, int $brand, PDO $db) : int{
+function getModelId(string $model, PDO $db) : int{
     $stmt = $db->prepare("SELECT id FROM Models WHERE name = ?");
     $stmt->execute([$model]);
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
