@@ -14,70 +14,76 @@ require_once (__DIR__ . '/../utils/Request.php');
 <?php function drawSideBar()
 { ?>
     <aside id="related">
-        <h2>Pages</h2>
+        <button class="open-sidebar">
+            <i class="gg-sidebar"></i>
+        </button>
 
-        <nav class="pages">
+        <div>
+            <h2>Pages</h2>
 
-            <ul>
+            <nav class="pages">
 
-                <li class="filter-element ">
-                    <a href="../pages/admin.php?value=users">
-                        <h4 class="hover-element">
-                            Users
-                        </h4>
-                    </a>
-                </li>
+                <ul>
+
+                    <li class="filter-element ">
+                        <a href="../pages/admin.php?value=users">
+                            <h4 class="hover-element">
+                                Users
+                            </h4>
+                        </a>
+                    </li>
 
 
-                <li class="filter-element">
-                    <a href="../pages/admin.php?value=statistics">
-                        <h4 class="hover-element">
-                            Statistics
-                        </h4>
-                    </a>
-                </li>
-                <li class="filter-element">
-                    <a href="../pages/admin.php?value=tags">
-                        <h4 class="hover-element">
-                            Tags
-                        </h4>
-                    </a>
-                </li>
-                <li class="filter-element">
-                    <a href="../pages/admin.php?value=categories">
-                        <h4 class="hover-element">
-                            Categories
-                        </h4>
-                    </a>
-                </li>
-                <li class="filter-element"><a href="../pages/admin.php?value=brands">
-                        <h4 class="hover-element">
-                            Brands
-                        </h4>
-                    </a>
-                </li>
-                <li class="filter-element"><a href="../pages/admin.php?value=condition">
-                        <h4 class="hover-element">
-                            Conditions
-                        </h4>
-                    </a>
-                </li>
-                <li class="filter-element"><a href="../pages/admin.php?value=size">
-                        <h4 class="hover-element">
-                            Sizes
-                        </h4>
-                    </a>
-                </li>
-                <li class="filter-element"><a href="../pages/admin.php?value=items">
-                        <h4 class="hover-element">
-                            Items
-                        </h4>
-                    </a>
-                </li>
-            </ul>
+                    <li class="filter-element">
+                        <a href="../pages/admin.php?value=statistics">
+                            <h4 class="hover-element">
+                                Statistics
+                            </h4>
+                        </a>
+                    </li>
+                    <li class="filter-element">
+                        <a href="../pages/admin.php?value=tags">
+                            <h4 class="hover-element">
+                                Tags
+                            </h4>
+                        </a>
+                    </li>
+                    <li class="filter-element">
+                        <a href="../pages/admin.php?value=categories">
+                            <h4 class="hover-element">
+                                Categories
+                            </h4>
+                        </a>
+                    </li>
+                    <li class="filter-element"><a href="../pages/admin.php?value=brands">
+                            <h4 class="hover-element">
+                                Brands
+                            </h4>
+                        </a>
+                    </li>
+                    <li class="filter-element"><a href="../pages/admin.php?value=condition">
+                            <h4 class="hover-element">
+                                Conditions
+                            </h4>
+                        </a>
+                    </li>
+                    <li class="filter-element"><a href="../pages/admin.php?value=size">
+                            <h4 class="hover-element">
+                                Sizes
+                            </h4>
+                        </a>
+                    </li>
+                    <li class="filter-element"><a href="../pages/admin.php?value=items">
+                            <h4 class="hover-element">
+                                Items
+                            </h4>
+                        </a>
+                    </li>
+                </ul>
 
-        </nav>
-
+            </nav>
+        </div>
+        
     </aside>
 <?php } ?>
 

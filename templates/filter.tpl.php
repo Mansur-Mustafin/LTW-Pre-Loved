@@ -7,23 +7,30 @@ require_once(__DIR__ . '/../utils/Session.php');
 { ?>
     <p id="session_id"><?= $session->getId()?></p>
     <aside id="related">
-        <h2>Filter</h2>
-        <form action="#" method="get" id="filter">
+        <button class="close-sidebar">
+            <img src="../assets/img/close.svg">
+        </button>
 
-            <?php 
-                draw_filter_element('Categories', $categories, 'category'); 
-                draw_filter_element('Brands', $brands, 'brand'); 
-                draw_filter_element('Size', $sizes, 'size'); 
-                draw_filter_element('Condition', $conditions, 'condition'); 
-            ?>
-            <div class='buttons'>
-                <button type="submit">Submit</button>
+        <button class="open-filter"></button>
+        <div class="filter-body">
+            <h2>Filter</h2>
+            <form action="#" method="get" id="filter">
+
+                <?php 
+                    draw_filter_element('Categories', $categories, 'category'); 
+                    draw_filter_element('Brands', $brands, 'brand'); 
+                    draw_filter_element('Size', $sizes, 'size'); 
+                    draw_filter_element('Condition', $conditions, 'condition'); 
+                ?>
+                <div class='buttons'>
+                    <button type="submit">Submit</button>
+                </div>
+                
+            </form>
+            <div class="slider-range">
+                <input type="range" min="0" max="3000" value="3000" id='slider'>
+                <p >Max price: <span id="current-max-price">3000</span> $</p>
             </div>
-            
-        </form>
-        <div class="slider-range">
-            <input type="range" min="0" max="3000" value="3000" id='slider'>
-            <p >Max price: <span id="current-max-price">3000</span> $</p>
         </div>
     </aside>
 <?php } ?>

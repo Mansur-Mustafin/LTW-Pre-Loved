@@ -3,6 +3,7 @@
     background-color: white;
     display: grid;
     margin: 1em;
+    /* padding: 1em; TODO */
     transition: all .3s;
     img{
         margin: 1em;

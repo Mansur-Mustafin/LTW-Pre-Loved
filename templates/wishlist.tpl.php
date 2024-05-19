@@ -9,24 +9,29 @@ require_once(__DIR__ . '/../utils/Request.php');
 
 <?php function drawWishListForm(Session $session){ ?>
     <aside id="related">
-        <h2>Share your wishlist!</h2>
-        <form action="../actions/action_send_wishlist.php" method="post" id="wishlist-form">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sagittis ex at nunc interdum, vel.</p>
-            <label>
-                Email <input type="email" name="email" required placeholder="Enter email">
-            </label>
-            <label>
-                Your Message <textarea id='expanding-textarea' name="wishlist-message" rows="1" placeholder="Add a personal message (optional)"></textarea>
-            </label>
+        <button class="open-sidebar">
+            <i class="gg-sidebar"></i>
+        </button>
+        <div>
+            <h2>Share your wishlist!</h2>
+            <form action="../actions/action_send_wishlist.php" method="post" id="wishlist-form">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sagittis ex at nunc interdum, vel.</p>
+                <label>
+                    Email <input type="email" name="email" required placeholder="Enter email">
+                </label>
+                <label>
+                    Your Message <textarea id='expanding-textarea' name="wishlist-message" rows="1" placeholder="Add a personal message (optional)"></textarea>
+                </label>
 
-            <?php drawErrors($session->getErrorMessages()) ?>
-            <?php drawSuccessMsg($session->getSuccessMessages()) ?>
+                <?php drawErrors($session->getErrorMessages()) ?>
+                <?php drawSuccessMsg($session->getSuccessMessages()) ?>
 
-            <div class='buttons'>
-                <?= Request::generateCsrfTokenInput() ?>
-                <button type="submit">Send</button>
-            </div>
-        </form>
+                <div class='buttons'>
+                    <?= Request::generateCsrfTokenInput() ?>
+                    <button type="submit">Send</button>
+                </div>
+            </form>
+        </div>
     </aside>
 
     <script>

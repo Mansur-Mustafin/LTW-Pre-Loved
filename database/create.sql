@@ -154,5 +154,5 @@ CREATE TABLE ItemTags (
 -- Its me :-)
 INSERT INTO Users (username, password, email, image_path, banned, admin_flag,address,created_at)
 VALUES 
-('Mansur','$2y$10$bXGap59fUn5tTO9mo5wAje37jGDPmKYhVn0cLAP199K0sxrNEPUsa','mansur@gmail.com','/data/profile_img/a5ec03d3e184f620948b1295a0b73a89038263f5134a0ec49083ab05331e459b.png',0,1,'',strftime('%s', 'now')),
-('rubem','$2y$10$bXGap59fUn5tTO9mo5wAje37jGDPmKYhVn0cLAP199K0sxrNEPUsa','rubem@gmail.com','/data/profile_img/john_doe.jpeg',0,1,'',strftime('%s', 'now'));
+('Mansur','$2y$10$dGGYn8udsQus681UbEHBy.Et1G.DLdxbi/VpMHh1HRp3zx3takxeu','mansur@gmail.com','/data/profile_img/a5ec03d3e184f620948b1295a0b73a89038263f5134a0ec49083ab05331e459b.png',0,1,'',strftime('%s', 'now')),
+('rubem','$2y$10$dGGYn8udsQus681UbEHBy.Et1G.DLdxbi/VpMHh1HRp3zx3takxeu','rubem@gmail.com','/data/profile_img/john_doe.jpeg',0,1,'',strftime('%s', 'now'));
