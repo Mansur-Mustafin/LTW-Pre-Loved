@@ -39,7 +39,7 @@ if (isset($_GET['action'])) {
         });
         drawItems($items, $session, "Your Sold Items", $isCurrentUserPage, place: 'sold');
     } elseif ($_GET['action'] == 'transactions') {
-        $items = getBoughtItems($db, $user->id);
+        $items = getBoughtItems($user->id);
         drawItems($items, $session, "Your Transactions", $isCurrentUserPage, place: 'transactions');
     }
 } else {
