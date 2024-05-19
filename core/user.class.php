@@ -18,14 +18,19 @@ class User
         public ?string $address = null,
         public ?int $created_at = null
     ) {
-        $this->image_path = $image_path ?? self::DEFAULT_USER_IMG;
-        $this->created_at = $created_at ?? time();
-        $this->phonenumber = $phonenumber ?? '';
-        $this->address = $address ?? '';
+        $this->ensureDefaultValues();
     }    
 
     public function hasDefaultImage()
     {
         return $this->image_path == static::DEFAULT_USER_IMG;
+        $this->ensureDefaultValues();
+    }
+
+    public function ensureDefaultValues() {
+        $this->image_path = $this->image_path ?? self::DEFAULT_USER_IMG;
+        $this->created_at = $this->created_at ?? time();
+        $this->phonenumber = $this->phonenumber ?? '';
+        $this->address = $this->address ?? '';
     }
 }

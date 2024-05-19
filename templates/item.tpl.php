@@ -47,8 +47,8 @@ require_once(__DIR__ . '/../utils/utils.php');
     Session $session,
     string $title,
     bool $isCurrentUserPage,
-    array $items_in_cart = array(),
-    array $items_in_wish_list = array(),
+    array $items_in_cart = [],
+    array $items_in_wish_list = [],
     int $page_index = 0,
     bool $has_more_pages = false,
     string $place = '',
@@ -157,7 +157,11 @@ require_once(__DIR__ . '/../utils/utils.php');
     bool $isCurrentUserPage,
     string $place = null,
 ): void {
-    $main_image = $item->getImagesArray()[0]; ?>
+    if (isset($item->getImagesArray()[0]) && ($item->getImagesArray()[0] !== '')) {
+        $main_image = $item->getImagesArray()[0];
+    } else {
+        $main_image = "../assets/img/default_item.svg";
+    } ?>
     
     <article class="item fly" data-id="<?= $item->id ?>">
         <img src=<?=htmlspecialchars($main_image)?> alt="Item Image">
@@ -233,7 +237,6 @@ function draw_buttons_item(Item $item, Session $session, bool $in_cart, bool $in
 
 <?php function drawItemMain(Item $item, Session $session, bool $in_cart, bool $in_wish_list, bool $solded = true) 
 {
-    $main_image = $item->getImagesArray()[0];
     $uri = '../actions/action_item_status.php';
 
     $cartHref = urlTo($uri, [
@@ -250,6 +253,10 @@ function draw_buttons_item(Item $item, Session $session, bool $in_cart, bool $in
         'item-id' => $item->id,
         'action' => 'delete-main',
     ]);
+    $editHref = urlTo($uri, [
+        'item-id' => $item->id,
+        'action' => 'edit-main',
+    ]);
 
     ?>
     <aside>
@@ -258,7 +265,24 @@ function draw_buttons_item(Item $item, Session $session, bool $in_cart, bool $in
         <h3><?=htmlspecialchars($item->title)?></h3>
         <div class="top-right-element"><p><?=htmlspecialchars(number_format($item->price, 2))?></p><p>$</p></div>
 
-        <img src=<?=htmlspecialchars($main_image)?> alt="Item Image">
+        <div id="image-nav">
+        <?php if (isset($item->getImagesArray()[0])) { ?>
+                <div class="slideshow">
+                        <?php foreach($item->getImagesArray() as $image) { ?>
+                            <figure class="slide fade">
+                            <img src="<?=htmlspecialchars($image, ENT_QUOTES, 'UTF-8')?>" alt="Item Image" style="max-width: 256px; max-height: 256px;">
+                            </figure>
+                        <?php } ?>
+                        <a class="prev" onclick="plusSlide(-1)">&#10094</a>
+                        <a class="next" onclick="plusSlide(1)">&#10095</a>
+                </div>
+        <?php 
+                } else { ?>
+                    <figure>
+                    <img src="../assets/img/default_item.svg" alt="Item Image" style="max-width: 256px; max-height: 256px;">
+                    </figure>
+                    <?php }?>
+            </div>
         
         <label>brand:
             <p><?= htmlspecialchars($item->brand) ?></p>
@@ -299,7 +323,7 @@ function draw_buttons_item(Item $item, Session $session, bool $in_cart, bool $in
                 <a href="<?= $deleteHref ?>" class="item-action button">
                     Delete Item
                 </a>
-                <a href="" class="item-action button">
+                <a href="<?= $editHref ?>" class="item-action button">
                     Edit Item
                 </a>
             <?php else: ?>
@@ -315,4 +339,189 @@ function draw_buttons_item(Item $item, Session $session, bool $in_cart, bool $in
     <?php } ?>
 
     </aside>
+    <script>
+        let slideIndex = 1
+        showSlides(slideIndex)
+
+        function plusSlide(n) {
+            showSlides(slideIndex += n)
+        }
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n)
+        }
+
+        function showSlides(n) {
+            let i = 0
+            let slides = document.getElementsByClassName('slide')
+            if(n > slides.length) {slideIndex = 1}
+            if(n < 1) {slideIndex = slides.length}
+            for(i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none"
+            }
+            slides[slideIndex - 1].style.display = "block"
+        }
+
+    </script>
+<?php } ?>
+<?php function drawAddItem(PDO $db, Session $session) { ?>
+  <form id="add-item-form" action="../actions/action_add_item.php" method="post" enctype="multipart/form-data">
+    <h2>Add new Item</h2>
+    <div class="error-messages">
+        <?= drawErrors($session->getErrorMessages()) ?>
+    </div>
+    <label for="item-name">Title:</label>
+    <input type="text" id="item-title" name="item-title" required>
+    <label for="item-description">Description:</label>
+    <textarea id="item-description" name="item-description"></textarea>
+    <label for="image-paths">Images:</label>
+    <input type="file" name="item-images[]" id="item-images" accept="image/*" onchange="loadFile(event)" multiple>
+    <div id="image-item-wrapper"></div>
+    <label for="item-category">Category:</label>
+    <?php
+    $stmt = $db->query('SELECT id, name FROM Categories');
+
+    $categories = $stmt->fetchAll();
+    ?>
+    <select id="item-category" name="item-category" required>
+    <?php foreach($categories as $category){ ?>
+    <option value="<?= htmlspecialchars($category['name']); ?>">
+        &nbsp<?= htmlspecialchars($category['name']); ?></option>
+        <?php } ?>
+    </select>
+    <label for="item-brand">Brand:</label>
+    <input type="text" id="item-brand" name="item-brand" required>
+    <label for="item-model">Model:</label>
+    <input type="text" id="item-model" name="item-model" required>
+    <label for="item-condition">Condition:</label>
+    <?php
+    $stmt = $db->query('SELECT id, name FROM Condition');
+
+    $conditions = $stmt->fetchAll();
+    ?>
+    <select id="item-condition" name="item-condition">
+    <?php foreach($conditions as $condition){ ?>
+    <option value="<?= htmlspecialchars($condition['name']); ?>">
+        &nbsp<?= htmlspecialchars($condition['name']); ?></option>
+        <?php }?>
+    </select>
+    <label for="item-price" min="0" inputmode="numeric">Price:</label>
+    <input type="number" id="item-price" name="item-price" step="0.01" required>
+    <label for="tradableItem">Tradable item:</label>
+    <input type="checkbox" id="tradable-item" name="tradable-item"><br>
+    <label for="item-size">Size:</label>
+    <?php
+    $stmt = $db->query('SELECT id, name FROM Size');
+
+    $sizes = $stmt->fetchAll();
+    ?>
+    <select id="item-size" name="item-size">
+    <?php foreach($sizes as $size){ ?>
+    <option value="<?= htmlspecialchars($size['name']); ?>">
+        &nbsp<?= htmlspecialchars($size['name']); ?></option>
+        <?php }?>
+    </select>
+    <div id="item-tag-wrapper">
+        <label for="item-tags">Item Tags:</label>
+        <?php
+            $stmt = $db->query('SELECT id, name FROM Tags');
+            $tags = $stmt->fetchAll();
+        ?>
+        <select id="item-tags" name="item-tags[]" multiple>
+        <?php foreach ($tags as $tag){?>
+            <option value="<?= htmlspecialchars($tag['name']); ?>">
+            &nbsp;<?= htmlspecialchars($tag['name']); ?></option>
+        <?php }?>
+        </select>
+    </div>
+    <div id="submit-item-button"><button type="submit">Add Item</button></div>
+  </form>
+    <script>
+        let loadFile = function(event) {
+            let itemImageWrapper = document.getElementById('image-item-wrapper')
+            
+            itemImageWrapper.innerHTML = ''
+
+            let imageList = [...event.target.files]
+            imageList.forEach((e) => {
+                const image = document.createElement('img')
+                image.classList.add("image-upload")
+                image.src = URL.createObjectURL(e)
+                itemImageWrapper.appendChild(image)
+            })
+        }
+    </script>
+<?php } ?>
+
+<?php function drawEditItem(PDO $db, int $itemId, Session $session) { ?>
+  <form id="add-item-form" action="../actions/action_edit_item.php?item_id=<?php echo $itemId; ?>" method="post" enctype="multipart/form-data">
+    <h2>Edit Item</h2>
+    <div class="error-messages">
+        <?= drawErrors($session->getErrorMessages()) ?>
+    </div>
+    <label for="item-name">Title:</label>
+    <input type="text" id="item-title" name="item-title" required>
+    <label for="item-description">Description:</label>
+    <textarea id="item-description" name="item-description"></textarea>
+    <label for="image-paths">Images:</label>
+    <input type="file" name="item-images[]" id="item-images" accept="image/*" multiple>
+    <label for="item-category">Category:</label>
+    <?php
+    $stmt = $db->query('SELECT id, name FROM Categories');
+
+    $categories = $stmt->fetchAll();
+    ?>
+    <select id="item-category" name="item-category" required>
+    <?php foreach($categories as $category){ ?>
+    <option value="<?= htmlspecialchars($category['name']); ?>">
+        &nbsp<?= htmlspecialchars($category['name']); ?></option>
+        <?php } ?>
+    </select>
+    <label for="item-brand">Brand:</label>
+    <input type="text" id="item-brand" name="item-brand" required>
+    <label for="item-model">Model:</label>
+    <input type="text" id="item-model" name="item-model" required>
+    <label for="item-condition">Condition:</label>
+    <?php
+    $stmt = $db->query('SELECT id, name FROM Condition');
+
+    $conditions = $stmt->fetchAll();
+    ?>
+    <select id="item-condition" name="item-condition">
+    <?php foreach($conditions as $condition){ ?>
+    <option value="<?= htmlspecialchars($condition['name']); ?>">
+        &nbsp<?= htmlspecialchars($condition['name']); ?></option>
+        <?php }?>
+    </select>
+    <label for="item-price" min="0" inputmode="numeric">Price:</label>
+    <input type="number" id="item-price" name="item-price" step="0.01" required>
+    <label for="tradableItem">Tradable item:</label>
+    <input type="checkbox" id="tradable-item" name="tradable-item"><br>
+    <label for="item-size">Size:</label>
+    <?php
+    $stmt = $db->query('SELECT id, name FROM Size');
+
+    $sizes = $stmt->fetchAll();
+    ?>
+    <select id="item-size" name="item-size">
+    <?php foreach($sizes as $size){ ?>
+    <option value="<?= htmlspecialchars($size['name']); ?>">
+        &nbsp<?= htmlspecialchars($size['name']); ?></option>
+        <?php }?>
+    </select>
+    <div id="item-tag-wrapper">
+        <label for="item-tags">Item Tags:</label>
+        <?php
+            $stmt = $db->query('SELECT id, name FROM Tags');
+            $tags = $stmt->fetchAll();
+        ?>
+        <select id="item-tags" name="item-tags[]" multiple>
+        <?php foreach ($tags as $tag){?>
+            <option value="<?= htmlspecialchars($tag['name']); ?>">
+            &nbsp;<?= htmlspecialchars($tag['name']); ?></option>
+        <?php }?>
+        </select>
+    </div>
+    <div id="submit-item-button"><button type="submit">Add Item</button></div>
+  </form>
 <?php } ?>
