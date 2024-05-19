@@ -70,7 +70,7 @@ class Request
 
     public function getReferer()
     {
-        return isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
+        return $_SERVER['HTTP_REFERER'] ?? null;
     }
 
     public static function validateCsrfToken(): bool

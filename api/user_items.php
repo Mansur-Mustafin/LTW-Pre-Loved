@@ -14,7 +14,7 @@ require_once(__DIR__ . '/../database/item.db.php');
 $db = getDatabaseConnection();
 
 $user = getUser($db, $session->getName());    // TODO search by id?
-$items = getItemsUser($db, $user->id);
+$items = getItemsUser($user->id);
 
 echo json_encode($items);
 

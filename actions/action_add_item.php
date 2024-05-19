@@ -19,7 +19,7 @@ $db = getDatabaseConnection();
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
   $itemTitle = $_POST['item-title'];
-  $itemDescription = isset($_POST['item-description']) ? $_POST['item-description'] : '';
+  $itemDescription = $_POST['item-description'] ?? '';
   $itemPathArray = [];
   if (!empty($_FILES["item-images"]["name"])) {
     if (count($_FILES["item-images"]["name"]) > 3) {
@@ -62,19 +62,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
   $itemPriority = 1;
 
   $item = new Item(
-    id : $itemUser_Id, 
-    title: $itemTitle,
-    description: $itemDescription,
-    priority: $itemPriority,
-    brand : $itemBrand,
-    images : $itemImages,
-    price : $itemPrice,
-    tradable : $itemTradable,
-    user_id : $itemUser_Id,
-    category : $itemCategory,
-    size : $itemSize,
-    condition : $itemCondition,
-    model : $itemModel,
+    price: $itemPrice,
+      user_id: $itemUser_Id,
+      tradable: $itemTradable,
+      priority: $itemPriority,
+      id: $itemUser_Id,
+      brand: $itemBrand,
+      model: $itemModel,
+      description: $itemDescription,
+      title: $itemTitle,
+      images: $itemImages,
+      condition: $itemCondition,
+      category: $itemCategory,
+      size: $itemSize,
   );
   if (!(addItem($session, $db, $item) && addItemTags($session, $db))) {
     $session->addMessage('error', 'Failed to add item or tags.');

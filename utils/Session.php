@@ -52,12 +52,12 @@ class Session
 
     public function getId(): ?int
     {
-        return isset($_SESSION['id']) ? $_SESSION['id'] : null;
+        return $_SESSION['id'] ?? null;
     }
 
     public function getName(): ?string
     {
-        return isset($_SESSION['name']) ? $_SESSION['name'] : null;
+        return $_SESSION['name'] ?? null;
     }
 
     public function getCsrfToken(): ?string

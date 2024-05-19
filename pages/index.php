@@ -19,7 +19,7 @@ if($pageIndex < 0){
 }
 
 $db = getDatabaseConnection();
-$items = getAllItems($db, 11, $pageIndex * 10, $session->getId());
+$items = getAllItems(11, $pageIndex * 10, $session->getId());
 
 $has_more_pages = false;
 
@@ -28,14 +28,14 @@ if (sizeof($items) > 10){
     array_pop($items);
 }
 
-$items_in_cart = itemsInCart($db, $session->getId());
-$items_in_wishlist = itemsInWishlist($db, $session->getId());
+$items_in_cart = itemsInCart($session->getId());
+$items_in_wishlist = itemsInWishlist($session->getId());
 
 // show filter
-$categories = getEntitiesFromType($db,"Categories");
-$brands = getEntitiesFromType($db,"Brands");
-$size = getEntitiesFromType($db,"Size");
-$conditions = getEntitiesFromType($db,"Condition");
+$categories = getEntitiesFromType("Categories");
+$brands = getEntitiesFromType("Brands");
+$size = getEntitiesFromType("Size");
+$conditions = getEntitiesFromType("Condition");
 
 drawHeader($session, 'Buy Now!');
 drawFilter($session, $categories, $brands, $size, $conditions);

@@ -16,7 +16,7 @@ $session = new Session();
 <?php } ?>
 
 <!-- Draw block of chats  -->
-<?php function drawMessagesBlockChats(Session $session, array $chats, $current_user_id, $current_item_id)
+<?php function drawMessagesBlockChats(Session $session, array $chats, $current_user_id, $current_item_id): void
 { ?>
     <section id="chats_block">
         <h2>Messages</h2>
@@ -36,7 +36,7 @@ $session = new Session();
 
 
 <!-- Draw each chat -->
-<?php function drawChat(Session $session, Chat $chat, int $current_item_id) 
+<?php function drawChat(Session $session, Chat $chat, int $current_item_id): void
 { ?>
     <article class="chat fly">
         <a href="../pages/item.php?item_id=<?= $current_item_id ?>&chat_id=<?= $chat->id ?>">
@@ -56,7 +56,7 @@ $session = new Session();
 
 
 <!-- Draw block with messages -->
-<?php function drawMessagesBlockMessages(Chat $chat, $current_user_id, $current_item, $solded = true)
+<?php function drawMessagesBlockMessages(Chat $chat, $current_user_id, $current_item, $solded = true): void
 { ?>
     <section id="messages_block">
         <a href="../pages/profile.php?id=<?=$chat->chat_partner->id?>" >
@@ -67,7 +67,7 @@ $session = new Session();
             <a href="../pages/item.php?item_id=<?= $current_item->id ?>">Back to chats</a>
         <?php } ?>
         
-        <?php drawMessages($chat, $current_user_id, $current_item->id); ?>
+        <?php drawMessages($chat, $current_user_id); ?>
         
         <?php if (!$solded){ ?>
             <form action="../actions/action_send_message.php" method="post" class="message_form" id="message_form" data-chat_id="<?= $chat->id ?>"
@@ -77,7 +77,7 @@ $session = new Session();
                 <img src="../assets/img/exchange.svg" alt="Exchange button" id="offer_exchange">
 
 
-                <textarea name="text" id="message_field" cols="50" rows="1" placeholder="Type here."></textarea>
+                <label for="message_field"></label><textarea name="text" id="message_field" cols="50" rows="1" placeholder="Type here."></textarea>
                 <input type="hidden" name="chat_id" value="<?= $chat->id ?>" id="chat_id_field">
                 <input type="hidden" name="item_id" value="<?= $current_item->id ?>">
                 <input type="hidden" name="offer_exchange" value="" id="offer_exchange_field">
@@ -122,7 +122,7 @@ $session = new Session();
 <?php } ?>
 
 
-<?php function drawMessages(Chat $chat, int $current_user_id, int $current_item_id)
+<?php function drawMessages(Chat $chat, int $current_user_id): void
 { ?>
     <section id="messages">
         <?php foreach ($chat->messages as $message) { ?>

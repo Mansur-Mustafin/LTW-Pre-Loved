@@ -7,7 +7,8 @@ require_once(__DIR__ . '/../utils/Request.php');
 
 ?>
 
-<?php function drawWishListForm(Session $session){ ?>
+<?php function drawWishListForm(Session $session): void
+{ ?>
     <aside id="related">
         <h2>Share your wishlist!</h2>
         <form action="../actions/action_send_wishlist.php" method="post" id="wishlist-form">

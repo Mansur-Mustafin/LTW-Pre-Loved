@@ -18,7 +18,7 @@ require_once(__DIR__ . '/../templates/messages.tpl.php');
 $db = getDatabaseConnection();
 
 $item_id = intval($_GET['item_id']);
-$item = getItem($db, $item_id);
+$item = getItem($item_id);
 $chats = null;
 $chat = null;
 $isCustomer = false;
@@ -42,8 +42,8 @@ $in_cart = false;
 $in_wishlist = false;
 
 if($session->isLoggedIn() && $session->getId() != $item->user_id){
-    $items_in_cart = itemsInCart($db, $session->getId());
-    $items_in_wishlist = itemsInWishlist($db, $session->getId());
+    $items_in_cart = itemsInCart($session->getId());
+    $items_in_wishlist = itemsInWishlist($session->getId());
 
     $in_cart = in_array($item->id, $items_in_cart);
     $in_wishlist = in_array($item->id, $items_in_wishlist);

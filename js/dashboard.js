@@ -1,7 +1,7 @@
 const dashboardCanvas = document.getElementById("dashboard-graph")
 
 if(dashboardCanvas) {
-    buildDashboard()
+    buildDashboard().then(r => null )
 }
 
 async function buildDashboard() {
@@ -11,12 +11,12 @@ async function buildDashboard() {
 }
 
 function transactionsByMonth(transactions,chartsSection) {
-    monthIndex = Array.from({length: 12}, (v, k) => k+1); 
-    formattedElements = transactions.map((e) => (new Date(1000 * e.created_at)))
-    monthsUsers = formattedElements
-        .filter((e) => e.getFullYear() == new Date().getFullYear())
+    let monthIndex = Array.from({length: 12}, (v, k) => k + 1);
+    let formattedElements = transactions.map((e) => (new Date(1000 * e.created_at)))
+    let monthsUsers = formattedElements
+        .filter((e) => e.getFullYear() === new Date().getFullYear())
         .map((e) => e.getMonth())
-    monthsCountUsers = monthIndex.map((month) => monthsUsers.filter((e) => e == month).length)
+    let monthsCountUsers = monthIndex.map((month) => monthsUsers.filter((e) => e === month).length)
     createGraphLine(chartsSection,months(monthsCountUsers.length),monthsCountUsers,"Transactions by Month")
 }
 

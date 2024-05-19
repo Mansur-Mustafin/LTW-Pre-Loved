@@ -68,20 +68,28 @@ require_once(__DIR__ . '/../utils/Request.php');
    
 <?php } ?>
 
-<?php function drawEditProfile(User $user)
+<?php function drawEditProfile(User $user): void
 {?>    
     <aside id="profile-info">
-        <img id="current_profile_img" src=<?=htmlspecialchars($user->image_path)?> alt="Account Profile Picture">
+        <img id="current_profile_img" src="<?=htmlspecialchars($user->image_path)?>" alt="Account Profile Picture">
         <form id="edit-profile-info" action="../actions/action_update_user.php" method="post" enctype="multipart/form-data">
             <?= Request::generateCsrfTokenInput() ?>
             <label><img src="../assets/img/edit.svg" alt="Edit icon">
                 <input id="profile_img" name="profile_img" type="file" accept="image/png,image/jpeg">
             </label>
 
-            <input type="text" name="new_username" placeholder= "Username" value='<?=htmlspecialchars($user->username)?>'>
-            <input type="text" name="new_email" placeholder= "Email" value='<?=htmlspecialchars($user->email)?>'>
-            <input type="tel" name="new_phonenumber" placeholder= 'Phone number' value='<?=htmlspecialchars($user->phonenumber)?>'>
-            <input type="text" name="new_address" placeholder= "Address" value='<?= htmlspecialchars($user->address)?>' >
+            <label>
+                <input type="text" name="new_username" placeholder= "Username" value='<?=htmlspecialchars($user->username)?>'>
+            </label>
+            <label>
+                <input type="text" name="new_email" placeholder= "Email" value='<?=htmlspecialchars($user->email)?>'>
+            </label>
+            <label>
+                <input type="tel" name="new_phonenumber" placeholder= 'Phone number' value='<?=htmlspecialchars($user->phonenumber)?>'>
+            </label>
+            <label>
+                <input type="text" name="new_address" placeholder= "Address" value='<?= htmlspecialchars($user->address)?>' >
+            </label>
             <div class='buttons'>
                 <button type="submit" name="edit-profile" value="save">Save</button>
                 <button type="submit" name="edit-profile" value="cancel">Cancel</button>
@@ -97,15 +105,21 @@ require_once(__DIR__ . '/../utils/Request.php');
 <?php } ?>
 
 
-<?php function drawChangePassword(User $user) 
+<?php function drawChangePassword(User $user): void
 {?>
     <aside id="profile-info">
-        <img id="current_profile_img" src=<?=htmlspecialchars($user->image_path)?> alt="Account Profile Picture">
+        <img id="current_profile_img" src="<?=htmlspecialchars($user->image_path)?>" alt="Account Profile Picture">
         <form id="edit-profile-info" action="../actions/action_update_user.php" method="post" enctype="multipart/form-data">
             <?= Request::generateCsrfTokenInput() ?>
-            <input type="password" name="new_password" placeholder="New Password">
-            <input type="password" name="new_password_confirmation" placeholder="Confirm New Password">
-            <input type="password" name="old_password" placeholder="Old Password">
+            <label>
+                <input type="password" name="new_password" placeholder="New Password">
+            </label>
+            <label>
+                <input type="password" name="new_password_confirmation" placeholder="Confirm New Password">
+            </label>
+            <label>
+                <input type="password" name="old_password" placeholder="Old Password">
+            </label>
 
             <div class='buttons'>
                 <button type="submit" name="change-password" value="save">Save</button>

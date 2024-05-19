@@ -16,7 +16,7 @@ $db = getDatabaseConnection();
 
 $item_id = intval($_GET['item_id']);
 
-$item = getItem($db, $item_id);
+$item = getItem($item_id);
 
 drawHeader($session);
 drawEditItem($db, $item, $session);

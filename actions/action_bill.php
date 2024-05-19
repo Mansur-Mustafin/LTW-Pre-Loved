@@ -21,7 +21,7 @@ $db = getDatabaseConnection();
 $userId = empty($request->get('id')) ? $session->getId() : intval($request->get('id'));
 $itemId = intval($request->get('item-id'));
 
-$item = getBoughtItem($db, $userId, $itemId);
+$item = getBoughtItem($userId, $itemId);
 $transaction = getTransaction($db, $itemId);
 
 if (empty($item)) {

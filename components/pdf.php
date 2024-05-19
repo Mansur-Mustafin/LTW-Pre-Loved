@@ -22,19 +22,19 @@ function generatePdfBill(Item $item, array $transaction)
     $pdfContent .= "BT /F1 22 Tf 50 720 Td (Matador OLX) Tj ET\n";
 
     $y = 650;
-    $pdfContent .= "BT /F1 16 Tf 50 {$y} Td (Transaction Details) Tj ET\n";
+    $pdfContent .= "BT /F1 16 Tf 50 $y Td (Transaction Details) Tj ET\n";
     $y -= 30;
-    $pdfContent .= "BT /F1 14 Tf 50 {$y} Td (Date: " . date('Y-m-d') . ") Tj ET\n";
+    $pdfContent .= "BT /F1 14 Tf 50 $y Td (Date: " . date('Y-m-d') . ") Tj ET\n";
     $y -= 30;
-    $pdfContent .= "BT /F1 14 Tf 50 {$y} Td (Transaction ID: {$transaction['id']}) Tj ET\n";
+    $pdfContent .= "BT /F1 14 Tf 50 $y Td (Transaction ID: {$transaction['id']}) Tj ET\n";
     
     $y -= 40;
-    $pdfContent .= "BT /F1 16 Tf 50 {$y} Td (Product Details) Tj ET\n";
+    $pdfContent .= "BT /F1 16 Tf 50 $y Td (Product Details) Tj ET\n";
     $y -= 30;
-    $pdfContent .= "BT /F1 14 Tf 50 {$y} Td (Name: {$item->title}) Tj ET\n";
+    $pdfContent .= "BT /F1 14 Tf 50 $y Td (Name: {$item->title}) Tj ET\n";
 
     $y -= 480;
-    $pdfContent .= "BT /F1 16 Tf 440 {$y} Td (Total price: {$item->price} $) Tj ET\n";
+    $pdfContent .= "BT /F1 16 Tf 440 $y Td (Total price: {$item->price} $) Tj ET\n";
     
     // QR code position
     $pdfContent .= "q\n";

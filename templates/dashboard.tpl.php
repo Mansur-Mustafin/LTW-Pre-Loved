@@ -9,7 +9,7 @@ $session = new Session();
 require_once (__DIR__ . '/../templates/common.tpl.php');
 ?>
 
-<?php function drawDashboard(array $items,array $transactions,float $earnings) 
+<?php function drawDashboard(array $items,array $transactions,float $earnings): void
 { ?>
     <section id="dashboard">
         <div class="previous-page">

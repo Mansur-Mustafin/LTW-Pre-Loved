@@ -21,13 +21,13 @@ class User
         $this->ensureDefaultValues();
     }    
 
-    public function hasDefaultImage()
+    public function hasDefaultImage(): bool
     {
         return $this->image_path == static::DEFAULT_USER_IMG;
-        $this->ensureDefaultValues();
     }
 
-    public function ensureDefaultValues() {
+    public function ensureDefaultValues(): void
+    {
         $this->image_path = $this->image_path ?? self::DEFAULT_USER_IMG;
         $this->created_at = $this->created_at ?? time();
         $this->phonenumber = $this->phonenumber ?? '';

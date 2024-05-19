@@ -62,8 +62,8 @@ foreach ($items as $item) {
 
 <script>
     function toggleFields() {
-        var visaFields = document.getElementById('visaFields');
-        var phoneLabel = document.getElementById('phoneLabel');
+        const visaFields = document.getElementById('visaFields');
+        const phoneLabel = document.getElementById('phoneLabel');
 
         if (document.getElementById('mbWay').checked) {
             visaFields.style.display = 'none';

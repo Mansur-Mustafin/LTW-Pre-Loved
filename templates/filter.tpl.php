@@ -22,7 +22,7 @@ require_once(__DIR__ . '/../utils/Session.php');
             
         </form>
         <div class="slider-range">
-            <input type="range" min="0" max="3000" value="3000" id='slider'>
+            <label for='slider'></label><input type="range" min="0" max="3000" value="3000" id='slider'>
             <p >Max price: <span id="current-max-price">3000</span> $</p>
         </div>
     </aside>
