@@ -29,7 +29,7 @@ function getMessagesById(PDO $db, int $message_id): Message
         date_time: $row['date_time'],
     );
     if($row['item_id_exchange'] != 0){
-        $message->item_for_exchange = getItem($db, $row['item_id_exchange']);
+        $message->item_for_exchange = getItem($row['item_id_exchange']);
     }
 
     return $message;
@@ -60,7 +60,7 @@ function getMessagesByChatId(PDO $db, int $chat_id): array
             date_time: $row['date_time'],
         );
         if($row['item_id_exchange'] != 0){
-            $message->item_for_exchange = getItem($db, $row['item_id_exchange']);
+            $message->item_for_exchange = getItem($row['item_id_exchange']);
         }
         $messages[] = $message;
     }

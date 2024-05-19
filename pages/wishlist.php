@@ -15,10 +15,10 @@ require_once(__DIR__ . '/../templates/wishlist.tpl.php');
 
 $db = getDatabaseConnection();
 
-$items_in_cart = itemsInCart($db, $session->getId());
-$items_in_wishlist = itemsInWishlist($db, $session->getId());
+$items_in_cart = itemsInCart($session->getId());
+$items_in_wishlist = itemsInWishlist($session->getId());
 
-$items = getAllItemsFromId($db, $items_in_wishlist);
+$items = getAllItemsFromId($items_in_wishlist);
 
 drawHeader($session, 'Wishlist');
 drawWishListForm($session);

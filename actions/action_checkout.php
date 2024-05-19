@@ -19,9 +19,9 @@ $db = getDatabaseConnection();
 
 $userId = $session->getId();
 
-$items_in_cart = itemsInCart($db, $session->getId());
-$items_in_wishlist = itemsInWishlist($db, $session->getId());
-$items = getAllItemsFromId($db, $items_in_cart);
+$items_in_cart = itemsInCart($session->getId());
+$items_in_wishlist = itemsInWishlist($session->getId());
+$items = getAllItemsFromId($items_in_cart);
 
 $validate = Validate::in($request->getPostParams())
     ->required(['cardType'])

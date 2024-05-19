@@ -12,7 +12,7 @@ require_once(__dir__.'/../database/item.db.php');
 
 $db = getdatabaseconnection();
 
-$items_in_cart = itemsInCart($db,$session->getid());
+$items_in_cart = itemsInCart($session->getid());
 
 echo $session->isLoggedIn()
     ? json_encode($items_in_cart)

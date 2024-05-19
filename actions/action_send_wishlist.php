@@ -36,7 +36,7 @@ if ($request->isPost()) {
         die();
     }
     
-    $items_in_wishlist = itemsInWishlist($db, $session->getId()); // TODO or better set all ids as a <input type=hidden>?
+    $items_in_wishlist = itemsInWishlist($session->getId()); // TODO or better set all ids as a <input type=hidden>?
 
     if(empty($items_in_wishlist)){
         $session->addMessage('error', 'Wishlist is empty');

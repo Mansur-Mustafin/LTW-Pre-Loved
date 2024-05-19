@@ -4,7 +4,7 @@ declare(strict_types=1);
 require_once(__DIR__ . '/../utils/validation.php');
 
 
-function getEntitiesFromType(PDO $db, string $type): array
+function getEntitiesFromType(string $type): array
 {
     $qb = new QueryBuilder();
     return $qb->select()->from($type)->all();

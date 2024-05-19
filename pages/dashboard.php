@@ -17,7 +17,7 @@ $db = getDatabaseConnection();
 
 $user = getUser($db,$session->getName());
 
-$userItems = getItemsUser($db,$session->getId());
+$userItems = getItemsUser($session->getId());
 $userTransactions = getBoughtItems($db,$session->getId());
 $earnings = 0;
 
