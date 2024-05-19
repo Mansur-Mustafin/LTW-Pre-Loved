@@ -23,4 +23,9 @@ class User
         $this->phonenumber = $phonenumber ?? '';
         $this->address = $address ?? '';
     }    
+
+    public function hasDefaultImage()
+    {
+        return $this->image_path == static::DEFAULT_USER_IMG;
+    }
 }

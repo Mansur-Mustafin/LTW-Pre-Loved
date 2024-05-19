@@ -56,7 +56,7 @@ $session = new Session();
 
 
 <!-- Draw block with messages -->
-<?php function drawMessagesBlockMessages(Chat $chat, $current_user_id, $current_item)
+<?php function drawMessagesBlockMessages(Chat $chat, $current_user_id, $current_item, $solded = true)
 { ?>
     <section id="messages_block">
         <a href="../pages/profile.php?id=<?=$chat->chat_partner->id?>" >
@@ -68,29 +68,32 @@ $session = new Session();
         <?php } ?>
         
         <?php drawMessages($chat, $current_user_id, $current_item->id); ?>
+        
+        <?php if (!$solded){ ?>
+            <form action="../actions/action_send_message.php" method="post" class="message_form" id="message_form" data-chat_id="<?= $chat->id ?>"
+                data-last_message_id="<?= $chat->getLastMessageId() ?>" enctype="multipart/form-data">
 
-        <form action="../actions/action_send_message.php" method="post" class="message_form" id="message_form" data-chat_id="<?= $chat->id ?>"
-              data-last_message_id="<?= $chat->getLastMessageId() ?>" enctype="multipart/form-data">
-
-            <img src="../assets/img/file-plus.svg" alt="Add file" id="attach_file">
-            <img src="../assets/img/exchange.svg" alt="Exchange button" id="offer_exchange">
+                <img src="../assets/img/file-plus.svg" alt="Add file" id="attach_file">
+                <img src="../assets/img/exchange.svg" alt="Exchange button" id="offer_exchange">
 
 
-            <textarea name="text" id="message_field" cols="50" rows="1" placeholder="Type here."></textarea>
-            <input type="hidden" name="chat_id" value="<?= $chat->id ?>" id="chat_id_field">
-            <input type="hidden" name="item_id" value="<?= $current_item->id ?>">
-            <input type="hidden" name="offer_exchange" value="" id="offer_exchange_field">
-            <input type="hidden" name="from_user_id" value="<?= $current_user_id ?>">
-            <input id="attach_file_field" type="file" name="file" value="" style="display: none">
-            <input type="hidden" name="to_user_id" value="<?= $chat->getChatPartnerId($current_user_id) ?>" id="to_user_id">
+                <textarea name="text" id="message_field" cols="50" rows="1" placeholder="Type here."></textarea>
+                <input type="hidden" name="chat_id" value="<?= $chat->id ?>" id="chat_id_field">
+                <input type="hidden" name="item_id" value="<?= $current_item->id ?>">
+                <input type="hidden" name="offer_exchange" value="" id="offer_exchange_field">
+                <input type="hidden" name="from_user_id" value="<?= $current_user_id ?>">
+                <input id="attach_file_field" type="file" name="file" value="" style="display: none">
+                <input type="hidden" name="to_user_id" value="<?= $chat->getChatPartnerId($current_user_id) ?>" id="to_user_id">
 
-            <button type="submit">
-                <img src="../assets/img/send-message.svg" alt="Send message" id="offer_exchange">
-            </button>
-            
-        </form>
+                <button type="submit">
+                    <img src="../assets/img/send-message.svg" alt="Send message" id="offer_exchange">
+                </button>
+                
+            </form>
 
-        <p id="attached_file_name"></p>
+            <p id="attached_file_name"></p>
+        <?php } ?>
+        
 
         <!-- TODO -->
         

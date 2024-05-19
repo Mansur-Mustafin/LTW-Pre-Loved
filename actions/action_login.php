@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 require_once(__DIR__ . '/../utils/Session.php');
 require_once(__DIR__ . '/../utils/Request.php');
+require_once(__DIR__ . '/../utils/Validate.php');
 
 $session = new Session();
 $request = new Request(false);
@@ -19,10 +20,20 @@ $db = getDatabaseConnection();
 
 if (!$request->isPost()) die(header('Location: ../pages/login.php'));
 
-if (!is_valid_email($request->post('email'))) {
-    $session->addMessage('error', 'Invalid email format');
-    die(header('Location: ../pages/login.php'));
-}
+$validator = Validate::in($_POST)
+    ->required(['email', 'password'])
+    ->length(['password'], 8, 100); 
+
+if ($errors = $validator->getErrors()) {
+    foreach ($errors as $field => $messages) {
+        foreach ($messages as $message) {
+            $session->addMessage('error', $message);
+        }
+    }
+    header('Location: ../pages/login.php');
+    exit;
+}    
+
 
 // Add password verification
 $user = getUser($db, $request->post('email'));

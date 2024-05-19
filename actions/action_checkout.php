@@ -31,7 +31,7 @@ if ($request->post('cardType') == 'visa') {
     $validate
         ->required(['cardNumber', 'cvv'])
         ->int(['cardNumber', 'cvv'])
-        ->length(['cardNumber'], 12, 12)
+        ->length(['cardNumber'], 16, 16)
         ->length(['cvv'], 3, 3);
 
 } elseif ($request->post('cardType') == 'mbWay') {

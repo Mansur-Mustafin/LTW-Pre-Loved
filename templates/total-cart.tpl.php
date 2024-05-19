@@ -41,7 +41,8 @@ foreach ($items as $item) {
                 <a href="../pages/shopping_checkout.php" class='button'>Proceed to pay</a>
             <?php else: ?>
                 <button type="submit" form="buy" formaction="../actions/action_checkout.php" formmethod="post">
-                    Pay Now!</button>
+                    Pay Now!
+                </button>
             <?php endif ?>
         </div>
     <?php endif ?>

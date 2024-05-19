@@ -5,8 +5,8 @@
 -- Insert sample data into Users table
 INSERT INTO Users (username, password, email, phonenumber, image_path, banned, admin_flag, address,created_at)
 VALUES 
-    ('john_doe', '$2y$10$NXRDoMYGaKBgnp.WWPqxJ.mugKjfEjBj.Y09b2awz1aSYMqtHR6Y6', 'john.doe@example.com', '123-456-7890', '/data/profile_img/john_doe.jpeg', 0, 0, '123 Main St, Hometown',strftime('%s', 'now')),
-    ('jane_smith', '$2y$10$NXRDoMYGaKBgnp.WWPqxJ.mugKjfEjBj.Y09b2awz1aSYMqtHR6Y6', 'jane.smith@example.com', '234-567-8901', '/data/profile_img/jane_smith.jpeg', 0, 1, '456 Elm St, Bigcity',strftime('%s', 'now'));
+    ('john_doe', '$2y$10$dGGYn8udsQus681UbEHBy.Et1G.DLdxbi/VpMHh1HRp3zx3takxeu', 'john.doe@example.com', '123-456-7890', '/data/profile_img/john_doe.jpeg', 0, 0, '123 Main St, Hometown',strftime('%s', 'now')),
+    ('jane_smith', '$2y$10$dGGYn8udsQus681UbEHBy.Et1G.DLdxbi/VpMHh1HRp3zx3takxeu', 'jane.smith@example.com', '234-567-8901', '/data/profile_img/jane_smith.jpeg', 0, 1, '456 Elm St, Bigcity',strftime('%s', 'now'));
 
 -- Insert sample data into Categories table
 INSERT INTO Categories (name)

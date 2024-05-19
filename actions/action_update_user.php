@@ -11,29 +11,59 @@ if(!$session->isLoggedIn()) die(header('Location: /'));
 
 
 require_once(__DIR__.'/../utils/hash.php');
-require_once(__DIR__.'/../utils/validation.php');
+require_once(__DIR__.'/../utils/Validate.php');
 require_once(__DIR__.'/../database/user.db.php');
 require_once(__DIR__.'/../database/connection.db.php');
 require_once(__DIR__.'/../core/user.class.php');
 
 $db = getDatabaseConnection();
 
+// case of profile
 if ($request->isPost() && $request->post('edit-profile') !== null) {
     // TODO validate user email.
     $user = getUser($db, $session->getName());
-    var_dump($user);
 
     if($request->post('edit-profile') == 'save'){
-        if (!empty($request->post('new_username'))) {
-            $old_image_path = $user->image_path;
 
-            $user->username = $request->post('new_username');
-            $root_folder = '/data/profile_img/';
-            $filename = get_hash_path($user->username).'.png';
-            $save_path = $root_folder.htmlspecialchars($filename);
-            $user->image_path = $save_path;
+        $validator = Validate::in($request->getPostParams())
+            ->required(['new_username', 'new_email'])
+            ->match('new_username', '/^[^@]*$/')
+            ->match('new_email', '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/');
+        
+        if ($errors = $validator->getErrors()) {
+            foreach ($errors as $field => $messages) {
+                foreach ($messages as $message) {
+                    $session->addMessage('error', $message);
+                }
+            }
+            header('Location: ../pages/login.php');
+            die();
+        }
+
+        if (!empty($request->post('new_username'))) {
+            $hasDefaultImage = $user->hasDefaultImage();
+            $updateFoto = !empty($_FILES['profile_img']['name']);
             
-            rename(__DIR__.'/..'.$old_image_path, __DIR__.'/..'.$save_path);
+            var_dump($hasDefaultImage);
+            var_dump($updateFoto);
+            
+
+            if ($hasDefaultImage && !$updateFoto) {
+                $user->username = $request->post('new_username');
+                var_dump("line 53");
+            } else {
+                var_dump("line 55");
+                $old_image_path = $user->image_path;
+
+                $user->username = $request->post('new_username');
+                $root_folder = '/data/profile_img/';
+                $filename = get_hash_path($user->username).'.png';
+                $save_path = $root_folder.htmlspecialchars($filename);
+                $user->image_path = $save_path;
+                
+                rename(__DIR__.'/..'.$old_image_path, __DIR__.'/..'.$save_path);
+            }
+            
         }
         if (!empty($request->post('new_email'))) {
             $user->email = $request->post('new_email');
@@ -46,9 +76,11 @@ if ($request->isPost() && $request->post('edit-profile') !== null) {
         }
         if(isset($_FILES['profile_img']['name'])){
             if (move_uploaded_file($_FILES['profile_img']['tmp_name'], __DIR__.'/..'.$user->image_path)) {
+                var_dump("line 79");
                 $user->image_path = $save_path;
             }
         }
+        // die();
         updateUser($db, $user);
         $session->setName($user->username);
     }
@@ -59,7 +91,7 @@ if ($request->isPost() && $request->post('edit-profile') !== null) {
     }
 }
 
-
+// case of password
 if ($request->isPost() && $request->post('change-password') !== null) {
 
     $user = getUser($db, $session->getName());

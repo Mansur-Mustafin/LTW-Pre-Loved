@@ -231,7 +231,7 @@ function draw_buttons_item(Item $item, Session $session, bool $in_cart, bool $in
 } ?>
 
 
-<?php function drawItemMain(Item $item, Session $session, bool $in_cart, bool $in_wish_list) 
+<?php function drawItemMain(Item $item, Session $session, bool $in_cart, bool $in_wish_list, bool $solded = true) 
 {
     $main_image = $item->getImagesArray()[0];
     $uri = '../actions/action_item_status.php';
@@ -292,8 +292,7 @@ function draw_buttons_item(Item $item, Session $session, bool $in_cart, bool $in
         
     </article>
     
-    
-    <?php if ($session->isLoggedIn()) { ?>
+    <?php if ($session->isLoggedIn() && !$solded) { ?>
         <form id="editing-item">
         <div class='buttons'>
             <?php if ($session->getId() == $item->user_id): ?>
