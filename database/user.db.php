@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-require_once(__DIR__.'/../core/user.class.php');
+require_once(__DIR__ . '/../core/User.php');
 require_once(__DIR__.'/../database/QueryBuilder.php');
 require_once(__DIR__.'/../database/connection.db.php');
 

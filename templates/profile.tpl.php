@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-require_once(__DIR__.'/../core/user.class.php');
+require_once(__DIR__ . '/../core/User.php');
 require_once(__DIR__ . '/../templates/common.tpl.php');
 require_once(__DIR__ . '/../utils/Request.php');
 ?>
