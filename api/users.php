@@ -10,7 +10,7 @@ if (!$session->isLoggedIn()) {
   die();
 }
 
-require_once(__DIR__.'/../core/item.class.php');
+require_once(__DIR__ . '/../core/Item.php');
 require_once(__DIR__.'/../database/connection.db.php');
 require_once(__DIR__.'/../database/filter.db.php');
 require_once(__DIR__.'/../database/user.db.php');

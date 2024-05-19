@@ -14,7 +14,7 @@ require_once(__DIR__.'/../utils/hash.php');
 require_once(__DIR__.'/../utils/validation.php');
 require_once(__DIR__.'/../database/user.db.php');
 require_once(__DIR__.'/../database/connection.db.php');
-require_once(__DIR__.'/../core/user.class.php');
+require_once(__DIR__ . '/../core/User.php');
 
 $db = getDatabaseConnection();
 

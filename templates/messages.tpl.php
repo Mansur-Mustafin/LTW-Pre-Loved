@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-require_once(__DIR__ . '/../core/chat.class.php');
+require_once(__DIR__ . '/../core/Chat.php');
 require_once(__DIR__ . '/../utils/utils.php');
 require_once(__DIR__ . '/../utils/Session.php');
 

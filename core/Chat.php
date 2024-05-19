@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-require_once(__DIR__ . '/../core/user.class.php');
-require_once(__DIR__ . '/../core/message.class.php');
+require_once(__DIR__ . '/../core/User.php');
+require_once(__DIR__ . '/../core/Message.php');
 require_once(__DIR__ . '/../database/user.db.php');
 
 class Chat 
