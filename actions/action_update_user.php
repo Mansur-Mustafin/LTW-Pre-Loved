@@ -47,15 +47,22 @@ if ($request->isPost() && $request->post('edit-profile') !== null) {
             var_dump($hasDefaultImage);
             var_dump($updateFoto);
             
+            $used_usernames = array_map(function (User $user) {
+                return $user->username;
+            },getAllUsers($db));
 
             if ($hasDefaultImage && !$updateFoto) {
-                $user->username = $request->post('new_username');
+                if(!in_array($request->post('new_username'),$used_usernames)){
+                    $user->username = $request->post('new_username');
+                }
                 var_dump("line 53");
             } else {
                 var_dump("line 55");
                 $old_image_path = $user->image_path;
 
-                $user->username = $request->post('new_username');
+                if(!in_array($request->post('new_username'),$used_usernames)){
+                    $user->username = $request->post('new_username');
+                }
                 $root_folder = '/data/profile_img/';
                 $filename = get_hash_path($user->username).'.png';
                 $save_path = $root_folder.htmlspecialchars($filename);
@@ -63,7 +70,6 @@ if ($request->isPost() && $request->post('edit-profile') !== null) {
                 
                 rename(__DIR__.'/..'.$old_image_path, __DIR__.'/..'.$save_path);
             }
-            
         }
         if (!empty($request->post('new_email'))) {
             $user->email = $request->post('new_email');
