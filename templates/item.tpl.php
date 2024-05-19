@@ -453,16 +453,16 @@ function draw_buttons_item(Item $item, Session $session, bool $in_cart, bool $in
     </script>
 <?php } ?>
 
-<?php function drawEditItem(PDO $db, int $itemId, Session $session) { ?>
-  <form id="add-item-form" action="../actions/action_edit_item.php?item_id=<?php echo $itemId; ?>" method="post" enctype="multipart/form-data">
+<?php function drawEditItem(PDO $db, Item $item, Session $session) { ?>
+  <form id="add-item-form" action="../actions/action_edit_item.php?item_id=<?php echo $item->id; ?>" method="post" enctype="multipart/form-data">
     <h2>Edit Item</h2>
     <div class="error-messages">
         <?= drawErrors($session->getErrorMessages()) ?>
     </div>
     <label for="item-name">Title:</label>
-    <input type="text" id="item-title" name="item-title" required>
+    <input type="text" id="item-title" name="item-title" value="<?php echo $item->title ?>"required>
     <label for="item-description">Description:</label>
-    <textarea id="item-description" name="item-description"></textarea>
+    <textarea id="item-description" name="item-description"><?php echo $item->description ?></textarea>
     <label for="image-paths">Images:</label>
     <input type="file" name="item-images[]" id="item-images" accept="image/*" multiple>
     <label for="item-category">Category:</label>
@@ -473,14 +473,14 @@ function draw_buttons_item(Item $item, Session $session, bool $in_cart, bool $in
     ?>
     <select id="item-category" name="item-category" required>
     <?php foreach($categories as $category){ ?>
-    <option value="<?= htmlspecialchars($category['name']); ?>">
-        &nbsp<?= htmlspecialchars($category['name']); ?></option>
+    <option value="<?= htmlspecialchars($category['name']);?>" <?php if($category['name'] === $item->size){echo "selected";}?>>
+        &nbsp<?= htmlspecialchars($category['name']);?></option>
         <?php } ?>
     </select>
     <label for="item-brand">Brand:</label>
-    <input type="text" id="item-brand" name="item-brand" required>
+    <input type="text" id="item-brand" name="item-brand" value="<?php echo $item->brand ?>"required>
     <label for="item-model">Model:</label>
-    <input type="text" id="item-model" name="item-model" required>
+    <input type="text" id="item-model" name="item-model" value="<?php echo $item->model ?>"required>
     <label for="item-condition">Condition:</label>
     <?php
     $stmt = $db->query('SELECT id, name FROM Condition');
@@ -489,14 +489,14 @@ function draw_buttons_item(Item $item, Session $session, bool $in_cart, bool $in
     ?>
     <select id="item-condition" name="item-condition">
     <?php foreach($conditions as $condition){ ?>
-    <option value="<?= htmlspecialchars($condition['name']); ?>">
-        &nbsp<?= htmlspecialchars($condition['name']); ?></option>
+    <option value="<?= htmlspecialchars($condition['name']); ?>" <?php if($condition['name'] === $item->condition){echo "selected";}?>>
+        &nbsp<?= htmlspecialchars($condition['name']);?></option>
         <?php }?>
     </select>
     <label for="item-price" min="0" inputmode="numeric">Price:</label>
-    <input type="number" id="item-price" name="item-price" step="0.01" required>
+    <input type="number" id="item-price" name="item-price" step="0.01" value="<?php echo $item->price ?>"required>
     <label for="tradableItem">Tradable item:</label>
-    <input type="checkbox" id="tradable-item" name="tradable-item"><br>
+    <input type="checkbox" id="tradable-item" name="tradable-item" <?php if($item->tradable){echo "checked";}?>><br>
     <label for="item-size">Size:</label>
     <?php
     $stmt = $db->query('SELECT id, name FROM Size');
@@ -505,8 +505,8 @@ function draw_buttons_item(Item $item, Session $session, bool $in_cart, bool $in
     ?>
     <select id="item-size" name="item-size">
     <?php foreach($sizes as $size){ ?>
-    <option value="<?= htmlspecialchars($size['name']); ?>">
-        &nbsp<?= htmlspecialchars($size['name']); ?></option>
+    <option value="<?= htmlspecialchars($size['name']);?>" <?php if($size['name'] === $item->size){echo "selected";}?>>
+        &nbsp<?= htmlspecialchars($size['name']);?></option>
         <?php }?>
     </select>
     <div id="item-tag-wrapper">

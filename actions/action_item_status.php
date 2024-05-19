@@ -41,7 +41,10 @@ if ($request->isGet() && $request->get('action') !== null && $request->get('item
       $response['redirect'] = $request->get('action') === 'delete-main' ? '/pages/profile.php' : null;
       break;
     case 'edit-main':
-      header('Location: ../pages/edit_item.php?item_id=' . $itemId);
+      $response['success'] = true;
+      $response['redirect'] = '../pages/edit_item.php?item_id=' . $itemId;
+      header('Content-Type: application/json');
+      echo json_encode($response);
       exit;
     default:
       $response['success'] = false;
