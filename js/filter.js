@@ -1,4 +1,4 @@
-const filterBody = document.querySelector(".filter-body");
+const filterBody = document.querySelector(".aside-box");
 const openFilterButton = document.querySelector(".open-filter");
 
 if (openFilterButton) {

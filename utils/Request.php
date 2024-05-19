@@ -94,8 +94,8 @@ class Request
 
     public static function generateCsrfTokenInput(): string
     {
-        Session::checkSession();
-        // Session::initDefaultSessionParams();
+        // Session::checkSession();
+        Session::initDefaultSessionParams();
 
         return '<input type="hidden" name="csrf_token" value="' . $_SESSION['csrf_token'] . '">';
     }

@@ -36,26 +36,6 @@ div#logo{
         vertical-align: middle;
     }
 
-    @media (max-width: 1024px) {
-        flex-grow: 1;
-
-        & > a {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            p{
-                display: none;
-            }
-            img{
-                height: 3em;
-            }
-            h1 {
-                height: 100%;
-                font-size: 1.5em;
-            }
-        }
-    }
-
     @media (max-width: 768px) {
         & > a {
             justify-content: start;
@@ -83,19 +63,6 @@ header > nav#header-menu{
         li:hover{
             background-color: var(--matador-dark-red);
             border-radius: 3px;
-        }
-    }
-
-    @media (max-width: 1024px) {
-        margin: 2em 0;
-        flex-grow: 0;
-
-        ul{
-            flex-flow: column;
-
-            li {
-                text-align: center;
-            }
         }
     }
 }

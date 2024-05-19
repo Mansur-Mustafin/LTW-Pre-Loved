@@ -27,7 +27,8 @@ require_once(__DIR__ . '/../utils/Session.php');
         <link href="../css/card.css" rel="stylesheet">
 
         <link href="../css/responsive.css" rel="stylesheet">    
-        <link href="../css/responsive-ipad.css" rel="stylesheet">
+        <link href="../css/responsive-tablet.css" rel="stylesheet">
+        <link href="../css/responsive-mobile.css" rel="stylesheet">
         <title>Matador OLX | <?=$title?></title>
         <link rel="icon" type="image/x-icon" href="../assets/img/favicon.png">
         <script type="text/javascript" src="../js/search_item.js" defer></script>

@@ -9,10 +9,10 @@ require_once(__DIR__ . '/../utils/Request.php');
 
 <?php function drawWishListForm(Session $session){ ?>
     <aside id="related">
-        <button class="open-sidebar">
-            <i class="gg-sidebar"></i>
+        <button class="close-sidebar">
+            <img src="../assets/img/close.svg">
         </button>
-        <div>
+        <div class="aside-box">
             <h2>Share your wishlist!</h2>
             <form action="../actions/action_send_wishlist.php" method="post" id="wishlist-form">
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sagittis ex at nunc interdum, vel.</p>

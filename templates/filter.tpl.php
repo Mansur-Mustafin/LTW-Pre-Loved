@@ -12,7 +12,7 @@ require_once(__DIR__ . '/../utils/Session.php');
         </button>
 
         <button class="open-filter"></button>
-        <div class="filter-body">
+        <div class="aside-box filter-body">
             <h2>Filter</h2>
             <form action="#" method="get" id="filter">
 

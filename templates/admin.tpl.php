@@ -14,11 +14,11 @@ require_once (__DIR__ . '/../utils/Request.php');
 <?php function drawSideBar()
 { ?>
     <aside id="related">
-        <button class="open-sidebar">
-            <i class="gg-sidebar"></i>
+        <button class="close-sidebar">
+            <img src="../assets/img/close.svg">
         </button>
 
-        <div>
+        <div class="aside-box">
             <h2>Pages</h2>
 
             <nav class="pages">
