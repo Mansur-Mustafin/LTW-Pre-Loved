@@ -49,3 +49,12 @@ header > nav#header-menu{
         border-radius: 3px;
     }
 }
+
+.h3 {
+    font-size: 2em;
+    color: white;
+}
+.h4 {
+    font-size: 1.5em;
+    color: white;
+}
