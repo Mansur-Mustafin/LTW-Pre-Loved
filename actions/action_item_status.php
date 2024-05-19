@@ -39,7 +39,10 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['action'], $_GET['item-id
       $response['redirect'] = $_GET['action'] === 'delete-main' ? '/pages/profile.php' : null;
       break;
     case 'edit-main':
-      header('Location: ../pages/edit_item.php?item_id=' . $itemId);
+      $response['success'] = true;
+      $response['redirect'] = '../pages/edit_item.php?item_id=' . $itemId;
+      header('Content-Type: application/json');
+      echo json_encode($response);
       exit;
     default:
       $response['success'] = false;
