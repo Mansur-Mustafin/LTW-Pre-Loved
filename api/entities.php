@@ -19,10 +19,6 @@ require_once(__DIR__ .'/../utils/validation.php');
 $db = getDatabaseConnection();
 
 $user = getUser($db,$session->getName());
-if(!$user->admin_flag) {
-    echo json_encode(['error'=> 'Permission denied']); 
-    die();
-}
 
 echo is_valid_entity($_GET['search']) 
     ? json_encode(getEntitiesFromType($db,$_GET['search']))

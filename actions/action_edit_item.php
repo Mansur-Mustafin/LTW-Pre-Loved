@@ -3,7 +3,7 @@ declare(strict_types=1);
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-require_once(__DIR__.'/../utils/session.php');
+require_once(__DIR__.'/../utils/Session.php');
 $session = new Session();
 
 if (!$session->isLoggedIn()) {
@@ -80,15 +80,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     condition : $itemCondition,
     model : $itemModel,
   );
-  if (!(addItem($session, $db, $item) && addItemTags($session, $db))) {
-    $session->addMessage('error', 'Failed to add item or tags.');
-    header('Location: ../pages/edit_item.php?item_id=' . $itemId);
-    exit;
-  } else {
-    $userId = intval(getUser($db, $session->getName())->id);
-    $oldItem = intval($_GET["item_id"]);
-    deleteItemById($db, $oldItem);
-  }
+
+  updateItem($session,$db,$item,intval($oldItem));
 }
 header('Location: ../pages/profile.php');
 exit;

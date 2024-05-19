@@ -218,7 +218,7 @@ function drawItem(item, session, title, inCart, inWishList,parent) {
     div.appendChild(descriptionP);
 
     const timeP = document.createElement('p');
-    timeP.textContent = getTimePassed(item.createdAt); // Assuming getTimePassed is defined elsewhere
+    timeP.textContent = getTimePassed(item.created_at); // Assuming getTimePassed is defined elsewhere
     div.appendChild(timeP);
 
     article.appendChild(div);
