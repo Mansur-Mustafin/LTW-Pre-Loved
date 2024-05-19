@@ -1,0 +1,10 @@
+#related{
+    button.close-sidebar {
+        display: none;
+    }
+}
+
+button.open-filter {
+    display: none;
+}
+

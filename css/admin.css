@@ -18,6 +18,7 @@ nav.pages{
     .profile-img {
         background-color: Gainsboro;
         border-radius: 15%;
+        width: 6em;
         height: 6em;
     }
 

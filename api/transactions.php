@@ -16,6 +16,6 @@ if(!$session->isLoggedIn()) {
 
 $db = getDatabaseConnection();
 
-$transactions = getBoughtItems($db,$session->getId()); 
+$transactions = getBoughtItems($session->getId()); 
 
 echo json_encode($transactions);

@@ -1,0 +1,124 @@
+@media (max-width: 768px) {
+
+    /* Header */
+
+    header .header-button-wrap:first-child {
+        display: none;
+    }
+
+    /* General */
+
+    #related {
+        position: static;
+        width: auto;
+        background: none;
+        padding: 2em 1em 1em;
+        z-index: 9997;
+
+        .open-sidebar {
+            display: none;
+        }
+
+        .aside-box {
+            background: none;
+            width: auto;
+            height: auto;
+            padding: 0;
+            overflow: hidden;
+        }
+    }
+
+    /* Layout */
+
+    body > main {
+        grid-template-columns: 1fr;
+    }
+
+    /* Item */
+    .item {
+        display: flex;
+        flex-direction: column;
+        img {
+            width: 75%;
+            height: 50%;
+            margin: 0 auto;
+        }
+        .top-right-element {
+            padding: 0 1em;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+        div.top-right-element p{
+            display: inline;
+            margin: 0;
+            font-size: larger;
+            text-align: end;
+        }
+        form{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+
+            .button{
+                padding: 1em;
+                margin: 1em 0.7em 4em 0.7em;
+                img{
+                    margin: .5em;
+                    width: 1.5em;
+                    height: 1.5em;
+                }
+            }
+        }
+    }
+
+    /* Filter */
+
+    .filter-body {
+        transition: max-height .2s;
+        max-height: 0;
+        margin: 1em 0.7em;
+        overflow: hidden;
+
+        &.open {
+            display: block;
+            max-height: 300em;
+            overflow: visible;
+            transition: max-height .5s;
+        }
+    }
+
+    button.open-filter {
+        display: block;
+        width: 100%;
+        height: auto;
+        position: static;
+
+        &:after {
+            content: "Open filter";
+        }
+
+        &.open:after {
+            content: "Close filter";
+        }
+    }
+
+    /* Dash board */
+    #dashboard{
+        ul{
+            display: flex;
+            flex-direction: column;
+            li{
+                min-width: auto;
+                height: 5em;
+                .dashboard-value {
+                    font-size: 2em;
+                    font-size-adjust:0.5;
+                }
+                border-radius: 5% / 20%;
+            }
+        }
+        
+    }
+}
+

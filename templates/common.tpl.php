@@ -12,6 +12,7 @@ require_once(__DIR__ . '/../utils/Session.php');
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="../css/style.css" rel="stylesheet">
+        
         <link href="../css/layout.css" rel="stylesheet">
         <link href="../css/search_bar.css" rel="stylesheet">
         <link href="../css/filter.css" rel="stylesheet">    
@@ -24,11 +25,17 @@ require_once(__DIR__ . '/../utils/Session.php');
         <link href="../css/dashboard.css" rel="stylesheet">
         <link href="../css/messages.css" rel="stylesheet">
         <link href="../css/card.css" rel="stylesheet">
+
+        <link href="../css/responsive.css" rel="stylesheet">    
+        <link href="../css/responsive-tablet.css" rel="stylesheet">
+        <link href="../css/responsive-mobile.css" rel="stylesheet">
         <title>Matador OLX | <?=$title?></title>
         <link rel="icon" type="image/x-icon" href="../assets/img/favicon.png">
         <script type="text/javascript" src="../js/search_item.js" defer></script>
         <script type="text/javascript" src="../js/search_user.js" defer></script>
         <script type="text/javascript" src="../js/add_entity.js" defer></script>
+        <script type="text/javascript" src="../js/filter.js" defer></script>
+        <script type="text/javascript" src="../js/header.js" defer></script>
         <script type="text/javascript" src="../js/analytics_page.js" defer></script>
         <script type="text/javascript" src="../js/filter_item.js" defer></script>
         <script type="text/javascript" src="../js/add_item.js" defer></script>
@@ -38,14 +45,29 @@ require_once(__DIR__ . '/../utils/Session.php');
     </head>
     <body data-csrf-token="<?=$session->getCsrfToken(); ?>">
         <header>
+            <div class="header-top">
+                <div class="header-button-wrap">
+                    <button class="open-sidebar">
+                        <img src="../assets/img/open-sidebar.svg">
+                    </button>
+                </div>
 
-            <div id="logo">
-                <a href="../">
-                    <img src="../assets/img/logo.svg" alt="Matador OLX Logo" class="logo">
-                    <h1>Matador OLX</h1>
-                    <p>Sell and buy what you love!</p>
-                </a>
+                <div id="logo">
+                    <a href="../">
+                        <img src="../assets/img/logo.svg" alt="Matador OLX Logo" class="logo">
+                        <h1>Matador OLX</h1>
+                        <p>Sell and buy what you love!</p>
+                    </a>
+                </div>
+
+                <div class="header-button-wrap">
+                    <button class="open-menu">
+                        <i class="img"></i>
+                    </button>
+                </div>
             </div>
+
+            <hr>
             
             <nav id="header-menu">
                 <ul>

@@ -20,6 +20,10 @@ foreach ($items as $item) {
 ?>
 
 <aside id="related">
+    <button class="close-sidebar">
+            <img src="../assets/img/close.svg">
+        </button>
+    <div class="aside-box">
     <h2>Your Cart:</h2>
     <section class='card'>
         <p>
@@ -46,4 +50,6 @@ foreach ($items as $item) {
             <?php endif ?>
         </div>
     <?php endif ?>
+    </div>
+    
 </aside>

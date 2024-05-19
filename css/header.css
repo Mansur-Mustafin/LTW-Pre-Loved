@@ -1,13 +1,27 @@
 /* Header */
-
 header{
     padding: 1em;
     background-color: #A50104;
     display: flex;
     flex-flow: row;
+    height: 10em;
+    transition: max-height 0.3s;
+
+    hr {
+        display: none;
+    }
+
+    .open-sidebar, .open-menu {
+        display: none;
+
+        img {
+            width: 2em;
+            height: 2em;
+        }
+    }
 }
 
-header > div#logo{
+div#logo{
     a{
         display: block;
         p{
@@ -21,6 +35,12 @@ header > div#logo{
         display: inline-block;
         vertical-align: middle;
     }
+
+    @media (max-width: 768px) {
+        & > a {
+            justify-content: start;
+        }
+    }
 }
 
 header > nav#header-menu{
@@ -30,6 +50,20 @@ header > nav#header-menu{
     justify-content: flex-end;
     ul{
         display: flex;
+        img{
+            height: 1.3em;
+            margin-right: .4em;
+        }
+        li{
+            transition: all .3s;
+            padding: 1em 0.7em;
+            margin: 0.3em;
+            cursor: pointer;
+        }
+        li:hover{
+            background-color: var(--matador-dark-red);
+            border-radius: 3px;
+        }
     }
     img{
         height: 1.3em;
