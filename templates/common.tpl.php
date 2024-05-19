@@ -3,7 +3,7 @@ declare(strict_types=1);
 require_once(__DIR__ . '/../utils/Session.php');
 ?>
 
-<?php function drawHeader(Session $session, string $title = ''): void
+<?php function drawHeader(Session $session, ?string $title = ''): void
 { ?>
 
     <!DOCTYPE html>
