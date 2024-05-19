@@ -491,9 +491,9 @@ function draw_buttons_item(Item $item, Session $session, string $title, bool $in
         <?php }?>
     </select>
     <label for="item-price" min="0" inputmode="numeric">Price:</label>
-    <input type="number" id="item-price" name="item-price" step="0.01" required>
+    <input type="number" id="item-price" name="item-price" step="0.01" value="<?php echo $item->price ?>"required>
     <label for="tradableItem">Tradable item:</label>
-    <input type="checkbox" id="tradable-item" name="tradable-item"><br>
+    <input type="checkbox" id="tradable-item" name="tradable-item" <?php if($item->tradable){echo "checked";}?>><br>
     <label for="item-size">Size:</label>
     <?php
     $stmt = $db->query('SELECT id, name FROM Size');
