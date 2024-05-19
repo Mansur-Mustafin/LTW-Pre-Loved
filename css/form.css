@@ -164,3 +164,58 @@ form#wishlist-form{
         margin-bottom: 1.5em;
     }
 }
+/* Add Item form */
+form#add-item-form{
+    grid-column: 1 / span 3;
+    padding: 1em;
+    h2{
+        text-align: center;
+        font-size: 2.5em;
+    }
+    h2, input{
+        margin-bottom: 1em;
+    }
+    label{
+        font-size: 1.5em;
+    }
+    input:focus{
+        outline: none;
+    }
+    input[type="text"], input[type="number"] {
+        border-bottom: 2px solid var(--matador-dark-red);
+    }
+    input[type="checkbox"]{
+        width: 1.25em;
+        height: 1.25em;
+        margin-left: .5em;
+    }
+    select{
+        font-size: large;
+        color: var(--matador-grey);
+        margin: 1em 0;
+        width:100%;
+        border-radius: 5px;
+        height: 2em;
+        background-color: rgba(var(--matador-red-rgb), 0.9);
+    }
+    textarea{
+        margin-bottom: 1em;
+        min-height: 8em;
+        border: 2px solid var(--matador-dark-red);
+        border-radius: 5px;
+    }
+    select#item-tags{
+        min-height: 6em;
+    }
+    textarea:focus{
+        outline: none;
+    }
+    #submit-item-button{
+        text-align: center;
+        button{
+            font-size: 1em;
+            height: 4em;
+            width: 30em;
+        }
+    }
+}
