@@ -31,6 +31,7 @@ require_once(__DIR__ . '/../utils/Session.php');
         <script type="text/javascript" src="../js/add_entity.js" defer></script>
         <script type="text/javascript" src="../js/analytics_page.js" defer></script>
         <script type="text/javascript" src="../js/filter_item.js" defer></script>
+        <script type="text/javascript" src="../js/add_item.js" defer></script>
         <script type="text/javascript" src="../js/dashboard.js" defer></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
 
@@ -52,6 +53,7 @@ require_once(__DIR__ . '/../utils/Session.php');
                     <?php if($session->isAdmin()) {?>
                         <li><a href="../pages/admin.php"><img src="../assets/img/control-centre.svg" alt="admin-icon">Admin Page</a></li>
                     <?php } ?>
+                    <li><a href="../pages/add_item.php"><img src="../assets/img/plus-sign.svg" alt="plus-sign">Add item</a></li>
                     <li><a href="../pages/shopping_cart.php"><img src="../assets/img/shopping-cart.svg" alt="cart-icon">Shopping Cart</a></li>
                     <li><a href="../pages/wishlist.php"><img src="../assets/img/love.svg" alt="cart-icon">Wish List</a></li>
                     <li><a href="../pages/profile.php"><img src="../assets/img/account-icon.svg" alt="account-icon"><?=$session->getName();?></a></li>

@@ -40,6 +40,9 @@ if ($request->isGet() && $request->get('action') !== null && $request->get('item
       $response['itemId'] = $itemId;
       $response['redirect'] = $request->get('action') === 'delete-main' ? '/pages/profile.php' : null;
       break;
+    case 'edit-main':
+      header('Location: ../pages/edit_item.php?item_id=' . $itemId);
+      exit;
     default:
       $response['success'] = false;
   }

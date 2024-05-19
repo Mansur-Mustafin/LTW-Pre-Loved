@@ -8,6 +8,29 @@ const title = document.getElementById("title")?.textContent
 
 const sessionId = document.getElementById("session_id")?.textContent
 
+const slider = document.getElementById("slider")
+
+if(slider) {
+    let slider =document.getElementById('slider')
+    slider.addEventListener('change', async function() {
+        document.getElementById('item-list').innerHTML = ''
+        const response = await fetch('../api/items.php?search=')
+        const items = await response.json()
+        let filteredItems = items.filter((item) => {
+            return item.price < this.value && item.user_id != sessionId
+        })
+        const sessionValue = sessionId.textContent == '' ? {isLoggedIn:false} : {isLoggedIn:true,id:sessionId};
+        filteredItems.forEach((filteredItem) => {
+
+            drawItem(filteredItem,sessionValue,'Find what you want to buy!',false,false,itemList)
+        })
+        let price = document.getElementById('current-max-price')
+        price.textContent = this.value
+    })
+}
+
+
+
 if(filterItems) {
    filterItems.addEventListener("submit",async function(e) {
         e.preventDefault();
@@ -36,13 +59,12 @@ if(filterItems) {
 
         const response = await fetch('../api/items.php?search=')
         const items = await response.json()
-        console.log(items)
         filteredItems = (items.filter((item) => {
             const checkCategory = categories.length == 0 || categories.includes(item.category)
             const checkBrand = brands.length == 0 || brands.includes(item.brand)
             const checkSize = sizes.length == 0 || sizes.includes(item.size)
             const  checkConditions = conditions.length == 0 || conditions.includes(item.condition)
-            return checkCategory && checkBrand && checkSize && checkConditions
+            return checkCategory && checkBrand && checkSize && checkConditions && item.user_id != sessionId
         }))
 
         itemList.innerHTML = ''

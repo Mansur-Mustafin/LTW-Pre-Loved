@@ -682,3 +682,149 @@ function deleteItemById(PDO $db, int $itemId): void
     $stmt->execute([$itemId]);
 }
 
+function completeCheckout(PDO $db, int $userId, array $items)
+{
+    $itemsIds = array_column($items, 'id');
+    $itemsIdsString = implode(', ', $itemsIds);
+
+    $stmt = $db->prepare("DELETE FROM Wishlist WHERE user_id = ? AND item_id in ({$itemsIdsString})");
+    $stmt->execute([$userId]);
+
+    $stmt = $db->prepare("DELETE FROM ShoppingCart WHERE user_id = ? AND item_id in ({$itemsIdsString})");
+    $stmt->execute([$userId]);
+
+    $values = [];
+    $params = [];
+
+    foreach ($items as $item) {
+        $values[] = "(?, ?, ?, ?)";
+        array_push($params, $item->user_id, $userId, $item->id, time());
+    }
+
+    $valuesString = implode(', ', $values);
+
+    $stmt = $db->prepare("INSERT INTO Transactions (seller_id, buyer_id, item_id, created_at) VALUES {$valuesString};");
+    $stmt->execute($params);
+
+    $stmt = $db->prepare("DELETE FROM ItemTags WHERE item_id IN ({$itemsIdsString})");
+    $stmt->execute();
+
+    $stmt = $db->prepare("SELECT id FROM Tags WHERE name = 'Sold'");
+    $stmt->execute();
+    $soldTagId = $stmt->fetchColumn();
+
+    $values = [];
+    $params = [];
+
+    foreach ($items as $item) {
+        $values[] = "(?, ?)";
+        array_push($params, $item->id, $soldTagId);
+    }
+
+    $valuesString = implode(', ', $values);
+
+    $stmt = $db->prepare("INSERT INTO ItemTags (item_id, tag_id) VALUES {$valuesString};");
+    $stmt->execute($params);
+}
+function addItem(Session $session, PDO $db, Item $item): bool {
+    $categoryId = getElementId($item->category, 'Categories', $db);
+    if($categoryId === -1){
+        $session->addMessage('error', 'Invalid category id.');
+        header('Location: ../pages/add_item.php');
+        return false;
+    }
+    $sizeId = getElementId($item->size, 'Size', $db);
+    if($sizeId === -1){
+        $session->addMessage('error', 'Invalid size id.');
+        header('Location: ../pages/add_item.php');
+        return false;
+    }
+    $conditionId = getElementId($item->condition, 'Condition', $db);
+    if($conditionId === -1){
+        $session->addMessage('error', 'Invalid condition id.');
+        header('Location: ../pages/add_item.php');
+        return false;
+    }
+    $brandId = getElementId($item->brand, 'Brands', $db);
+    if($brandId === -1){
+        $sql = "INSERT INTO Brands (name) VALUES (:brand)";
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':brand', $item->brand);
+        $stmt->execute();
+        $brandId = $db->lastInsertId();
+    }
+    $modelId = getModelId($item->model, (int)$brandId, $db);
+    if($modelId === -1){
+        $sql = "INSERT INTO Models (brand_id, name) VALUES (:brand_id, :model)";
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':brand_id', $brandId);
+        $stmt->bindParam(':model', $item->model);
+        $stmt->execute();
+        $modelId = $db->lastInsertId();
+    }
+    $sql = "INSERT INTO Items (title, description, images, price, tradable, user_id, category_id, size_id, condition_id, model_id, created_at)
+            VALUES (:title, :description, :images, :price, :tradable, :user_id, :category_id, :size_id, :condition_id, :model_id, :created_at)";
+    $stmt = $db->prepare($sql);
+    
+    $stmt->bindParam(':title', $item->title, PDO::PARAM_STR);
+    $stmt->bindParam(':description', $item->description, PDO::PARAM_STR);
+    $stmt->bindParam(':images', $item->images, PDO::PARAM_STR);
+    $stmt->bindParam(':price', $item->price, PDO::PARAM_STR);
+    $stmt->bindParam(':tradable', $item->tradable, PDO::PARAM_BOOL);
+    $stmt->bindParam(':user_id', $item->user_id, PDO::PARAM_INT);
+    $stmt->bindParam(':category_id', $categoryId, PDO::PARAM_INT);
+    $stmt->bindParam(':size_id', $sizeId, PDO::PARAM_INT);
+    $stmt->bindParam(':condition_id', $conditionId, PDO::PARAM_INT);
+    $stmt->bindParam(':model_id', $modelId, PDO::PARAM_INT);
+    $stmt->bindParam(':created_at', $item->created_at, PDO::PARAM_STR);
+    $stmt->execute();
+    return true;
+}
+
+function addItemTags(Session $session, PDO $db) : bool{
+    $itemId = (int)$db->lastInsertId();
+    if (isset($item['item-tags'])) {
+        $itemTags = $_POST['item-tags'];
+    } else {
+        $itemTags = [];
+    }
+    foreach($itemTags as $tag){
+        $tagId = getElementId($tag, 'Tags', $db);
+        if($tagId === -1){
+            $session->addMessage('error', 'Invalid tag id.');
+            header('Location: ../pages/profile.php');
+            return false;
+        }
+        $insertStmt = $db->prepare("INSERT INTO ItemTags (item_id, tag_id) VALUES (?,?)");
+        $insertStmt->execute([$itemId, $tagId]);
+    }
+    return true;
+}
+function getElementId(string $element, string $table, PDO $db) : int{
+    $stmt = $db->prepare("SELECT id FROM $table WHERE name = ?");
+    $stmt->execute([$element]);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($row) {
+        return (int)$row['id'];
+    } else {
+        return -1;
+    }
+}
+function getModelId(string $model, int $brand, PDO $db) : int{
+    $stmt = $db->prepare("SELECT id FROM Models WHERE name = ? and brand_id = ?");
+    $stmt->execute([$model, $brand]);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($row) {
+        return (int)$row['id'];
+    } else {
+        return -1;
+    }
+}
+function getBrandFromModelId(string $model, PDO $db){
+    $stmt = $db->prepare('SELECT Brands.id 
+                          FROM Brands
+                          JOIN Models ON Models.brand_id = Brands.id
+                          WHERE Models.id = ?');
+    $stmt->execute([$model]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
