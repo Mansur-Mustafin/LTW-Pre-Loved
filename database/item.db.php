@@ -6,7 +6,7 @@ require_once(__DIR__ . '/../core/Item.php');
 require_once(__DIR__.'/../database/QueryBuilder.php');
 require_once(__DIR__.'/../database/filter.db.php');
 
-function getBoughtItems(PDO $db, int $user_id) : array
+function getBoughtItems(int $user_id) : array
 {
     $qb = new QueryBuilder("Item");
 
@@ -26,7 +26,7 @@ function getBoughtItems(PDO $db, int $user_id) : array
     return $result;
 }
 
-function getItemsUser(PDO $db, int $user_id): array 
+function getItemsUser(int $user_id): array
 {
     $qb = new QueryBuilder("Item");
 
@@ -45,7 +45,7 @@ function getItemsUser(PDO $db, int $user_id): array
     return $result;
 }
 
-function getAllItems(PDO $db, int $limit, int $offset, ?int $uid): array 
+function getAllItems(int $limit, int $offset, ?int $uid): array
 {
     $qb = new QueryBuilder("Item");
     $nullValue = null;
@@ -75,7 +75,7 @@ function getAllItems(PDO $db, int $limit, int $offset, ?int $uid): array
     return $result;
 }
 
-function searchItems(PDO $db, string $keyword) : array
+function searchItems(string $keyword) : array
 {
     $qb = new QueryBuilder("Item");
 
@@ -94,7 +94,7 @@ function searchItems(PDO $db, string $keyword) : array
     return $result;
 }
 
-function getItem(PDO $db, int $itemId): ?Item 
+function getItem(int $itemId): ?Item
 {
     $qb = new QueryBuilder("Item");
 
@@ -110,7 +110,7 @@ function getItem(PDO $db, int $itemId): ?Item
     return $result[0];
 }
 
-function getBoughtItem(PDO $db, int $userId, int $itemId): ?Item
+function getBoughtItem(int $userId, int $itemId): ?Item
 {
     $qb = new QueryBuilder("Item");
     
@@ -141,7 +141,7 @@ function getTagsForItem(int $itemId): array
     return array_column($result, "name");
 }
 
-function itemsInCart(PDO $db, ?int $uid): array 
+function itemsInCart(?int $uid): array
 {
     if (!isset($uid)) return [];
     
@@ -154,7 +154,7 @@ function itemsInCart(PDO $db, ?int $uid): array
     return array_column($result, "item_id");
 }
 
-function itemsInWishlist(PDO $db, ?int $uid): array 
+function itemsInWishlist(?int $uid): array
 {
     if (!isset($uid)) return [];
     
@@ -178,7 +178,7 @@ function groupByUser(array $items): array
     return $itemsGroups;
 }
 
-function getAllItemsFromId(PDO $db, array $items_ids): array 
+function getAllItemsFromId(array $items_ids): array
 {
     if (empty($items_ids)) {
         return [];
@@ -311,7 +311,7 @@ function addItem(Session $session, PDO $db, Item $item): bool {
         $stmt->execute();
         $brandId = $db->lastInsertId();
     }
-    $modelId = getModelId($item->model, (int)$brandId, $db);
+    $modelId = getModelId($item->model, $db);
     if($modelId === -1){
         $sql = "INSERT INTO Models (brand_id, name) VALUES (:brand_id, :model)";
         $stmt = $db->prepare($sql);
@@ -366,10 +366,10 @@ function updateItem(Session $session, PDO $db, Item $item, int $oldID): bool {
         $stmt->execute();
         $brandId = $db->lastInsertId();
     }
-    $modelId = getModelId($item->model, (int)$brandId, $db);
+    $modelId = getModelId($item->model, $db);
     //var_dump($item->model);
     if($modelId === -1){
-        $models = getEntitiesFromType($db,"Models");
+        $models = getEntitiesFromType("Models");
         $sql = "INSERT INTO Models (brand_id, name) VALUES (:brand_id, :model)";
         $stmt = $db->prepare($sql);
         $stmt->bindParam(':brand_id', $brandId);
@@ -436,7 +436,7 @@ function getElementId(string $element, string $table, PDO $db) : int{
         return -1;
     }
 }
-function getModelId(string $model, int $brand, PDO $db) : int{
+function getModelId(string $model, PDO $db) : int{
     $stmt = $db->prepare("SELECT id FROM Models WHERE name = ?");
     $stmt->execute([$model]);
     $row = $stmt->fetch(PDO::FETCH_ASSOC);

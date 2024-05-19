@@ -21,20 +21,17 @@ $user = getUser($db,$session->getName());
 if(!$user->admin_flag) die(header('Location: /'));
 
 $allUsers = getAllUsers($db);
-$tags = getEntitiesFromType($db,"Tags");
-$categories = getEntitiesFromType($db,"Categories");
-$brands = getEntitiesFromType($db,"Brands");
-$conditions = getEntitiesFromType($db,"Condition");
-$sizes = getEntitiesFromType($db,"Size");
-$items = getAllItems($db,100,0,null);
+$tags = getEntitiesFromType("Tags");
+$categories = getEntitiesFromType("Categories");
+$brands = getEntitiesFromType("Brands");
+$conditions = getEntitiesFromType("Condition");
+$sizes = getEntitiesFromType("Size");
+$items = getAllItems(100, 0, null);
 
 drawHeader($session, 'Admin Page');
 drawSideBar();
 
 switch ($_GET['value']) {
-    case 'users':
-        drawUsersAdmin($allUsers,$session);
-        break;
     case 'statistics':
         drawStatisticsAdmin();
         break;

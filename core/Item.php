@@ -31,7 +31,8 @@ class Item
 
     public function __set($name, $value){}
 
-    public function ensureDefaultValues() {
+    public function ensureDefaultValues(): void
+    {
         $this->brand = $this->brand ?? '';
         $this->model = $this->model ?? '';
         $this->description = $this->description ?? '';

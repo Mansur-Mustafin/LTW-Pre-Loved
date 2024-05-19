@@ -18,7 +18,7 @@ require_once(__DIR__ . '/../utils/utils.php');
 ): void { ?>
     <?php if (empty($items)) { ?>
         <section class='message_middle'>
-            <h2> <?= handleDifferentTitles($place); ?></h2>
+            <h2> <?php handleDifferentTitles($place); ?></h2>
         </section>
     <?php } else { ?>
 
@@ -33,7 +33,7 @@ require_once(__DIR__ . '/../utils/utils.php');
                     $in_cart = in_array($item->id, $items_in_cart);
                     $in_wishlist = in_array($item->id, $items_in_wish_list);
 
-                    drawItem($item, $session, $title, $in_cart, $in_wishlist, $isCurrentUserPage, $place);
+                    drawItem($item, $session, $in_cart, $in_wishlist, $isCurrentUserPage, $place);
                 } ?>
             </div>
             <!-- Pagination Controls -->
@@ -56,7 +56,7 @@ require_once(__DIR__ . '/../utils/utils.php');
 
     <?php if (empty($items)) { ?>
         <section class='message_middle'>
-            <h2> <?= handleDifferentTitles($place); ?></h2>
+            <h2> <?php handleDifferentTitles($place); ?></h2>
         </section>
     <?php } else { ?>
 
@@ -64,7 +64,7 @@ require_once(__DIR__ . '/../utils/utils.php');
             <h2 id="title"><?= $title ?></h2>
             <div id="search-wrapper">
                 <img src="../assets/img/search.svg" alt="search-bar" id="search-icon">
-                <input class="search" id="item-search" type="text">
+                <label for="item-search"></label><input class="search" id="item-search" type="text">
             </div>
             <div id="item-list">
                 <?php
@@ -93,7 +93,7 @@ require_once(__DIR__ . '/../utils/utils.php');
                         $in_cart = in_array($item->id, $items_in_cart);
                         $in_wishlist = in_array($item->id, $items_in_wish_list);
 
-                        drawItem($item, $session, $title, $in_cart, $in_wishlist, $isCurrentUserPage, $place);
+                        drawItem($item, $session, $in_cart, $in_wishlist, $isCurrentUserPage, $place);
                     }
                 }
 
@@ -105,29 +105,16 @@ require_once(__DIR__ . '/../utils/utils.php');
     </section>
 <?php } ?>
 
-<?php function handleDifferentTitles($place)
+<?php function handleDifferentTitles($place): void
 {
-    $titleEmptyList = '';
-    switch ($place) {
-        case 'home':
-            $titleEmptyList = 'Houston, we have a problem';
-            break;
-        case 'profile':
-            $titleEmptyList = 'Add new item to sell!';
-            break;
-        case 'transactions':
-            $titleEmptyList = 'You didn\'t buy item yet.';
-            break;
-        case 'shopcard':
-            $titleEmptyList = 'Add items to Shopping Card!';
-            break;
-        case 'wishlist':
-            $titleEmptyList = 'Add item to WishList!';
-            break;
-        default:
-            $titleEmptyList = 'Here is no items.';
-            break;
-    }
+    $titleEmptyList = match ($place) {
+        'home' => 'Houston, we have a problem',
+        'profile' => 'Add new item to sell!',
+        'transactions' => 'You didn\'t buy item yet.',
+        'shopcard' => 'Add items to Shopping Card!',
+        'wishlist' => 'Add item to WishList!',
+        default => 'Here is no items.',
+    };
     echo $titleEmptyList;
 } ?>
 
@@ -151,7 +138,6 @@ require_once(__DIR__ . '/../utils/utils.php');
 <?php function drawItem(
     Item $item,
     Session $session,
-    string $title,
     bool $in_cart,
     bool $in_wish_list,
     bool $isCurrentUserPage,
@@ -164,7 +150,7 @@ require_once(__DIR__ . '/../utils/utils.php');
     } ?>
     
     <article class="item fly" data-id="<?= $item->id ?>">
-        <img src=<?=htmlspecialchars($main_image)?> alt="Item Image">
+        <img src="<?=htmlspecialchars($main_image)?>" alt="Item Image">
         <a href="../pages/item.php?item_id=<?=$item->id?>">
             <h3><?=htmlspecialchars($item->title)?></h3>
         </a>
@@ -193,7 +179,7 @@ require_once(__DIR__ . '/../utils/utils.php');
 
 
 <?php
-function draw_buttons_item(Item $item, Session $session, bool $in_cart, bool $in_wish_list, bool $isCurrentUserPage, $place = null)
+function draw_buttons_item(Item $item, Session $session, bool $in_cart, bool $in_wish_list, bool $isCurrentUserPage, $place = null): void
 {   
     $uri = '../actions/action_item_status.php';
 
@@ -235,7 +221,7 @@ function draw_buttons_item(Item $item, Session $session, bool $in_cart, bool $in
 } ?>
 
 
-<?php function drawItemMain(Item $item, Session $session, bool $in_cart, bool $in_wish_list, bool $solded = true) 
+<?php function drawItemMain(Item $item, Session $session, bool $in_cart, bool $in_wish_list, bool $solded = true): void
 {
     $uri = '../actions/action_item_status.php';
 
@@ -285,16 +271,16 @@ function draw_buttons_item(Item $item, Session $session, bool $in_cart, bool $in
             </div>
         
         <label>brand:
-            <p><?= htmlspecialchars($item->brand) ?></p>
+            <?= htmlspecialchars($item->brand) ?>
         </label>
         <label>model:
-            <p><?= htmlspecialchars($item->model) ?></p>
+            <?= htmlspecialchars($item->model) ?>
         </label>
         <label>condition:
-            <p><?= htmlspecialchars($item->condition)?></p>
+            <?= htmlspecialchars($item->condition)?>
         </label>
         <label>size:
-            <p><?= htmlspecialchars($item->size) ?></p>
+           <?= htmlspecialchars($item->size) ?>
         </label>
         
         <ul class='tags'>
@@ -309,7 +295,7 @@ function draw_buttons_item(Item $item, Session $session, bool $in_cart, bool $in
         </ul>
         
         <label>description:
-            <p><?= htmlspecialchars($item->description) ?></p>
+            <?= htmlspecialchars($item->description) ?>
         </label>
 
         <p><?=getTimePassed($item->created_at)?></p>
@@ -352,7 +338,7 @@ function draw_buttons_item(Item $item, Session $session, bool $in_cart, bool $in
         }
 
         function showSlides(n) {
-            let i = 0
+            let i
             let slides = document.getElementsByClassName('slide')
             if(n > slides.length) {slideIndex = 1}
             if(n < 1) {slideIndex = slides.length}
@@ -368,10 +354,10 @@ function draw_buttons_item(Item $item, Session $session, bool $in_cart, bool $in
   <form id="add-item-form" action="../actions/action_add_item.php" method="post" enctype="multipart/form-data">
     <h2>Add new Item</h2>
     <div class="error-messages">
-        <?= drawErrors($session->getErrorMessages()) ?>
+        <?php drawErrors($session->getErrorMessages()) ?>
     </div>
     <label for="item-name">Title:</label>
-    <input type="text" id="item-title" name="item-title" required>
+      <label for="item-title"></label><input type="text" id="item-title" name="item-title" required>
     <label for="item-description">Description:</label>
     <textarea id="item-description" name="item-description"></textarea>
     <label for="image-paths">Images:</label>
@@ -405,10 +391,10 @@ function draw_buttons_item(Item $item, Session $session, bool $in_cart, bool $in
         &nbsp<?= htmlspecialchars($condition['name']); ?></option>
         <?php }?>
     </select>
-    <label for="item-price" min="0" inputmode="numeric">Price:</label>
+    <label for="item-price" inputmode="numeric">Price:</label>
     <input type="number" id="item-price" name="item-price" step="0.01" required>
     <label for="tradableItem">Tradable item:</label>
-    <input type="checkbox" id="tradable-item" name="tradable-item"><br>
+      <label for="tradable-item"></label><input type="checkbox" id="tradable-item" name="tradable-item"><br>
     <label for="item-size">Size:</label>
     <?php
     $stmt = $db->query('SELECT id, name FROM Size');
@@ -453,11 +439,12 @@ function draw_buttons_item(Item $item, Session $session, bool $in_cart, bool $in
     </script>
 <?php } ?>
 
-<?php function drawEditItem(PDO $db, Item $item, Session $session) { ?>
+<?php function drawEditItem(PDO $db, Item $item, Session $session): void
+{ ?>
   <form id="add-item-form" action="../actions/action_edit_item.php?item_id=<?php echo $item->id; ?>" method="post" enctype="multipart/form-data">
     <h2>Edit Item</h2>
     <div class="error-messages">
-        <?= drawErrors($session->getErrorMessages()) ?>
+        <?php drawErrors($session->getErrorMessages()) ?>
     </div>
     <label for="item-name">Title:</label>
     <input type="text" id="item-title" name="item-title" value="<?php echo $item->title ?>"required>
@@ -493,7 +480,7 @@ function draw_buttons_item(Item $item, Session $session, bool $in_cart, bool $in
         &nbsp<?= htmlspecialchars($condition['name']);?></option>
         <?php }?>
     </select>
-    <label for="item-price" min="0" inputmode="numeric">Price:</label>
+    <label for="item-price"  inputmode="numeric">Price:</label>
     <input type="number" id="item-price" name="item-price" step="0.01" value="<?php echo $item->price ?>"required>
     <label for="tradableItem">Tradable item:</label>
     <input type="checkbox" id="tradable-item" name="tradable-item" <?php if($item->tradable){echo "checked";}?>><br>

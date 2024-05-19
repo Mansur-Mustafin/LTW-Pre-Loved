@@ -7,7 +7,8 @@ require_once(__DIR__ . '/../utils/Request.php');
 
 ?>
 
-<?php function drawWishListForm(Session $session){ ?>
+<?php function drawWishListForm(Session $session): void
+{ ?>
     <aside id="related">
         <button class="close-sidebar">
             <img src="../assets/img/close.svg">

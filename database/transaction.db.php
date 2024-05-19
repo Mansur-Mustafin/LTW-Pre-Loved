@@ -30,8 +30,8 @@ function completeCheckout(PDO $db, int $userId, array $items)
     $stmt = $db->prepare("DELETE FROM Wishlist WHERE user_id = ? AND item_id in ({$itemsIdsString})");
     $stmt->execute([$userId]);
 
-    $stmt = $db->prepare("DELETE FROM ShoppingCart WHERE user_id = ? AND item_id in ({$itemsIdsString})");
-    $stmt->execute([$userId]);
+    $stmt = $db->prepare("DELETE FROM ShoppingCart WHERE item_id in ({$itemsIdsString})");
+    $stmt->execute();
 
     $values = [];
     $params = [];

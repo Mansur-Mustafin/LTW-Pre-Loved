@@ -26,14 +26,6 @@ nav.pages{
         padding: 1em;
     }
 
-    #add-entity-article {
-        input {
-            margin: 1em;
-        }
-        button {
-            margin-left: 1em;
-        }
-    }
 
     ul.tags{
         display: flex;

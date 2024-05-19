@@ -17,11 +17,11 @@ require_once(__DIR__ . '/../templates/item.tpl.php');
 
 $db = getDatabaseConnection();
 
-$items_in_cart = itemsInCart($db, $session->getId());
-$items_in_wishlist = itemsInWishlist($db, $session->getId());
+$items_in_cart = itemsInCart($session->getId());
+$items_in_wishlist = itemsInWishlist($session->getId());
 $isCart = true;
 
-$items = getAllItemsFromId($db, $items_in_cart);
+$items = getAllItemsFromId($items_in_cart);
 $itemsGroups = groupByUser($items);
 
 drawHeader($session, 'Shopping Cart ' . $session->getName());

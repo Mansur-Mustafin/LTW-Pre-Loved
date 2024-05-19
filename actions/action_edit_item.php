@@ -26,7 +26,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
       exit;
   }
   $itemTitle = $_POST['item-title'];
-  $itemDescription = isset($_POST['item-description']) ? $_POST['item-description'] : '';
+  $itemDescription = $_POST['item-description'] ?? '';
   $itemPathArray = [""];
   if (!empty($_FILES["item-images"]["name"])) {
     if (count($_FILES["item-images"]["name"]) > 3) {
@@ -68,17 +68,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
   $itemPriority = 1;
 
   $item = new Item(
-    title: $itemTitle,
-    description: $itemDescription,
-    images : $itemImages,
-    priority: $itemPriority,
-    price : $itemPrice,
-    tradable : $itemTradable,
-    user_id : $itemUser_id,
-    category : $itemCategory,
-    size : $itemSize,
-    condition : $itemCondition,
-    model : $itemModel,
+    price: $itemPrice,
+      user_id: $itemUser_id,
+      tradable: $itemTradable,
+      priority: $itemPriority,
+      model: $itemModel,
+      description: $itemDescription,
+      title: $itemTitle,
+      images: $itemImages,
+      condition: $itemCondition,
+      category: $itemCategory,
+      size: $itemSize,
   );
 
   updateItem($session,$db,$item,intval($oldItem));

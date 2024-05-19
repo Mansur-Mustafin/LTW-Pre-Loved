@@ -19,7 +19,7 @@ class Chat
         public int $to_user_id,
     ) {}
 
-    public static function newChat( $from_user_id, $to_user_id, $item_id ) 
+    public static function newChat( $from_user_id, $to_user_id, $item_id ): Chat
     {
         return new Chat(
             0,
@@ -29,7 +29,7 @@ class Chat
         );
     }
 
-    public function getChatPartnerId(int $current_user_id)
+    public function getChatPartnerId(int $current_user_id): int
     {
         if($current_user_id == $this->to_user_id){
             return $this->from_user_id;
