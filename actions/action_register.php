@@ -1,32 +1,44 @@
 <?php
 declare(strict_types=1);
 
-require_once(__DIR__ . '/../utils/session.php');
+require_once(__DIR__ . '/../utils/Session.php');
+require_once(__DIR__ . '/../utils/Request.php');
+
 $session = new Session();
-// If user input link
-if ($session->isLoggedIn()) {
-    die(header('Location: ../pages/main_page.php'));
-}
+$request = new Request(false);
+
+if ($session->isLoggedIn()) die(header('Location: ../pages/main_page.php'));
 
 require_once(__DIR__.'/../utils/hash.php');
 require_once(__DIR__.'/../database/connection.db.php');
 require_once(__DIR__.'/../utils/validation.php');
 require_once(__DIR__.'/../database/user.db.php');
+require_once(__DIR__ . '/../utils/Validate.php');
 
 $db = getDatabaseConnection();
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST['email'] ?? null;
-    $username = $_POST['username'] ?? null;
-    $password = $_POST['password'] ?? null;
-    $confirmPassword = $_POST['confirm_password'] ?? null;
-    $address = $_POST['address'] ?? null;
-    $phonenumber = $_POST['phonenumber'] ?? null;
+if ($request->isPost()) {
+    $email = $request->post('email') ?? null;
+    $username = $request->post('username') ?? null;
+    $password = $request->post('password') ?? null;
+    $confirmPassword = $request->post('confirm_password') ?? null;
+    $address = $request->post('address') ?? null;
+    $phonenumber = $request->post('phonenumber') ?? null;
 
-    // TODO Basic validation
-    if (!$email || !$username || !$password || $password !== $confirmPassword) {
-        $session->addMessage('error', 'Failed input values');
-        die(header('Location: ../pages/login.php'));
+    $validator = Validate::in($request->getPostParams())
+        ->required(['username', 'email', 'password', 'confirm_password'])
+        ->match('username', '/^[^@]*$/')  // Username must not contain '@'
+        ->length(['password'], 8, 100)   
+        ->match('email', '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/');  // <mansur>@<gmail>.<com>
+
+    if ($errors = $validator->getErrors()) {
+        foreach ($errors as $field => $messages) {
+            foreach ($messages as $message) {
+                $session->addMessage('error', $message);
+            }
+        }
+        header('Location: ../pages/login.php');
+        die();
     }
 
     if (existUser($db, $username, $email)){

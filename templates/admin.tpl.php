@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-require_once (__DIR__ . '/../utils/session.php');
+require_once (__DIR__ . '/../utils/Session.php');
 
 $session = new Session();
 
 require_once (__DIR__ . '/../templates/common.tpl.php');
 require_once (__DIR__ . '/../pages/admin.php');
+require_once (__DIR__ . '/../utils/Request.php');
 ?>
 
 <?php function drawSideBar()
@@ -81,8 +82,7 @@ require_once (__DIR__ . '/../pages/admin.php');
 <?php } ?>
 
 
-
-<?php function drawUsersAdmin(array $allUsers, Session $session)
+<?php function drawUsersAdmin(array $allUsers, Session $session): void
 { ?>
     <section class="admin-info">
         <div id="search-wrapper">
@@ -93,7 +93,7 @@ require_once (__DIR__ . '/../pages/admin.php');
         <div id="users-admin">
             <?php foreach ($allUsers as $user) { ?>
                 <article class="item">
-                    <img class="profile-img" src=<?= htmlspecialchars($user->image_path) ?> alt="User Image">
+                    <img class="profile-img" src="<?= htmlspecialchars($user->image_path) ?>" alt="User Image">
                     <h3><?= htmlspecialchars($user->username) ?></h3>
                     <div>
                         <ul class="tags">
@@ -129,6 +129,7 @@ require_once (__DIR__ . '/../pages/admin.php');
 
 
                     <form>
+                        <?= Request::generateCsrfTokenInput() ?>
                         <?php if (!$user->banned && !$user->admin_flag) { ?>
                             <button type="submit" name="username" value="<?= $user->username ?>"
                                 formaction="../actions/action_make_user_admin.php" formmethod="post">Promote</button>
@@ -154,7 +155,7 @@ require_once (__DIR__ . '/../pages/admin.php');
     </section>
 <?php } ?>
 
-<?php function drawEntitiesAdmin(array $entities, string $type)
+<?php function drawEntitiesAdmin(array $entities, string $type): void
 { ?>
     <section class="admin-info">
         <button id="add-tag">Add</button>
@@ -165,6 +166,7 @@ require_once (__DIR__ . '/../pages/admin.php');
                     <li>
                         <p><?= $entity["name"] ?></p>
                         <form action="../actions/action_delete_entity.php" method="post" id="delete-entity-form">
+                            <?= Request::generateCsrfTokenInput() ?>
                             <button type="submit" name="typeValue" value="<?= $type ?>/<?= $entity["id"] ?>">
                                 <img src="../assets/img/trash.svg" alt="">
                             </button>
@@ -176,7 +178,7 @@ require_once (__DIR__ . '/../pages/admin.php');
     </section>
 <?php } ?>
 
-<?php function drawItemsAdmin(array $items)
+<?php function drawItemsAdmin(array $items): void
 { ?>
     <section class="admin-info">
         <div id="search-wrapper">
@@ -212,9 +214,9 @@ require_once (__DIR__ . '/../pages/admin.php');
 
                     <div class="top-right-element"></div>
                     <form action="../actions/action_delete_product.php" method="post">
+                        <?= Request::generateCsrfTokenInput() ?>
                         <button type="submit" name="product_id" value=<?= $item->id ?>>Remove</button>
                     </form>
-                    
 
                 </article>
             <?php } ?>

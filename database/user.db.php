@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 require_once(__DIR__.'/../core/user.class.php');
+require_once(__DIR__.'/../database/QueryBuilder.php');
+require_once(__DIR__.'/../database/connection.db.php');
 
 function createUser(PDO $db, User $user) : int
 {
@@ -11,114 +13,18 @@ function createUser(PDO $db, User $user) : int
 
     $stmt = $db->prepare($sql);
 
-    // Bind parameters to prevent SQL injection
-    $stmt->bindParam(':username', $user->username);
-    $stmt->bindParam(':password', $user->password);
-    $stmt->bindParam(':email', $user->email);
-    $stmt->bindParam(':phonenumber', $user->phonenumber);
-    $stmt->bindParam(':image_path', $user->image_path);
+    $stmt->bindParam(':username', $user->username, PDO::PARAM_STR);
+    $stmt->bindParam(':password', $user->password, PDO::PARAM_STR);
+    $stmt->bindParam(':email', $user->email, PDO::PARAM_STR);
+    $stmt->bindParam(':phonenumber', $user->phonenumber, PDO::PARAM_STR);
+    $stmt->bindParam(':image_path', $user->image_path, PDO::PARAM_STR);
     $stmt->bindParam(':banned', $user->banned, PDO::PARAM_BOOL);
     $stmt->bindParam(':admin_flag', $user->admin_flag, PDO::PARAM_BOOL);
-    $stmt->bindParam(':address', $user->address);
+    $stmt->bindParam(':address', $user->address, PDO::PARAM_STR);
 
     $stmt->execute();
 
     return intval($db->lastInsertId());
-}
-
-function existUser(PDO $db, string $username, string $email): bool 
-{
-    // text could be email or username they are both unique
-    $sql = "SELECT 1 FROM Users WHERE username = :username OR email = :email";
-
-    $stmt = $db->prepare($sql);
-
-    $stmt->bindParam(':username', $username, PDO::PARAM_STR);
-    $stmt->bindParam(':email', $email, PDO::PARAM_STR);
-
-    $stmt->execute();
-
-    return $stmt->fetch(PDO::FETCH_ASSOC) !== false;
-}
-
-function getUser(PDO $db, string $text): ?User 
-{
-    // text could be email or username they are both unique
-    $sql = "SELECT * FROM Users WHERE username = :text OR email = :text";
-
-    $stmt = $db->prepare($sql);
-    $stmt->bindParam(':text', $text, PDO::PARAM_STR);
-    $stmt->execute();
-
-    $userData = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if (!$userData) return null;
-    $user = new User(
-        username: $userData['username'],
-        password: $userData['password'],
-        email: $userData['email'],
-        id: $userData['id'],
-        phonenumber: $userData['phonenumber'],
-        image_path: $userData['image_path'],
-        banned: $userData['banned'] ?? 0,
-        admin_flag: $userData['admin_flag'] ?? 0,
-        address: $userData['address'],
-        created_at: $row['created_at'] ?? null,
-    );
-    return $user;
-}
-
-function searchUsers(PDO $db, string $keyword): ?array 
-{
-    $sql = "SELECT * FROM Users WHERE username LIKE ?";
-
-    $stmt = $db->prepare($sql);
-    $stmt->execute([$keyword . '%']);
-
-    $users = [];
-    while( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
-        $user = new User(
-            id: $row['id'],
-            username: $row['username'],
-            email: $row['email'],
-            password: $row['password'],
-            phonenumber: $row['phonenumber'] ?? null,
-            image_path: $row['image_path'] ?? null,
-            banned: $row['banned'] ?? 0,
-            admin_flag: $row['admin_flag'] ?? 0,
-            address: $row['address'] ?? null,
-            created_at: $row['created_at'] ?? null,
-        );
-        $users[] = $user;
-    }
-
-    return $users;
-}
-
-function getUserById(PDO $db, int $id): ?User 
-{
-    $sql = "SELECT * FROM Users WHERE id = :id";
-
-    $stmt = $db->prepare($sql);
-    $stmt->bindParam(':id', $id, PDO::PARAM_STR);
-    $stmt->execute();
-
-    $userData = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if (!$userData) return null;
-    $user = new User(
-        id: $userData['id'],
-        username: $userData['username'],
-        email: $userData['email'],
-        password: $userData['password'],
-        phonenumber: $userData['phonenumber'] ?? null,
-        image_path: $userData['image_path'] ?? null,
-        banned: $userData['banned'] ?? 0,
-        admin_flag: $userData['admin_flag'] ?? 0,
-        address: $userData['address'] ?? null,
-        created_at: $userData['created_at'] ?? null,
-    );
-    return $user;
 }
 
 function updateUser(PDO $db, User $user): bool 
@@ -149,27 +55,59 @@ function updateUser(PDO $db, User $user): bool
     return $stmt->execute();
 }
 
+function existUser(PDO $db, string $username, string $email): bool 
+{
+    $qb = new QueryBuilder("User");
+
+    $qb->select()
+        ->from("Users")
+        ->where(['username', '=', $username], 'OR')
+        ->where(['email', '=', $email]);
+
+    return isset($qb->all()[0]);
+}
+
+function getUser(PDO $db, string $text): ?User 
+{   
+    // text could be email or username they are both unique
+    $qb = new QueryBuilder("User");
+
+    $qb->select()
+        ->from("Users")
+        ->where(['username', '=', $text], 'OR')
+        ->where(['email', '=', $text]);
+
+    if(!$qb->all()) return null;
+    return $qb->all()[0];
+}
+
+function searchUsers(PDO $db, string $keyword): ?array 
+{
+    $qb = new QueryBuilder("User");
+    $qb->select()
+        ->from("Users")
+        ->where(['username', 'LIKE', '%'.$keyword.'%']);
+
+    return $qb->all();
+}
+
+function getUserById(PDO $db, int $id): ?User 
+{
+    $qb = new QueryBuilder("User");
+
+    $qb->select()
+        ->from("Users")
+        ->where(['id', '=', $id]);
+
+    return $qb->all()[0];
+}
+
 function getAllUsers(PDO $db): array 
 {
-    $sql = 'SELECT * FROM USERS';
-    $stmt = $db->prepare($sql);
-    $stmt->execute();
+    $qb = new QueryBuilder("User");
 
-    $users = [];
-    while( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
-        $user = new User(
-            id: $row['id'],
-            username: $row['username'],
-            email: $row['email'],
-            password: $row['password'],
-            phonenumber: $row['phonenumber'] ?? null,
-            image_path: $row['image_path'] ?? null,
-            banned: $row['banned'] ?? 0,
-            admin_flag: $row['admin_flag'] ?? 0,
-            address: $row['address'] ?? null,
-        );
-        $users[] = $user;
-    }
+    $qb->select()
+        ->from("Users");
 
-    return $users;
+    return $qb->all();
 }

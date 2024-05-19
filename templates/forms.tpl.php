@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-require_once(__DIR__ . '/../utils/session.php');
+require_once(__DIR__ . '/../utils/Session.php');
 ?>
 
 
@@ -15,10 +15,10 @@ require_once(__DIR__ . '/../utils/session.php');
         <button id="register-tuggle">Create Account</button>
         <form id="login-form">
             <label>
-                Username <input type="text" name="email">
+                Username <input type="text" name="email" required>
             </label>
             <label>
-                Password <input type="password" name="password">
+                Password <input type="password" name="password" required>
             </label>
             <?php drawErrors($session->getErrorMessages()) ?>
             <button formaction="../actions/action_login.php" formmethod="post">Login</button>

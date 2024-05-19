@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
-require_once(__DIR__ . '/../utils/session.php');
+require_once(__DIR__ . '/../utils/Session.php');
+require_once(__DIR__ . '/../utils/Request.php');
 
 $session = new Session();
+$request = new Request();
 
 if (!$session->isLoggedIn()) die(header('Location: /'));
 
@@ -16,8 +18,8 @@ require_once(__DIR__ . '/../components/pdf.php');
 
 $db = getDatabaseConnection();
 
-$userId = isset($_GET['id']) == null ? $session->getId() : intval($_GET['id']);
-$itemId = intval($_GET['item-id']);
+$userId = empty($request->get('id')) ? $session->getId() : intval($request->get('id'));
+$itemId = intval($request->get('item-id'));
 
 $item = getBoughtItem($db, $userId, $itemId);
 $transaction = getTransaction($db, $itemId);

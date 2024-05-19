@@ -66,3 +66,14 @@ function completeCheckout(PDO $db, int $userId, array $items)
     $stmt = $db->prepare("INSERT INTO ItemTags (item_id, tag_id) VALUES {$valuesString};");
     $stmt->execute($params);
 }
+
+// TODO: rewrite this with QueryBuilder
+function isItemSold(PDO $db, int $itemId) {
+    
+    $sql = "SELECT COUNT(*) FROM Transactions WHERE item_id = :itemId";
+    $stmt = $db->prepare($sql);
+    $stmt->execute([':itemId' => $itemId]);
+    $count = $stmt->fetchColumn();
+
+    return $count > 0; 
+}

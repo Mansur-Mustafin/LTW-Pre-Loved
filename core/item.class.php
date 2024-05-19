@@ -5,6 +5,7 @@ declare(strict_types=1);
 class Item 
 {
     public const DEFAULT_IMAGE_PATH = "../assets/img/default_item.svg";
+    public array $imagesArray = [];
 
     public function __construct(
         public float $price,
@@ -24,21 +25,32 @@ class Item
         public ?string $size = null,
         public ?array $tags = null,
     ) {
-        $this->brand = $brand ?? '';
-        $this->model = $model ?? '';
-        $this->description = $description ?? '';
-        $this->title = $title ?? '';
-        $this->images = $images ?? [self::DEFAULT_IMAGE_PATH];
-        $this->created_at = $created_at ?? time();
-        $this->condition = $condition ?? '';
-        $this->category = $category ?? '';
-        $this->size = $size ?? '';
-        $this->tags = $tags ?? array();
+        $this->ensureDefaultValues();
+        $this->imagesArray = isset($this->images) ?  $this->parseImages() : [self::DEFAULT_IMAGE_PATH];
+    }
+
+    public function __set($name, $value){}
+
+    public function ensureDefaultValues() {
+        $this->brand = $this->brand ?? '';
+        $this->model = $this->model ?? '';
+        $this->description = $this->description ?? '';
+        $this->title = $this->title ?? '';
+        $this->created_at = $this->created_at ?? time();
+        $this->condition = $this->condition ?? '';
+        $this->category = $this->category ?? '';
+        $this->size = $this->size ?? '';
+        $this->tags = $this->tags ?? [];
+    }
+
+    public function parseImages() : array 
+    {
+        return json_decode($this->images, true);
     }
 
     public function getImagesArray(): array
     {
-        return json_decode($this->images, true);
+        return $this->imagesArray;
     }
 
     public function getMainItemImage(): string

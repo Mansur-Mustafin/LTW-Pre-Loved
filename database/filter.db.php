@@ -6,9 +6,8 @@ require_once(__DIR__ . '/../utils/validation.php');
 
 function getEntitiesFromType(PDO $db, string $type) 
 {
-    $stmt = $db->prepare("SELECT * FROM $type");
-    $stmt->execute();
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $qb = new QueryBuilder();
+    return $qb->select()->from($type)->all();
 }
 
 function removeEntity(PDO $db, string $entity, string $type) 

@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
-require_once(__DIR__ . '/../utils/session.php');
+require_once(__DIR__ . '/../utils/Session.php');
 ?>
 
-<?php function drawHeader(Session $session, string $title = '')
+<?php function drawHeader(Session $session, string $title = ''): void
 { ?>
 
     <!DOCTYPE html>
@@ -36,7 +36,7 @@ require_once(__DIR__ . '/../utils/session.php');
         <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
 
     </head>
-    <body>
+    <body data-csrf-token="<?=$session->getCsrfToken(); ?>">
         <header>
 
             <div id="logo">
@@ -100,7 +100,7 @@ require_once(__DIR__ . '/../utils/session.php');
 <?php } ?>
 
 
-<?php function drawErrors(array $errors) 
+<?php function drawErrors(array $errors): void
 { ?>
     <ul id='errors'>
         <?php foreach($errors as $error){ ?>
@@ -109,7 +109,7 @@ require_once(__DIR__ . '/../utils/session.php');
     </ul>
 <?php } ?>
 
-<?php function drawSuccessMsg(array $messages) 
+<?php function drawSuccessMsg(array $messages): void
 { ?>
     <ul id='success'>
         <?php foreach($messages as $message){ ?>

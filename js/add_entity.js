@@ -31,7 +31,13 @@ function createForm(action,name,value,parent) {
     button.value = value // TYPE
     button.textContent = "Add"
 
+    const csrfToken = document.createElement("input")
+    csrfToken.type = "hidden"
+    csrfToken.name = "csrf_token"
+    csrfToken.value = document.body.dataset?.csrfToken;
+
     form.appendChild(input)
+    form.appendChild(csrfToken)
     form.appendChild(button)
     parent.appendChild(form)
 }

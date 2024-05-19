@@ -5,23 +5,34 @@ declare(strict_types=1);
 require_once(__DIR__.'/../core/item.class.php');
 require_once(__DIR__.'/../database/connection.db.php');
 require_once(__DIR__.'/../database/item.db.php');
+require_once(__DIR__.'/../database/QueryBuilder.php');
 
-$db = getDatabaseConnection();
+
+$qb = new QueryBuilder("Item");
+
+$qb ->setupItemSelect()
+    ->from("Items")
+    ->setupItemJoins();
+
 
 if($_GET['entity'] == 'category') {
-    $items = filterItemsbyCategory($db,$_GET['filter']);
-    echo json_encode($items);
+    $qb->where(["Categories.name", "LIKE", $_GET['filter']]);
 } else if($_GET['entity'] == 'brand') {
-    $items = filterItemsbyBrand($db,$_GET['filter']);
-    echo json_encode($items);
+    $qb->where(["Brands.name", "LIKE", $_GET['filter']]);
 } else if($_GET['entity'] == 'size') {
-    $items = filterItemsbySize($db,$_GET['filter']);
-    echo json_encode($items);
+    $qb->where(["Size.name", "LIKE", $_GET['filter']]);
 } else if($_GET['entity'] == 'condition') {
-    $items = filterItemsbyCondition($db,$_GET['filter']);
-    echo json_encode($items);
+    $qb->where(["Condition.name", "LIKE", $_GET['filter']]);
 } else {
     echo json_encode(['error'=> 'not valid search']);
 }
 
+
+$items = $qb->all();
+if (isset($items) && count($items) > 0) {
+    foreach ($items as $item) {
+        $item->tags = getTagsForItem($item->id);
+    }
+}
+echo json_encode($items);
 

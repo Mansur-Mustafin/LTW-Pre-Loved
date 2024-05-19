@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 require_once(__DIR__.'/../core/user.class.php');
 require_once(__DIR__ . '/../templates/common.tpl.php');
+require_once(__DIR__ . '/../utils/Request.php');
 ?>
 
 
-<?php function drawProfile(User $user, Session $session,bool $isCurrentUser) 
+<?php function drawProfile(User $user, Session $session,bool $isCurrentUser): void
 {?>    
     <p class="hidden" id="session_id"><?= $session->getId()?></p>
     <aside id="profile-info">
@@ -72,6 +73,7 @@ require_once(__DIR__ . '/../templates/common.tpl.php');
     <aside id="profile-info">
         <img id="current_profile_img" src=<?=htmlspecialchars($user->image_path)?> alt="Account Profile Picture">
         <form id="edit-profile-info" action="../actions/action_update_user.php" method="post" enctype="multipart/form-data">
+            <?= Request::generateCsrfTokenInput() ?>
             <label><img src="../assets/img/edit.svg" alt="Edit icon">
                 <input id="profile_img" name="profile_img" type="file" accept="image/png,image/jpeg">
             </label>
@@ -100,6 +102,7 @@ require_once(__DIR__ . '/../templates/common.tpl.php');
     <aside id="profile-info">
         <img id="current_profile_img" src=<?=htmlspecialchars($user->image_path)?> alt="Account Profile Picture">
         <form id="edit-profile-info" action="../actions/action_update_user.php" method="post" enctype="multipart/form-data">
+            <?= Request::generateCsrfTokenInput() ?>
             <input type="password" name="new_password" placeholder="New Password">
             <input type="password" name="new_password_confirmation" placeholder="Confirm New Password">
             <input type="password" name="old_password" placeholder="Old Password">

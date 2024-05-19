@@ -1,3 +1,5 @@
+const csrfToken = document.body.dataset?.csrfToken
+
 let form = document.getElementById('message_form')
 let messages = document.getElementById('messages')
 let message_template = document.getElementById('message_template')
@@ -17,6 +19,14 @@ setInterval(checkNewMessages, 2000)
 
 form.addEventListener("submit", function (e){
     e.preventDefault()
+
+    const csrfToken = document.createElement("input")
+    csrfToken.type = "hidden"
+    csrfToken.name = "csrf_token"
+    csrfToken.value = document.body.dataset?.csrfToken;
+
+    form.appendChild(csrfToken)
+
     sendMessage()
 })
 
@@ -58,7 +68,12 @@ function checkNewMessages() {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(
-            {last_message_id:last_message_id, chat_id:chat_id, to_user_id:to_user_id}
+            {
+                last_message_id:last_message_id,
+                chat_id:chat_id,
+                to_user_id: to_user_id,
+                csrfToken
+            }
         ),
     })
         .then(r =>  r.json().then(data => ({status: r.status, body: data})))
