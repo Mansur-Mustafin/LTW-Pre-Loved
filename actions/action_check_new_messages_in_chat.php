@@ -1,20 +1,21 @@
 <?php
+
 declare(strict_types=1);
 
-require_once(__DIR__.'/../utils/session.php');
+require_once(__DIR__ . '/../utils/Session.php');
+require_once(__DIR__ . '/../utils/Request.php');
 
 $session = new Session();
+$request = new Request();
 
-if(!$session->isLoggedIn()) {
-    die(header('Location: /'));
-}
+if(!$session->isLoggedIn()) die(header('Location: /'));
 
 require_once(__DIR__.'/../database/connection.db.php');
 require_once(__DIR__.'/../database/message.db.php');
 
 $db = getDatabaseConnection();
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($request->isPost()) {
     $data = json_decode(file_get_contents('php://input'), true);
     if (!isset($data['chat_id']) ||
         !isset($data['last_message_id']) ||

@@ -42,17 +42,18 @@ foreach ($items as $item) {
 
             <div id="phoneLabel" style="display: none">
                 <label>
-                    Phone <input type="text" name="phone">
+                    Phone <input type="text" name="phone" >
                 </label>
             </div>
 
             <div id="visaFields" style="display: none">
                 <label>
-                    Card number <input type="text" name="cardNumber" >
+                    Card number <input type="text" id="formattedCardNumber" autocomplete="off">
+                    <input type="hidden" name="cardNumber" id="cardNumber">
                 </label>
 
                 <label>
-                    CVV <input type="text" name="cvv">
+                    CVV <input type="text" name="cvv" id="cvv" >
                 </label>
             </div>
         </form>
@@ -72,4 +73,32 @@ foreach ($items as $item) {
             phoneLabel.style.display = 'none';
         }
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        let formattedCardInput = document.getElementById('formattedCardNumber');
+        let rawCardInput = document.getElementById('cardNumber');
+        let cvvInput = document.getElementById('cvv');
+
+        formattedCardInput.addEventListener('input', function() {
+            let rawInput = this.value.split(' ').join(''); // Remove spaces for processing
+            if (rawInput.length > 16) {
+                rawInput = rawInput.substring(0, 16); // Limit to 16 digits
+            }
+
+            let formattedInput = '';
+            if (rawInput.length > 0) {
+                formattedInput = rawInput.match(new RegExp('.{1,4}', 'g')).join(' '); // Add spaces every 4 digits
+            }
+            
+            this.value = formattedInput; // Update visible input field
+            rawCardInput.value = rawInput; // Update hidden input field
+        });
+
+        cvvInput.addEventListener('input', function() {
+            if (this.value.length > 3) {
+                this.value = this.value.substring(0, 3); // Limit CVV to 3 digits
+            }
+        });
+    });
+
 </script>

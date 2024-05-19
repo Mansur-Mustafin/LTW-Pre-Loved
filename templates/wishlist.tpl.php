@@ -2,7 +2,8 @@
 
 declare(strict_types=1);
 
-require_once(__DIR__.'/../utils/session.php')
+require_once(__DIR__ . '/../utils/Session.php');
+require_once(__DIR__ . '/../utils/Request.php');
 
 ?>
 
@@ -22,6 +23,7 @@ require_once(__DIR__.'/../utils/session.php')
             <?php drawSuccessMsg($session->getSuccessMessages()) ?>
 
             <div class='buttons'>
+                <?= Request::generateCsrfTokenInput() ?>
                 <button type="submit">Send</button>
             </div>
         </form>
@@ -29,7 +31,7 @@ require_once(__DIR__.'/../utils/session.php')
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            var textarea = document.getElementById('expanding-textarea'); // TODO id? 
+            let textarea = document.getElementById('expanding-textarea'); // TODO id?
 
             textarea.addEventListener('input', function() {
                 this.style.height = 'auto'; 

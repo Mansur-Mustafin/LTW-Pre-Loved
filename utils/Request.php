@@ -2,8 +2,22 @@
 
 declare(strict_types=1);
 
+require_once(__DIR__ . '/../utils/Session.php');
+
 class Request
 {
+    public function __construct($enableCsrfValidation = true)
+    {
+        if ($enableCsrfValidation) self::init();
+    }
+
+    public static function init(): void
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && !self::validateCsrfToken()) {
+            throw new Exception('Bad Request', 400);
+        }
+    }
+
     public function get($key, $default = null): ?string
     {
         return isset($_GET[$key]) ? $this->sanitize($_GET[$key]) : $default;
@@ -14,12 +28,12 @@ class Request
         return isset($_POST[$key]) ? $this->sanitize($_POST[$key]) : $default;
     }
 
-    public function isPost(): bool
+    public static function isPost(): bool
     {
         return $_SERVER['REQUEST_METHOD'] === 'POST';
     }
 
-    public function isGet(): bool
+    public static function isGet(): bool
     {
         return $_SERVER['REQUEST_METHOD'] === 'GET';
     }
@@ -59,18 +73,18 @@ class Request
         return isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
     }
 
-    public function validateCsrfToken(): bool
+    public static function validateCsrfToken(): bool
     {
-        if (!$this->isPost() || $this->post('csrf_token') === null) {
+        if (!$_SERVER['REQUEST_METHOD'] || (isset($_POST['csrf_token']) && $_POST['csrf_token'] !== $_SESSION['csrf_token'])) {
             return false;
         }
 
-        $token = $this->post('csrf_token');
+        $token = $_POST['csrf_token'];
 
-        static::checkSession();
+        Session::checkSession();
 
         if (isset($_SESSION['csrf_token']) && hash_equals($_SESSION['csrf_token'], $token)) {
-            $this->clearCsrfToken();
+            self::clearCsrfToken();
 
             return true;
         }
@@ -80,29 +94,17 @@ class Request
 
     public static function generateCsrfTokenInput(): string
     {
-        static::checkSession();
+        Session::checkSession();
+        // Session::initDefaultSessionParams();
 
-        if (empty($_SESSION['csrf_token'])) {
-            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-        }
-
-        $token = $_SESSION['csrf_token'];
-
-        return '<input type="hidden" name="csrf_token" value="' . $token . '">';
+        return '<input type="hidden" name="csrf_token" value="' . $_SESSION['csrf_token'] . '">';
     }
 
-    private function clearCsrfToken(): void
+    private static function clearCsrfToken(): void
     {
-        static::checkSession();
+        Session::checkSession();
 
         unset($_SESSION['csrf_token']);
         unset($_POST['csrf_token']);
-    }
-
-    private static function checkSession(): void
-    {
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
     }
 }

@@ -1,28 +1,39 @@
 <?php
 declare(strict_types=1);
 
-require_once(__DIR__.'/../utils/session.php');
+require_once(__DIR__ . '/../utils/Session.php');
+require_once(__DIR__ . '/../utils/Request.php');
 
 $session = new Session();
+$request = new Request();
 
-if(!$session->isLoggedIn()) {
-    die(header('Location: /'));
-}
+if(!$session->isLoggedIn()) die(header('Location: /'));
+
 
 require_once(__DIR__.'/../database/connection.db.php');
 require_once(__DIR__ . '/../database/item.db.php');
 require_once(__DIR__.'/../utils/validation.php');
+require_once(__DIR__ . '/../utils/Validate.php');
 
 $db = getDatabaseConnection();
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST['email'];
-    $email = 'mustafin.mansur02@gmail.com'; // TODO 
-    $message = $_POST['wishlist-message'];
+if ($request->isPost()) {
+    $email = $request->post('email');
+    $email = 'mustafin.mansur02@gmail.com'; // TODO: change this email.
+    $message = $request->post('wishlist-message');
 
-    if(!is_valid_email($email)){
-        $session->addMessage('error', 'Invalid email format');
-        die(header('Location: ../pages/wishlist.php'));
+    $validator = Validate::in($request->getPostParams())
+        ->required(['email'])  
+        ->match('email', '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/');  // <mansur>@<gmail>.<com>
+
+    if ($errors = $validator->getErrors()) {
+        foreach ($errors as $field => $messages) {
+            foreach ($messages as $message) {
+                $session->addMessage('error', $message);
+            }
+        }
+        header('Location: ../pages/login.php');
+        die();
     }
     
     $items_in_wishlist = itemsInWishlist($db, $session->getId()); // TODO or better set all ids as a <input type=hidden>?

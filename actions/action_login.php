@@ -1,13 +1,14 @@
 <?php
 declare(strict_types=1);
 
-require_once(__DIR__.'/../utils/session.php');
-$session = new Session();
+require_once(__DIR__ . '/../utils/Session.php');
+require_once(__DIR__ . '/../utils/Request.php');
+require_once(__DIR__ . '/../utils/Validate.php');
 
-// TODO: delete all dies
-if ($session->isLoggedIn()) {
-  die(header('Location: /'));
-}
+$session = new Session();
+$request = new Request(false);
+
+if ($session->isLoggedIn()) die(header('Location: /'));
 
 require_once(__DIR__.'/../utils/hash.php');
 require_once(__DIR__.'/../utils/validation.php');
@@ -17,24 +18,32 @@ require_once(__DIR__.'/../core/user.class.php');
 
 $db = getDatabaseConnection();
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    die(header('Location: ../pages/login.php'));
-}
+if (!$request->isPost()) die(header('Location: ../pages/login.php'));
 
-if (!is_valid_email($_POST['email'])) {
-    $session->addMessage('error', 'Invalid email format');
-    die(header('Location: ../pages/login.php'));
-}
+$validator = Validate::in($_POST)
+    ->required(['email', 'password'])
+    ->length(['password'], 8, 100); 
+
+if ($errors = $validator->getErrors()) {
+    foreach ($errors as $field => $messages) {
+        foreach ($messages as $message) {
+            $session->addMessage('error', $message);
+        }
+    }
+    header('Location: ../pages/login.php');
+    exit;
+}    
+
 
 // Add password verification
-$user = getUser($db, $_POST['email']);
+$user = getUser($db, $request->post('email'));
 
 if (!$user){
     $session->addMessage('error', 'User not found');
     die(header('Location: ../pages/login.php'));
 }
 
-if(!is_same_password($_POST['password'], $user->password)){
+if(!is_same_password($request->post('password'), $user->password)){
     $session->addMessage('error', 'Wrong password');
     die(header('Location: ../pages/login.php'));
 }
@@ -48,7 +57,7 @@ $session->setId($user->id);
 $session->setName($user->username);
 $session->setAdmin((bool)$user->admin_flag);
 
-// TODO change this later
+// TODO change this later to admin page
 if($user->admin_flag){
     header('Location: /');
 }

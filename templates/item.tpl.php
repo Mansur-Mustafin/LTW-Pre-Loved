@@ -23,7 +23,7 @@ require_once(__DIR__ . '/../utils/utils.php');
     <?php } else { ?>
 
     <section id="items">
-            <h2 id="title"><?= $title ?></h2>
+            <h2 id="title"><?= $title ?> </h2>
             <div id="search-wrapper">
                 <img src="../assets/img/search.svg" alt="search-bar" id="search-icon">
                 <input class="search" id="item-search" type="text">
@@ -53,10 +53,14 @@ require_once(__DIR__ . '/../utils/utils.php');
     bool $has_more_pages = false,
     string $place = '',
 ): void { ?>
+
+    <?php if (empty($items)) { ?>
+        <section class='message_middle'>
+            <h2> <?= handleDifferentTitles($place); ?></h2>
+        </section>
+    <?php } else { ?>
+
     <section id="items">
-        <?php if (empty($items)){ ?>
-            <h2> <?= handleDifferentTitles($place); ?> </h2>
-        <?php } else { ?>
             <h2 id="title"><?= $title ?></h2>
             <div id="search-wrapper">
                 <img src="../assets/img/search.svg" alt="search-bar" id="search-icon">
@@ -183,13 +187,13 @@ require_once(__DIR__ . '/../utils/utils.php');
             <p><?=getTimePassed($item->created_at)?></p>
         </div>
         <div class="top-right-element"><p><?=htmlspecialchars(number_format($item->price, 2))?></p><p>$</p></div>
-        <?php draw_buttons_item($item, $session, $title, $in_cart, $in_wish_list, $isCurrentUserPage, $place); ?>
+        <?php draw_buttons_item($item, $session, $in_cart, $in_wish_list, $isCurrentUserPage, $place); ?>
     </article>
 <?php } ?>
 
+
 <?php
-// TODO: change problem with title SOLID
-function draw_buttons_item(Item $item, Session $session, string $title, bool $in_cart, bool $in_wish_list, bool $isCurrentUserPage, $place = null)
+function draw_buttons_item(Item $item, Session $session, bool $in_cart, bool $in_wish_list, bool $isCurrentUserPage, $place = null)
 {   
     $uri = '../actions/action_item_status.php';
 
@@ -231,7 +235,7 @@ function draw_buttons_item(Item $item, Session $session, string $title, bool $in
 } ?>
 
 
-<?php function drawItemMain(Item $item, Session $session, bool $in_cart, bool $in_wish_list) 
+<?php function drawItemMain(Item $item, Session $session, bool $in_cart, bool $in_wish_list, bool $solded = true) 
 {
     $uri = '../actions/action_item_status.php';
 
@@ -312,8 +316,7 @@ function draw_buttons_item(Item $item, Session $session, string $title, bool $in
         
     </article>
     
-    
-    <?php if ($session->isLoggedIn()) { ?>
+    <?php if ($session->isLoggedIn() && !$solded) { ?>
         <form id="editing-item">
         <div class='buttons'>
             <?php if ($session->getId() == $item->user_id): ?>

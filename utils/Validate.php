@@ -10,7 +10,7 @@ class Validate
     private array $errors = [];
 
     public function __construct(
-        private readonly array|object $provider,
+        private readonly array | object $provider,
     ) {}
 
     public static function in(array|object $provider): static
@@ -88,6 +88,16 @@ class Validate
             if ($length < $min || $length > $max) {
                 $this->addError($attribute, $errorMessage);
             }
+        }
+
+        return $this;
+    }
+
+    public function match(string $attribute, string $pattern): static
+    {
+        $attributeValue = $this->getAttributeValue($attribute);
+        if (!preg_match($pattern, $attributeValue)) {
+            $this->addError($attribute, "{$attribute} does not match the required format");
         }
 
         return $this;

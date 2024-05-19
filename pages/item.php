@@ -2,11 +2,12 @@
 
 declare(strict_types = 1);
 
-require_once(__DIR__ . '/../utils/session.php');
+require_once(__DIR__ . '/../utils/Session.php');
 $session = new Session();
 
 
 require_once(__DIR__ . '/../database/item.db.php');
+require_once(__DIR__ . '/../database/transaction.db.php');
 require_once(__DIR__ . '/../database/connection.db.php');
 require_once(__DIR__ . '/../database/chat.db.php');
 require_once(__DIR__ . '/../templates/common.tpl.php');
@@ -48,11 +49,12 @@ if($session->isLoggedIn() && $session->getId() != $item->user_id){
     $in_wishlist = in_array($item->id, $items_in_wishlist);
 }
 
+$solded = isItemSold($db, $item->id);
 drawHeader($session, $item->title);
-drawItemMain($item, $session, $in_cart, $in_wishlist);
+drawItemMain($item, $session, $in_cart, $in_wishlist, $solded);
 
 if($chat !== null || $isCustomer)
-    drawMessagesBlockMessages($chat, $session->getId(), $item);
+    drawMessagesBlockMessages($chat, $session->getId(), $item, $solded);
 else if($chats !== null)
     drawMessagesBlockChats($session, $chats, $session->getId(), $item_id);
 else if(!$session->isLoggedIn()){

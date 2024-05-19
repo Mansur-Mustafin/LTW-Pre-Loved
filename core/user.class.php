@@ -19,6 +19,12 @@ class User
         public ?int $created_at = null
     ) {
         $this->ensureDefaultValues();
+    }    
+
+    public function hasDefaultImage()
+    {
+        return $this->image_path == static::DEFAULT_USER_IMG;
+        $this->ensureDefaultValues();
     }
 
     public function ensureDefaultValues() {
