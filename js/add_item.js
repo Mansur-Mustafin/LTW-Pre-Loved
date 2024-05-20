@@ -14,8 +14,6 @@ if(itemTags) {
     tagsUL.classList.add("ul-tags")
     itemTags.appendChild(tagsUL)
 
-    console.log(tagsUL)
-
     label = document.createElement("label")
     label.textContent = "Tags"
     itemTags.appendChild(label)
@@ -77,7 +75,6 @@ function renderTags(tagsUL,currentTags,itemTagsSelect) {
         const deleteButton = document.createElement('button')
         deleteButton.textContent = "X"
         deleteButton.addEventListener('click', () => {
-            console.log(itemTagsSelect.childNodes)
             removeTag(tagsUL,tag,currentTags,itemTagsSelect)
         })
         item.appendChild(deleteButton)

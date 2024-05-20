@@ -106,7 +106,7 @@ async function buildPage() {
         })
 
         drawTransactionsByMonthGraph(transactions, chartsSection)
-        drawUserByMonthGraph(chartsSection)
+        drawUserByMonthGraph(users, chartsSection)
         drawGraphByDay(chartsSection, items, "New Items by Day")
         categoriesGraph = createGraph(chartsSection, "Categories", countCategories, "doughnut")
         sizeGraph = createGraph(chartsSection, "Sizes", countSizes, "doughnut")
@@ -125,7 +125,7 @@ function drawTransactionsByMonthGraph(transactions,chartsSection) {
     createGraphLine(chartsSection,months(monthsCountUsers.length),monthsCountUsers,"Transactions by Month")
 }
 
-function drawUserByMonthGraph(chartsSection) {
+function drawUserByMonthGraph(users, chartsSection) {
     let monthIndex = Array.from({length: 12}, (v, k) => k + 1);
     let formattedCreatedAtUsers = users.map((e) => (new Date(1000 * e.created_at)))
     let monthsUsers = formattedCreatedAtUsers
@@ -143,7 +143,6 @@ function drawGraphByDay(chartsSection,values,name) {
     let daysItems = formattedData
         .filter((e) => e.getFullYear() === new Date().getFullYear() && e.getMonth() === new Date().getMonth())
     let daysCountItems = dayIndex.map((day) => daysItems.filter((e) => e.getDate() === day).length)
-    console.log(daysCountItems)
     createGraphLine(chartsSection,dayIndex,daysCountItems,name)
 }
 

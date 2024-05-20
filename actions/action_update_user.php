@@ -44,9 +44,6 @@ if ($request->isPost() && $request->post('edit-profile') !== null) {
             $hasDefaultImage = $user->hasDefaultImage();
             $updateFoto = !empty($_FILES['profile_img']['name']);
             
-            var_dump($hasDefaultImage);
-            var_dump($updateFoto);
-            
             $used_usernames = array_map(function (User $user) {
                 return $user->username;
             },getAllUsers($db));
@@ -55,9 +52,7 @@ if ($request->isPost() && $request->post('edit-profile') !== null) {
                 if(!in_array($request->post('new_username'),$used_usernames)){
                     $user->username = $request->post('new_username');
                 }
-                var_dump("line 53");
             } else {
-                var_dump("line 55");
                 $old_image_path = $user->image_path;
 
                 if(!in_array($request->post('new_username'),$used_usernames)){
@@ -82,7 +77,6 @@ if ($request->isPost() && $request->post('edit-profile') !== null) {
         }
         if(isset($_FILES['profile_img']['name'])){
             if (move_uploaded_file($_FILES['profile_img']['tmp_name'], __DIR__.'/..'.$user->image_path)) {
-                var_dump("line 79");
                 $user->image_path = $save_path;
             }
         }
@@ -101,7 +95,6 @@ if ($request->isPost() && $request->post('edit-profile') !== null) {
 if ($request->isPost() && $request->post('change-password') !== null) {
 
     $user = getUser($db, $session->getName());
-    var_dump($user);
 
     if ($request->post('change-password') == 'save') {
         $new_password = $request->post('new_password');
