@@ -75,6 +75,10 @@ if ($request->isPost() && $request->post('edit-profile') !== null) {
         if (!empty($request->post('new_address'))) {
             $user->address = $request->post('new_address');
         }
+        $user->country_id = ((int) $request->post('new_country')) - 1;
+        if (!empty($request->post('new_zip_code'))) {
+            $user->zip_code = $request->post('new_zip_code');
+        }
         if(isset($_FILES['profile_img']['name'])){
             if (move_uploaded_file($_FILES['profile_img']['tmp_name'], __DIR__.'/..'.$user->image_path)) {
                 $user->image_path = $save_path;
@@ -95,6 +99,7 @@ if ($request->isPost() && $request->post('edit-profile') !== null) {
 if ($request->isPost() && $request->post('change-password') !== null) {
 
     $user = getUser($db, $session->getName());
+    var_dump($user);
 
     if ($request->post('change-password') == 'save') {
         $new_password = $request->post('new_password');

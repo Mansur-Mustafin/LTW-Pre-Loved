@@ -2,10 +2,11 @@
 declare(strict_types=1);
 
 require_once(__DIR__ . '/../utils/Session.php');
+require_once (__DIR__ . '/../utils/Request.php');
 ?>
 
 
-<?php function drawLoginForm(Session $session) 
+<?php function drawLoginForm(Session $session, array $countries = [])
 {?>
     <section id="login-register">
 
@@ -37,11 +38,28 @@ require_once(__DIR__ . '/../utils/Session.php');
                 Confirm Password <input type="password" name="confirm_password" required>
             </label>
             <label>
+                Select Country
+                <div class="select-field">
+                <span>--------------</span>
+                    <input type="hidden" name="country_id" value="">
+                    <ul>
+                        <li data-value="">--------------</li>
+                        <?php foreach ($countries as $country):  ?>
+                            <li data-value="<?=$country->id; ?>"><?=$country->name; ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            </label>
+            <label>
                 Address <input type="text" name="address">
+            </label>
+            <label>
+                ZIP Code <input type="text" name="zip_code">
             </label>
             <label>
                 Phone Number <input type="tel" name="phonenumber">
             </label>
+            <?= Request::generateCsrfTokenInput() ?>
             <button formaction="../actions/action_register.php" formmethod="post">Register</button>
         </form>
 

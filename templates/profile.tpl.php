@@ -8,7 +8,7 @@ require_once(__DIR__ . '/../utils/Request.php');
 ?>
 
 
-<?php function drawProfile(User $user, Session $session,bool $isCurrentUser): void
+<?php function drawProfile(User $user, Session $session, bool $isCurrentUser): void
 {?>    
     <p class="hidden" id="session_id"><?= $session->getId()?></p>
     <aside id="profile-info">
@@ -68,16 +68,17 @@ require_once(__DIR__ . '/../utils/Request.php');
    
 <?php } ?>
 
-<?php function drawEditProfile(User $user): void
+
+<?php function drawEditProfile(User $user, array $countries): void
 {?>    
     <aside id="profile-info">
         <img id="current_profile_img" src="<?=htmlspecialchars($user->image_path)?>" alt="Account Profile Picture">
         <form id="edit-profile-info" action="../actions/action_update_user.php" method="post" enctype="multipart/form-data">
             <?= Request::generateCsrfTokenInput() ?>
+            
             <label><img src="../assets/img/edit.svg" alt="Edit icon">
                 <input id="profile_img" name="profile_img" type="file" accept="image/png,image/jpeg">
             </label>
-
             <label>
                 <input type="text" name="new_username" placeholder= "Username" value='<?=htmlspecialchars($user->username)?>'>
             </label>
@@ -87,8 +88,21 @@ require_once(__DIR__ . '/../utils/Request.php');
             <label>
                 <input type="tel" name="new_phonenumber" placeholder= 'Phone number' value='<?=htmlspecialchars($user->phonenumber)?>'>
             </label>
+            <div class="select-field">
+                <span><?=$countries[$user->country_id]->name ?: 'Select Country'; ?></span>
+                <input type="hidden" name="new_country" value="<?=$user->country_id; ?>">
+                <ul>
+                    <li data-value="">--------------</li>
+                    <?php foreach ($countries as $country):  ?>
+                        <li data-value="<?=$country->id; ?>"><?=$country->name; ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
             <label>
                 <input type="text" name="new_address" placeholder= "Address" value='<?= htmlspecialchars($user->address)?>' >
+            </label>
+            <label>
+            <input type="text" name="new_zip_code" placeholder= "Zip Code" value='<?= htmlspecialchars($user->zip_code)?>'>
             </label>
             <div class='buttons'>
                 <button type="submit" name="edit-profile" value="save">Save</button>

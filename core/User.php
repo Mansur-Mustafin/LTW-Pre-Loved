@@ -15,7 +15,9 @@ class User
         public ?string $image_path = null,
         public int $banned = 0,
         public int $admin_flag = 0,
+        public ?int $country_id = null,
         public ?string $address = null,
+        public ?string $zip_code = null,
         public ?int $created_at = null
     ) {
         $this->ensureDefaultValues();
@@ -32,5 +34,6 @@ class User
         $this->created_at = $this->created_at ?? time();
         $this->phonenumber = $this->phonenumber ?? '';
         $this->address = $this->address ?? '';
+        $this->zip_code = $this->zip_code ?? '';
     }
 }

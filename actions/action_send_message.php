@@ -6,7 +6,7 @@ require_once(__DIR__ . '/../utils/Session.php');
 require_once(__DIR__ . '/../utils/Request.php');
 
 $session = new Session();
-$request = new Request(false);
+$request = new Request();
 
 if(!$session->isLoggedIn()) die(header('Location: /'));
 

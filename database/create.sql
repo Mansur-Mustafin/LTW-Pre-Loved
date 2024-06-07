@@ -18,6 +18,7 @@ DROP TABLE IF EXISTS Condition;
 DROP TABLE IF EXISTS Size;
 DROP TABLE IF EXISTS Categories;
 DROP TABLE IF EXISTS Users;
+DROP TABLE IF EXISTS Countries;
 
 /*******************************************************************************
    Create Tables
@@ -32,8 +33,11 @@ CREATE TABLE Users (
     image_path TEXT,
     banned BOOLEAN DEFAULT 0,                   -- Is banned user
     admin_flag BOOLEAN DEFAULT 0,               -- User is admin
+    country_id INTEGER,
     address TEXT,
-    created_at INTEGER
+    zip_code TEXT,
+    created_at INTEGER,
+    FOREIGN KEY (country_id) REFERENCES Countries(id) ON DELETE SET NULL
 );
 
 CREATE TABLE Items (
@@ -150,9 +154,15 @@ CREATE TABLE ItemTags (
     FOREIGN KEY (tag_id) REFERENCES Tags(id) ON DELETE CASCADE
 );
 
+CREATE TABLE Countries (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    alpha2 VARCHAR(2) NOT NULL, -- PT, SP, RU ...
+    alpha3 VARCHAR(3) NOT NULL  -- EUR, RUB ...
+);
 
 -- Its me :-)
-INSERT INTO Users (username, password, email, image_path, banned, admin_flag,address,created_at)
+INSERT INTO Users (username, password, email, image_path, banned, admin_flag, country_id, address, zip_code, created_at)
 VALUES 
-('Mansur','$2y$10$dGGYn8udsQus681UbEHBy.Et1G.DLdxbi/VpMHh1HRp3zx3takxeu','mansur@gmail.com','/data/profile_img/a5ec03d3e184f620948b1295a0b73a89038263f5134a0ec49083ab05331e459b.png',0,1,'',strftime('%s', 'now')),
-('rubem','$2y$10$dGGYn8udsQus681UbEHBy.Et1G.DLdxbi/VpMHh1HRp3zx3takxeu','rubem@gmail.com','/data/profile_img/john_doe.jpeg',0,1,'',strftime('%s', 'now'));
+('Mansur','$2y$10$dGGYn8udsQus681UbEHBy.Et1G.DLdxbi/VpMHh1HRp3zx3takxeu','mansur@gmail.com','/data/profile_img/a5ec03d3e184f620948b1295a0b73a89038263f5134a0ec49083ab05331e459b.png',0,1,1,'','4300-471',strftime('%s', 'now')),
+('rubem','$2y$10$dGGYn8udsQus681UbEHBy.Et1G.DLdxbi/VpMHh1HRp3zx3takxeu','rubem@gmail.com','/data/profile_img/john_doe.jpeg',0,1,NULL,'','',strftime('%s', 'now'));

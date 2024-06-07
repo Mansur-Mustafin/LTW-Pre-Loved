@@ -17,6 +17,8 @@ $db = getDatabaseConnection();
 
 if($request->isPost()) {
     $user = getUser($db, $request->post('username'));
+    var_dump($request->post('username'));
+    var_dump($user);
     $user->admin_flag = 1;
     updateUser($db,$user);
 }

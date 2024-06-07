@@ -367,6 +367,7 @@ function updateItem(Session $session, PDO $db, Item $item, int $oldID): bool {
         $brandId = $db->lastInsertId();
     }
     $modelId = getModelId($item->model, $db);
+    //var_dump($item->model);
     if($modelId === -1){
         $models = getEntitiesFromType("Models");
         $sql = "INSERT INTO Models (brand_id, name) VALUES (:brand_id, :model)";

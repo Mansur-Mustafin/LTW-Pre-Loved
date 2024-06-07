@@ -40,6 +40,7 @@ require_once(__DIR__ . '/../utils/Session.php');
         <script type="text/javascript" src="../js/filter_item.js" defer></script>
         <script type="text/javascript" src="../js/add_item.js" defer></script>
         <script type="text/javascript" src="../js/dashboard.js" defer></script>
+        <script type="text/javascript" src="../js/form.js" defer></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
 
     </head>
