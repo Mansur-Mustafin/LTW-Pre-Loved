@@ -1,10 +1,13 @@
 # Matador OLX
 
-## Group ltw06g04
+### Contributors and Grade
 
-- Mansur Mustafin (up202102355) 50%
-- Bruno (up202107143) 10%
-- Rubem Neto (up202207086) 40%
+* [Mansur Mustafin](https://github.com/Mansur-Mustafin)
+* [Rubem Neto](https://github.com/rubuy-74)
+* [Bruno](https://github.com/BrunoM6)
+
+Grade: 19.4/20
+
 
 ## Install Instructions
 
@@ -29,7 +32,6 @@ We have used the following external libraries:
 ## Screenshots
 ![alt text](assets/docs/image.png)
 ![alt text](assets/docs/image-1.png)
-![alt text](assets/docs/image-2.png)
 
 ## Implemented Features
 
@@ -70,15 +72,13 @@ We have been careful with the following security aspects:
 
 **Aditional Requirements**:
 
-We also implemented the following additional requirements (you can add more):
+We also implemented the following additional requirements:
 
-- [ ] **Rating and Review System**
 - [ ] **Promotional Features**
 - [X] **Analytics Dashboard**
 - [ ] **Multi-Currency Support**
-- [ ] **Item Swapping**
+- [ ] **Item Swapping** (ui)
 - [X] **API Integration**
-- [ ] **Dynamic Promotions**
 - [X] **User Preferences**
-- [ ] **Shipping Costs**: (not delivered, but implemented)
+- [ ] **Shipping Costs**: (implemented, but not delivered)
 - [X] **Real-Time Messaging System**
