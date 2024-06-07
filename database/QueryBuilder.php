@@ -171,7 +171,9 @@ class QueryBuilder
             foreach ($row as $key => $value) {
                 $model->{$key} = $value;
             }
+
             $model->ensureDefaultValues();
+
             $models[] = $model;
         }
 
@@ -183,6 +185,7 @@ class QueryBuilder
         return match ($model) {
             'User' => new User($row['username'], $row['password'], $row['email']),
             'Item' => new Item($row['price'], $row['user_id']),
+            'Country' => new Country($row['id'], $row['name'], $row['alpha2'], $row['alpha3']),
             default => null,
         };
     }

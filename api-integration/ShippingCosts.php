@@ -5,19 +5,19 @@ class ShippingCosts
     private $apiKey;    # export ZIPCODEBASE_API_KEY='48fe1520-124c-11ef-9894-d3522cbb4570'
     private static float $COST = 0.5;
 
-    public function __construct($apiKey) 
+    public function __construct() 
     {
         $this->apiKey = getenv('ZIPCODEBASE_API_KEY');
     }
 
-    public function getDistance(string $zipCode1, string $zipCode2) : float
+    public function getDistance(string $zipCode1, string $zipCode2, string $country = "PT") : float
     {
         $url = "https://app.zipcodebase.com/api/v1/distance";
     
         $data = [
             "code" => $zipCode1,
             "compare" => $zipCode2,
-            "country" => "pt",
+            "country" => strtolower($country),
             "apikey" => "48fe1520-124c-11ef-9894-d3522cbb4570"
         ];
         

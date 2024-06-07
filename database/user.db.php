@@ -3,15 +3,17 @@
 declare(strict_types=1);
 
 require_once(__DIR__ . '/../core/User.php');
+require_once(__DIR__ . '/../core/Country.php');
 require_once(__DIR__.'/../database/QueryBuilder.php');
 require_once(__DIR__.'/../database/connection.db.php');
 
 function createUser(PDO $db, User $user) : int
 {
-    $sql = "INSERT INTO Users (username, password, email, phonenumber, image_path, banned, admin_flag, address) 
-            VALUES (:username, :password, :email, :phonenumber, :image_path, :banned, :admin_flag, :address)";
+    $sql = "INSERT INTO Users (username, password, email, phonenumber, image_path, banned, admin_flag, country_id, address, zip_code, created_at)
+            VALUES (:username, :password, :email, :phonenumber, :image_path, :banned, :admin_flag, :country_id, :address, :zip_code, :created_at)";
 
     $stmt = $db->prepare($sql);
+    $time = time();
 
     $stmt->bindParam(':username', $user->username, PDO::PARAM_STR);
     $stmt->bindParam(':password', $user->password, PDO::PARAM_STR);
@@ -20,15 +22,18 @@ function createUser(PDO $db, User $user) : int
     $stmt->bindParam(':image_path', $user->image_path, PDO::PARAM_STR);
     $stmt->bindParam(':banned', $user->banned, PDO::PARAM_BOOL);
     $stmt->bindParam(':admin_flag', $user->admin_flag, PDO::PARAM_BOOL);
+    $stmt->bindParam(':country_id', $user->country_id, PDO::PARAM_INT);
     $stmt->bindParam(':address', $user->address, PDO::PARAM_STR);
-
+    $stmt->bindParam(':zip_code', $user->zip_code, PDO::PARAM_STR);
+    $stmt->bindParam(':created_at', $time);
+    
     $stmt->execute();
-
+    
     return intval($db->lastInsertId());
 }
 
 function updateUser(PDO $db, User $user): bool 
-{
+{   
     $sql = "UPDATE Users SET 
                 username = :username, 
                 password = :password, 
@@ -37,7 +42,9 @@ function updateUser(PDO $db, User $user): bool
                 image_path = :image_path, 
                 banned = :banned, 
                 admin_flag = :admin_flag, 
-                address = :address 
+                country_id = :country_id,
+                address = :address,
+                zip_code = :zip_code
             WHERE id = :id";
 
     $stmt = $db->prepare($sql);
@@ -51,6 +58,8 @@ function updateUser(PDO $db, User $user): bool
     $stmt->bindValue(':banned', $user->banned, PDO::PARAM_INT);
     $stmt->bindValue(':admin_flag', $user->admin_flag, PDO::PARAM_INT);
     $stmt->bindValue(':address', $user->address, PDO::PARAM_STR);
+    $stmt->bindValue(':country_id', $user->country_id, PDO::PARAM_INT);
+    $stmt->bindValue(':zip_code', $user->zip_code, PDO::PARAM_STR);
 
     return $stmt->execute();
 }
@@ -109,5 +118,13 @@ function getAllUsers(PDO $db): array
     $qb->select()
         ->from("Users");
 
+    return $qb->all();
+}
+
+function getCountries(PDO $db): array
+{
+    $qb = new QueryBuilder("Country");
+    $qb->select()
+        ->from("Countries");
     return $qb->all();
 }

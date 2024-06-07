@@ -23,6 +23,9 @@ if ($request->isPost()) {
     $password = $request->post('password') ?? null;
     $confirmPassword = $request->post('confirm_password') ?? null;
     $address = $request->post('address') ?? null;
+    $country_id = $request->post('country_id') ?? null;
+    $country_id = isset($country_id) ? ((int) $country_id - 1) : null;
+    $zipCode = $request->post('zip_code') ?? null;
     $phonenumber = $request->post('phonenumber') ?? null;
 
     $validator = Validate::in($request->getPostParams())
@@ -47,7 +50,7 @@ if ($request->isPost()) {
     }
 
     $password = get_hash_password($password);
-    $user = new User($username, $password, $email, null, $phonenumber, null, 0, 0, $address);
+    $user = new User($username, $password, $email, null, $phonenumber, null, 0, 0, $country_id, $address, $zipCode);
     $userId = createUser($db, $user);
     $session->setId($userId);
     $session->setName($username);

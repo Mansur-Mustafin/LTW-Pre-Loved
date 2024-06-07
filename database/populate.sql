@@ -3,10 +3,11 @@
 ********************************************************************************/
 
 -- Insert sample data into Users table
-INSERT INTO Users (username, password, email, phonenumber, image_path, banned, admin_flag, address,created_at)
+INSERT INTO Users (username, password, email, phonenumber, image_path, banned, admin_flag, country_id, address, zip_code, created_at)
 VALUES 
-    ('john_doe', '$2y$10$dGGYn8udsQus681UbEHBy.Et1G.DLdxbi/VpMHh1HRp3zx3takxeu', 'john.doe@example.com', '123-456-7890', '/data/profile_img/john_doe.jpeg', 0, 0, '123 Main St, Hometown',strftime('%s', 'now')),
-    ('jane_smith', '$2y$10$dGGYn8udsQus681UbEHBy.Et1G.DLdxbi/VpMHh1HRp3zx3takxeu', 'jane.smith@example.com', '234-567-8901', '/data/profile_img/jane_smith.jpeg', 0, 1, '456 Elm St, Bigcity',strftime('%s', 'now'));
+    ('john_doe', '$2y$10$NXRDoMYGaKBgnp.WWPqxJ.mugKjfEjBj.Y09b2awz1aSYMqtHR6Y6', 'john.doe@example.com', '123-456-7890', '/data/profile_img/john_doe.jpeg', 0, 0, NULL,'123 Main St, Hometown','',strftime('%s', 'now')),
+    ('jane_smith', '$2y$10$NXRDoMYGaKBgnp.WWPqxJ.mugKjfEjBj.Y09b2awz1aSYMqtHR6Y6', 'jane.smith@example.com', '234-567-8901', '/data/profile_img/jane_smith.jpeg', 0, 1, 1,'456 Elm St, Bigcity','1000-001',strftime('%s', 'now'));
+
 
 -- Insert sample data into Categories table
 INSERT INTO Categories (name)
@@ -361,3 +362,16 @@ VALUES
     ("Hi, I'm interested in buying this item.", 1, 2, 1, strftime('%s', 'now')),
     -- Message 4
     ("Ok, my brother.", 1, 1, 2, strftime('%s', 'now'));
+
+-- Populate Countries table
+INSERT INTO Countries (name, alpha2, alpha3)
+VALUES
+    ('Portugal', 'PT', 'EUR'),
+    ('France', 'FR', 'EUR'),
+    ('Austria', 'AT', 'EUR'),
+    ('United Kingdom', 'GB', 'GBP'),
+    ('Germany', 'DE', 'EUR'),
+    ('Italy', 'It', 'EUR'),
+    ('Canada', 'CA', 'CAD'),
+    ('United States of America', 'US', 'USD'),
+    ('Sweden', 'SW', 'EUR');

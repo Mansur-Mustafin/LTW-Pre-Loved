@@ -26,7 +26,7 @@ class Item
         public ?array $tags = null,
     ) {
         $this->ensureDefaultValues();
-        $this->imagesArray = isset($this->images) ?  $this->parseImages() : [self::DEFAULT_IMAGE_PATH]; 
+        $this->imagesArray = isset($this->images) ?  $this->parseImages() : [self::DEFAULT_IMAGE_PATH];
     }
 
     public function __set($name, $value){}
@@ -42,7 +42,6 @@ class Item
         $this->category = $this->category ?? '';
         $this->size = $this->size ?? '';
         $this->tags = $this->tags ?? [];
-        $this->imagesArray = isset($this->images) ?  $this->parseImages() : [self::DEFAULT_IMAGE_PATH];
     }
 
     public function parseImages() : array 
@@ -52,7 +51,6 @@ class Item
 
     public function getImagesArray(): array
     {
-        $this->imagesArray = isset($this->images) ?  $this->parseImages() : [self::DEFAULT_IMAGE_PATH];
         return $this->imagesArray;
     }
 

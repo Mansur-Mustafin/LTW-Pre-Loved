@@ -219,3 +219,63 @@ form#add-item-form{
         }
     }
 }
+
+div.select-field {
+    background-color: transparent;
+    color: black;
+    border: 1px solid rgba(0, 0, 0, 0);
+    border-bottom: 1px solid black;
+    padding: 1em 1em 1em 0.9em;
+    height: 3.2em;
+    box-sizing: border-box;
+    font-size: 0.9em;
+    position: relative;
+    transition: all .3s;
+    overflow: hidden;
+    border-radius: 3px;
+
+    &:after {
+        content: '▼';
+        position: absolute;
+        right: 0.7em;
+        top: 1.1em;
+        transition: all .3s;
+    }
+
+    &.open {
+        overflow: visible;
+        border: 1px solid var(--matador-dark-red);
+
+        ul {
+            max-height: 100em;
+        }
+
+        &:after {
+            transform: rotate(180deg);
+        }
+    }
+
+    ul {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        padding: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: all .3s;
+        border: 1px solid var(--matador-dark-red);
+        margin: 0!important;
+
+        li {
+            padding: 1em;
+            background: #F5F5F5;
+            cursor: pointer;
+            border-bottom: 1px solid var(--matador-grey-plus);
+        }
+
+        li:hover {
+            background: var(--matador-grey-plus);
+        }
+    }
+}

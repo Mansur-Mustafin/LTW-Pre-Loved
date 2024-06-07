@@ -4,6 +4,8 @@ let current_item_id = document.getElementById("current_item_id").value
 
 setInterval(checkNewMessages, 1000)
 
+console.log(current_item_id)
+
 function checkNewMessages() {
     fetch("../actions/action_check_new_messages.php", {
         method: 'post',

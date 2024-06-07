@@ -18,19 +18,21 @@ require_once(__DIR__ . '/../components/pdf.php');
 $db = getDatabaseConnection();
 
 $user_id = isset($_GET['id']) == null ? $session->getId() : intval($_GET['id']);
+var_dump($session->getId());
 $user = getUserById($db, $user_id);
-
 drawHeader($session, $user->username);
 
 $isCurrentUserPage = $user_id == $session->getId();
+$allCountries = getCountries($db);
+$countries = [];
+foreach ($allCountries as $country) $countries[$country->id] = $country;
 
-if(isset($_GET['action']) && $_GET['action'] == 'profile') drawEditProfile($user);
+
+if(isset($_GET['action']) && $_GET['action'] == 'profile') drawEditProfile($user, $allCountries);
 else if (isset($_GET['action']) && $_GET['action'] == 'password')  drawChangePassword($user);
-else drawProfile($user, $session,$isCurrentUserPage);
+else drawProfile($user, $session, $isCurrentUserPage);
 
 
-// TODO: Is there better solution?
-// Find all items that was sold, and not filter them?
 if (isset($_GET['action'])) {
     if ($_GET['action'] == 'sold') {
         $allItems = getItemsUser($user->id);
